@@ -35,7 +35,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 
-const AddBiodataForm = ({ biodata }: { biodata: Warga }) => {
+const AddBiodataForm = ({ biodata }: { biodata: Warga | null }) => {
   const form = useForm<z.infer<typeof wargaSchema>>({
     resolver: zodResolver(wargaSchema),
     defaultValues: {
