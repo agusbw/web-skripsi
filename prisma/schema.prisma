@@ -1,0 +1,117 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  username  String    @unique @db.VarChar(25)
+  password  String
+  role      Role @default(WARGA)
+
+  warga     Warga?    
+}
+
+model Penandatangan{
+  id       String      @id @default(uuid())
+  nama     String      @db.VarChar(255)
+  jabatan  String      @db.VarChar(255)
+  alamat   String      @db.VarChar(255)
+
+  surat     Surat[]
+}
+
+model Warga {
+  id              String      @id @db.VarChar(255)
+  nik             String      @db.VarChar(255)
+  nama            String      @db.VarChar(255)
+  alamat          String      @db.VarChar(255)
+  agama           Agama
+  kewarganegaraan String      @db.VarChar(255)
+  no_telp         String      @db.VarChar(255)
+  pekerjaan       String      @db.VarChar(255)
+  tanggal_lahir   DateTime
+  tempat_lahir    String      @db.VarChar(255)
+  jenis_kelamin   Boolean 
+  status_perkawinan StatusKawin
+
+  user           User        @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  id_user       String       @unique
+
+  surat          Surat[]
+}
+
+model KategoriSurat{
+  id      String      @id @default(uuid())
+  nama    String      @db.VarChar(255)
+
+  surat   Surat[]
+}
+
+model Surat{
+  id          String      @id @default(uuid())
+  no_surat    String      @db.VarChar(255)
+  no_kk       String?      @db.VarChar(255)
+  keperluan   String      @db.VarChar(255)
+  status      Status      @default(PENDING)
+
+  nik             String      @db.VarChar(255)
+  nama            String      @db.VarChar(255)
+  alamat          String      @db.VarChar(255)
+  agama           Agama
+  kewarganegaraan String      @db.VarChar(255)
+  pekerjaan       String      @db.VarChar(255)
+  tanggal_lahir   DateTime
+  tempat_lahir    String      @db.VarChar(255)
+  jenis_kelamin   Boolean      
+  status_perkawinan StatusKawin
+
+  url             String?     @db.VarChar(255)
+  domisili        String?      @db.VarChar(255)
+  keterangan_tambahan String? @db.VarChar(255)
+
+  id_penandatangan String     @db.VarChar(255)
+  penandatangan Penandatangan @relation(fields: [id_penandatangan], references: [id], onDelete: Cascade)
+
+  id_kategori_surat String @db.VarChar(255)
+  kategori_surat KategoriSurat @relation(fields: [id_kategori_surat], references: [id], onDelete: Cascade)
+
+  id_warga String @db.VarChar(255)
+  warga Warga @relation(fields: [id_warga], references: [id], onDelete: Cascade)
+}
+
+enum Status {
+  PENDING
+  DITOLAK
+  SELESAI
+}
+
+
+enum Agama {
+  ISLAM
+  PROTESTAN
+  KATOLIK
+  HINDU
+  BUDHA
+  KONGHUCU
+}
+
+enum Role {
+  WARGA
+  ADMIN
+}
+
+enum StatusKawin {
+  KAWIN
+  BELUM_KAWIN
+  CERAI_HIDUP
+  CERAI_MATI
+}
