@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import AddBiodataForm from "./_components/add-biodata-form";
+// import AddBiodataForm from "./_components/add-biodata-form";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
@@ -60,7 +60,7 @@ export default async function BiodataPage() {
         </AlertDescription>
       </Alert>
       <Separator />
-      <AddBiodataForm biodata={biodata} />
+      {/* <AddBiodataForm biodata={biodata} /> */}
     </DashboardContainer>
   );
 }

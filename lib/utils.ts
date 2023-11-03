@@ -19,3 +19,16 @@ export function isLinkActive(currentPath: string, itemPath: string) {
 
   return;
 }
+
+export function formatEnumValue(input: string): string {
+  // Replace underscores with spaces
+  const formatted = input.replace(/_/g, " ");
+
+  // Capitalize the first letter of each word
+  const words = formatted.split(" ");
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+
+  return capitalizedWords.join(" ");
+}

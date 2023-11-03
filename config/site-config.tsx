@@ -43,23 +43,28 @@ export const ComplaintSteps: ComplaintStep[] = [
 
 const adminSidebar = [
   {
-    title: "Overview",
-    path: "/admin/dashboard",
+    title: "Ringkasan Data",
+    path: "/admin",
     icon: <BarChart2 size={18} />,
   },
   {
-    title: "Buku & Rak",
-    path: "/admin/dashboard/books",
+    title: "Pengajuan Surat",
+    path: "/admin/surat",
     icon: <Book size={18} />,
   },
   {
-    title: "Peminjaman",
-    path: "/admin/dashboard/transactions",
+    title: "Warga",
+    path: "/admin/warga",
     icon: <CalendarClock size={18} />,
   },
   {
-    title: "Anggota",
-    path: "/admin/dashboard/members",
+    title: "Kategori Surat",
+    path: "/admin/kategori",
+    icon: <Book size={18} />,
+  },
+  {
+    title: "Statistik",
+    path: "/admin/statistik",
     icon: <User2 size={18} />,
   },
 ];

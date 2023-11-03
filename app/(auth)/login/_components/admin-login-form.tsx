@@ -13,16 +13,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { loginSchema } from "@/types/types";
+import { adminLoginSchema } from "@/types/schema";
 import { signIn } from "next-auth/react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+export default function AdminLoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof adminLoginSchema>>({
+    resolver: zodResolver(adminLoginSchema),
     defaultValues: {
       username: "",
       password: "",
@@ -31,7 +31,7 @@ export default function LoginForm() {
   const router = useRouter();
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: z.infer<typeof adminLoginSchema>) {
     try {
       const res = await signIn("credentials", {
         redirect: false,
@@ -40,10 +40,9 @@ export default function LoginForm() {
       });
 
       if (!res?.error) {
-        console.log(res);
         router.replace("/redirector");
       } else {
-        setLoginError("Email atau password salah!");
+        setLoginError("Username atau password salah!");
       }
     } catch (error) {
       console.error(error);
@@ -73,7 +72,6 @@ export default function LoginForm() {
               <FormControl>
                 <Input
                   autoComplete={"off"}
-                  placeholder="pakjon01"
                   {...field}
                 />
               </FormControl>
@@ -104,6 +102,10 @@ export default function LoginForm() {
         >
           Login
         </Button>
+        <p className="px-8 text-sm text-center text-muted-foreground">
+          Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
+          Dashboard Admin/Staff.
+        </p>
       </form>
     </Form>
   );

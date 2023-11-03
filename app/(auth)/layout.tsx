@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import LoginRegisterNavigator from "@/app/(auth)/_components/login-register-navigator";
 import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -26,7 +24,6 @@ export default async function AuthenticationLayout({
           >
             Beranda
           </Link>
-          <LoginRegisterNavigator />
         </div>
         <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />

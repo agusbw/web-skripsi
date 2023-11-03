@@ -1,59 +1,24 @@
-"use client";
-
 import SidebarList from "@/components/sidebar-list";
-import { outfit } from "@/app/fonts";
-import { useState } from "react";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-const Sidebar = () => {
-  const [isWide, setIsWide] = useState(true);
+const Sidebar = async () => {
+  const session = await getServerSession(authOptions);
 
   return (
     <>
-      <div
-        className={`${
-          isWide ? "w-3/12" : "w-[70px]"
-        } min-h-screen hidden lg:block  border-r border-2 transition-all duration-300`}
-      >
-        {isWide ? (
-          <div className={"flex flex-col"}>
-            <PanelLeftClose
-              onClick={() => {
-                setIsWide(false);
-              }}
-              className={
-                "mt-5 mb-10 self-end mr-3  text-primary transition cursor-pointer hover:text-primary/80"
-              }
-            />
-          </div>
-        ) : (
-          <PanelLeftOpen
-            onClick={() => {
-              setIsWide(true);
-            }}
-            className={
-              "mt-5 mb-44 mx-auto  text-primary transition cursor-pointer hover:text-primary/80"
-            }
-          />
-        )}
+      <div className="hidden w-3/12 min-h-screen transition-all duration-300 border-r border-slate-300 lg:block">
+        <p
+          className={`my-16 text-2xl px-3 transition inline-block mx-auto w-full py-4  text-center  font-semibold`}
+        >
+          Sistem Pengajuan Surat Keterangan
+        </p>
 
-        {isWide && (
-          <p
-            className={`mb-16 text-4xl transition tracking-wide inline-block mx-auto w-full py-4  text-center  font-semibold ${outfit.className}`}
-          >
-            Dashboard
-          </p>
-        )}
+        <SidebarList user={session?.user} />
 
-        <div className={"flex flex-col gap-5"}>
-          <SidebarList wide={isWide} />
-        </div>
-
-        {isWide && (
-          <p className={"px-5 text-center mt-5 text-xs text-muted-foreground"}>
-            Skripsi Demo [Server Action Implementation]
-          </p>
-        )}
+        <p className={"px-5 text-center mt-5 text-xs text-muted-foreground"}>
+          Website Untuk Skripsinya Bewe
+        </p>
       </div>
     </>
   );

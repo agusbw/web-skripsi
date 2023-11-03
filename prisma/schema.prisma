@@ -36,7 +36,6 @@ model Warga {
   alamat          String      @db.VarChar(255)
   agama           Agama
   kewarganegaraan String      @db.VarChar(255)
-  no_telp         String      @db.VarChar(255)
   pekerjaan       String      @db.VarChar(255)
   tanggal_lahir   DateTime
   tempat_lahir    String      @db.VarChar(255)
@@ -45,6 +44,8 @@ model Warga {
 
   user           User        @relation(fields: [id_user], references: [id], onDelete: Cascade)
   id_user       String       @unique
+  @@index([id_user])
+  
 
   surat          Surat[]
 }
@@ -80,12 +81,15 @@ model Surat{
 
   id_penandatangan String     @db.VarChar(255)
   penandatangan Penandatangan @relation(fields: [id_penandatangan], references: [id], onDelete: Cascade)
+  @@index([id_penandatangan])
 
   id_kategori_surat String @db.VarChar(255)
   kategori_surat KategoriSurat @relation(fields: [id_kategori_surat], references: [id], onDelete: Cascade)
+  @@index([id_kategori_surat])
 
   id_warga String @db.VarChar(255)
   warga Warga @relation(fields: [id_warga], references: [id], onDelete: Cascade)
+  @@index([id_warga])
 }
 
 enum Status {

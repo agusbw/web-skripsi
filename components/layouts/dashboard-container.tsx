@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { CalendarDays, Clock3, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { outfit } from "@/app/fonts";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import React from "react";
@@ -20,14 +19,14 @@ function DashboardContainer({
   const session = useSession();
 
   useEffect(() => {
-    const interval = setInterval(() => setDate(new Date()), 30000);
+    const interval = setInterval(() => setDate(new Date()), 60000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
       {/*desktop*/}
-      <div className={"pt-4 pb-4 lg:pt-16 px-5 hidden lg:block"}>
+      <div className={"pt-4 pb-4 lg:pt-16 px-10 hidden lg:block"}>
         <div className={"flex gap-3 mb-4"}>
           <span className={"flex items-center gap-1"}>
             <CalendarDays className={"w-4 text-primary"} />{" "}
@@ -53,10 +52,10 @@ function DashboardContainer({
                 width={40}
                 height={40}
               />
-              <span
-                className={`font-semibold ${outfit.className} tracking-wide text-muted-foreground`}
-              >
-                {session && session.data?.user.username}
+              <span className={` text-muted-foreground`}>
+                {session && session.data?.user.role === "ADMIN"
+                  ? "Admin"
+                  : "Warga"}
               </span>
             </div>
             <div className={"border-l-2 border-muted-foreground px-4"}>
