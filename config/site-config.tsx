@@ -3,41 +3,44 @@ import {
   Book,
   CalendarClock,
   User2,
-  BarChart2,
   User,
+  BarChart2,
+  LogIn,
+  ScrollText,
+  FormInput,
   FilePlus2,
+  MailCheck,
+  CheckCircle2,
 } from "lucide-react";
 
 export const ComplaintSteps: ComplaintStep[] = [
   {
-    title: "Daftar Akun",
-    description:
-      "VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk bespoke try-hard cliche palo santo offal.",
-    icon: <User />,
+    title: "Login",
+    description: "Login terlebih dahulu dengan akun yang telah terdaftar.",
+    icon: <LogIn />,
   },
   {
-    title: "Daftar Akun",
+    title: "Pilih Jenis Surat",
     description:
-      "VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk bespoke try-hard cliche palo santo offal.",
-    icon: <User />,
+      "Pilih jenis surat yang ingin diajukan. Pastikan jenis surat yang dipilih sesuai dengan kebutuhan.",
+    icon: <ScrollText />,
   },
   {
-    title: "Daftar Akun",
+    title: "Isi Formulir dan Kirim",
     description:
-      "VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk bespoke try-hard cliche palo santo offal.",
-    icon: <User />,
+      "Isi formulir pengajuan surat dengan lengkap dan benar, lalu kirim pengajuan.",
+    icon: <FormInput />,
   },
   {
-    title: "Daftar Akun",
+    title: "Pantau Status Pengajuan",
     description:
-      "VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk bespoke try-hard cliche palo santo offal.",
-    icon: <User />,
+      "Pantau status pengajuan surat melalui halaman riwayat pengajuan. Surat yang sudah selesai akan memiliki status 'selesai'.",
+    icon: <MailCheck />,
   },
   {
-    title: "Daftar Akun",
-    description:
-      "VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk bespoke try-hard cliche palo santo offal.",
-    icon: <User />,
+    title: "Ambil Surat",
+    description: "Ambil surat yang telah selesai dibuat di kantor desa.",
+    icon: <CheckCircle2 />,
   },
 ];
 

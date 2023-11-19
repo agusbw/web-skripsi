@@ -3,11 +3,11 @@ import Image from "next/image";
 
 export default function ComplaintStepsSection() {
   return (
-    <section className="text-gray-600 body-font ">
-      <h2 className="text-3xl font-bold text-center text-gray-900">
-        Langkah-langkah mengirim pengaduan.
+    <section className="py-12 text-gray-600 body-font">
+      <h2 className="text-3xl font-medium text-center text-gray-900">
+        Langkah-langkah mengajukan surat
       </h2>
-      <div className="container flex flex-wrap px-5 py-24 mx-auto">
+      <div className="container flex flex-wrap px-5 mx-auto mt-10">
         <div className="flex flex-wrap w-full">
           <div className="lg:w-2/5 md:w-1/2 md:pr-10 md:py-6">
             {ComplaintSteps.map((step, index) => {

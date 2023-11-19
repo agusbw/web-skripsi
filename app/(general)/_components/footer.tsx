@@ -1,30 +1,30 @@
 export default function Footer() {
   return (
     <footer className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-        <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-          <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+      <div className="container flex flex-col flex-wrap px-5 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
+        <div className="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
+          <a className="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               stroke="currentColor"
-              className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+              className="w-10 h-10 p-2 text-white bg-indigo-500 rounded-full"
               viewBox="0 0 24 24"
             >
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
-            <span className="ml-3 text-xl">Tailblocks</span>
+            <span className="ml-3 text-xl">SIPSK</span>
           </a>
           <p className="mt-2 text-sm text-gray-500">
-            Air plant banjo lyft occupy retro adaptogen indego
+            Pemerintah Desa Pelapuan @2023
           </p>
         </div>
-        <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+        <div className="flex flex-wrap flex-grow mt-10 -mb-10 text-center md:pl-20 md:mt-0 md:text-left">
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">
               CATEGORIES
             </h2>
-            <nav className="list-none mb-10">
+            <nav className="mb-10 list-none">
               <li>
                 <a className="text-gray-600 hover:text-gray-800">First Link</a>
               </li>
@@ -39,11 +39,11 @@ export default function Footer() {
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">
               CATEGORIES
             </h2>
-            <nav className="list-none mb-10">
+            <nav className="mb-10 list-none">
               <li>
                 <a className="text-gray-600 hover:text-gray-800">First Link</a>
               </li>
@@ -58,11 +58,11 @@ export default function Footer() {
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">
               CATEGORIES
             </h2>
-            <nav className="list-none mb-10">
+            <nav className="mb-10 list-none">
               <li>
                 <a className="text-gray-600 hover:text-gray-800">First Link</a>
               </li>
@@ -77,11 +77,11 @@ export default function Footer() {
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">
               CATEGORIES
             </h2>
-            <nav className="list-none mb-10">
+            <nav className="mb-10 list-none">
               <li>
                 <a className="text-gray-600 hover:text-gray-800">First Link</a>
               </li>

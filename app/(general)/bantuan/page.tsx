@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
 
 export default function HelpPage() {
   return (
@@ -22,33 +23,39 @@ export default function HelpPage() {
       <div
         className={"border mx-4 lg:mx-48 lg:mt-10 px-5 mt-12 mb-12 lg:mb-28"}
       >
-        <Accordion type="single" collapsible>
+        <Accordion
+          type="single"
+          collapsible
+        >
           <AccordionItem value="item-1">
-            <AccordionTrigger>SiPem itu aplikasi apa?</AccordionTrigger>
+            <AccordionTrigger>SIPSK itu aplikasi apa?</AccordionTrigger>
             <AccordionContent>
-              SiPem adalah platform digital yang membantu anda dalam mengelola
-              dan memonitoring keuangan anda. SiPem juga dapat membantu anda
-              dalam
+              SIPSK adalah website yang digunakan untuk mempermudah masyarakat
+              dalam mengajukan surat keterangan kepada pemerintah Desa Pelapuan.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
             <AccordionTrigger>
-              Apa yang melatar belakangi lahirnya SiPem?
+              Apa yang melatarbelakangi dibangunnya SIPSK?
             </AccordionTrigger>
             <AccordionContent>
-              SiPem adalah platform digital yang membantu anda dalam mengelola
-              dan memonitoring keuangan anda. SiPem juga dapat membantu anda
-              dalam
+              SIPSK dilatarbelakangi oleh kurangnya aksesibilitas masyarakat
+              dalam mengajukan surat keterangan secara online kepada pemerintah
+              Desa Pelapuan.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger>
-              Bagaimana caranya melapor keluhan?
+              Bagaimana caranya mengajukan surat?
             </AccordionTrigger>
             <AccordionContent>
-              SiPem adalah platform digital yang membantu anda dalam mengelola
-              dan memonitoring keuangan anda. SiPem juga dapat membantu anda
-              dalam
+              Tata cara pengajuan surat tersedia di halaman{" "}
+              <Link
+                className="underline text-primary"
+                href="/"
+              >
+                Home
+              </Link>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
@@ -56,19 +63,38 @@ export default function HelpPage() {
               Ada bug atau error, harus lapor kemana?
             </AccordionTrigger>
             <AccordionContent>
-              SiPem adalah platform digital yang membantu anda dalam mengelola
-              dan memonitoring keuangan anda. SiPem juga dapat membantu anda
-              dalam
+              Anda dapat melaporkan bug atau error melalui kontak berikut:
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5">
             <AccordionTrigger>
-              Apa status pengembangan dari platform ini?
+              Saya tidak punya akun, harus bagaimana?
             </AccordionTrigger>
             <AccordionContent>
-              SiPem adalah platform digital yang membantu anda dalam mengelola
-              dan memonitoring keuangan anda. SiPem juga dapat membantu anda
-              dalam
+              Anda dapat menuju halaman login, lalu klik{" "}
+              <span className="text-primary">&apos;belum punya akun&apos;</span>
+              , lalu anda akan diarahkan menuju kontak Pemerintah Desa Pelapuan
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-6">
+            <AccordionTrigger>
+              Apakah saya tetap mengambil surat di Kantor Desa?
+            </AccordionTrigger>
+            <AccordionContent>
+              Iya, surat keterangan adalah dokumen resmi yang memerlukan tanda
+              tangan dan cap resmi dari Pemerintah Desa Pelapuan. Website ini
+              mempersingkat waktu anda, anda tidak perlu lagi mengajukan surat,
+              mengurus data administrasi, menunggu pencetakan surat, dan
+              melakukan proses lainnya di Kantor Desa. Hanya anda perlu
+              mengambil suratnya langsung.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-7">
+            <AccordionTrigger>
+              Ada pertanyaan lain, hubungi kemana?
+            </AccordionTrigger>
+            <AccordionContent>
+              Anda dapat terhubung dengan admin melalui:
             </AccordionContent>
           </AccordionItem>
         </Accordion>

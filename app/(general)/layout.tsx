@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Header from "@/app/(general)/_components/header";
+import Footer from "@/app/(general)/_components/footer";
 
 function GeneralLayout({ children }: { children: React.ReactNode }) {
   return (
