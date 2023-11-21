@@ -10,6 +10,7 @@ declare module "next-auth" {
       username: string;
       role: string;
       id_warga?: string;
+      display_name: string;
     };
   }
 
@@ -18,6 +19,7 @@ declare module "next-auth" {
     username: string;
     role: string;
     id_warga?: string;
+    display_name: string;
   }
 }
 
@@ -27,5 +29,6 @@ declare module "next-auth/jwt" {
     username: string;
     role: string;
     id_warga?: string;
+    display_name: string;
   }
 }

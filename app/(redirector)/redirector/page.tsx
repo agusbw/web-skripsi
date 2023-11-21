@@ -6,14 +6,10 @@ export default async function RedirectDashboardPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return redirect("/login");
+    return redirect("/api/auth/signin");
   }
 
   if (session?.user.role === "WARGA") {
-    if (session?.user.id_warga === undefined) {
-      return redirect("/warga/biodata");
-    }
-
     return redirect("/warga");
   }
 

@@ -45,11 +45,16 @@ export default function WargaLoginForm() {
       const username = values.nik;
       const password = format(values.tanggal_lahir, "ddMMyyyy");
 
+      console.log(password);
+
       const res = await signIn("credentials", {
         redirect: false,
         username,
         password,
+        role: "WARGA",
       });
+
+      console.log(res);
 
       if (!res?.error) {
         router.replace("/redirector");
