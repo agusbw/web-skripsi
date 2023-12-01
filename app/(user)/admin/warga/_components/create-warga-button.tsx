@@ -6,11 +6,11 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import * as z from "zod";
+import type { z } from "zod";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
 import { useTransition } from "react";
 import { cn } from "@/lib/utils";
@@ -32,7 +32,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import * as React from "react";
 import { CalendarIcon, FileEdit, Loader2 } from "lucide-react";
@@ -41,16 +41,16 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverTrigger
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { createWarga, updateWarga } from "@/lib/actions";
-import { Warga } from "@/types/types";
+import type { Warga } from "@/types/types";
 
 export default function CreataWarga({
   buttonText,
   warga = null,
-  variant = "default",
+  variant = "default"
 }: {
   warga?: Warga | null;
   buttonText?: string | React.ReactNode;
@@ -67,7 +67,7 @@ export default function CreataWarga({
   const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof createWargaSchema>>({
-    resolver: zodResolver(createWargaSchema),
+    resolver: zodResolver(createWargaSchema)
   });
 
   React.useEffect(() => {
@@ -79,13 +79,10 @@ export default function CreataWarga({
     form.setValue("pekerjaan", warga ? warga.pekerjaan : "");
     form.setValue("tempat_lahir", warga ? warga.tempat_lahir : "");
     if (warga) {
-      form.setValue("tanggal_lahir", warga && new Date(warga.tanggal_lahir));
-      form.setValue("agama", warga && warga.agama);
-      form.setValue(
-        "jenis_kelamin",
-        warga && warga.jenis_kelamin ? "true" : "false"
-      );
-      form.setValue("status_perkawinan", warga && warga.status_perkawinan);
+      form.setValue("tanggal_lahir", new Date(warga.tanggal_lahir));
+      form.setValue("agama", warga.agama);
+      form.setValue("jenis_kelamin", warga.jenis_kelamin ? "true" : "false");
+      form.setValue("status_perkawinan", warga.status_perkawinan);
     }
   }, [form, dialogOpen, warga]);
 
@@ -97,7 +94,7 @@ export default function CreataWarga({
       toast({
         title: `${result.success ? "Berhasil" : "Gagal"}!`,
         description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
+        variant: `${result.success ? "default" : "destructive"}`
       });
 
       setDialogOpen(false);

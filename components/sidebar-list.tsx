@@ -2,7 +2,7 @@
 
 import { adminSidebar, wargaSidebar } from "@/config/site-config";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { isLinkActive } from "@/lib/utils";

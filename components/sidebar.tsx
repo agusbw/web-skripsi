@@ -1,21 +1,12 @@
 import SidebarList from "@/components/sidebar-list";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { fetchWargaByUserId } from "@/lib/data";
 
 const Sidebar = async () => {
   const session = await getServerSession(authOptions);
-  let fullName = "Admin";
 
   if (!session) {
-    redirect("/api/auth/signin");
-  }
-
-  // get fullNamee if it's not an admin
-  if (session.user.role === "WARGA" && session.user.id_warga) {
-    const warga = await fetchWargaByUserId(session.user.id_warga);
-    fullName = warga ? warga.nama : "Warga Desa";
+    return;
   }
 
   return (

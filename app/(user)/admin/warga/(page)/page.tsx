@@ -3,10 +3,10 @@ import { WargaDataTable } from "../_components/data-warga-table";
 import { listWargaColumns } from "../_components/data-warga-column";
 import { fetchWargaList } from "@/lib/data";
 import CreateWarga from "../_components/create-warga-button";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Warga",
+  title: "Warga"
 };
 
 export default async function AdminWargaPage() {

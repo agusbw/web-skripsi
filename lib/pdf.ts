@@ -1,6 +1,6 @@
 import path from "path";
-const fs = require("fs/promises"); //note fs/promises, not fs her;
-import { PDFDocument } from "pdf-lib";
+import fs from "fs/promises"; //note fs/promises, not fs her;
+// import { PDFDocument } from "pdf-lib";
 
 const rootDirectory = path.join(process.cwd(), "app", "assets");
 

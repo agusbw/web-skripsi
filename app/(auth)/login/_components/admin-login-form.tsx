@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,7 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,8 @@ export default function AdminLoginForm() {
     resolver: zodResolver(adminLoginSchema),
     defaultValues: {
       username: "",
-      password: "",
-    },
+      password: ""
+    }
   });
   const router = useRouter();
 
@@ -34,15 +34,15 @@ export default function AdminLoginForm() {
   async function onSubmit(values: z.infer<typeof adminLoginSchema>) {
     try {
       const res = await signIn("credentials", {
-        redirect: false,
         username: values.username,
         password: values.password,
+        redirect: false
       });
 
-      if (!res?.error) {
-        router.replace("/redirector");
-      } else {
+      if (res?.error) {
         setLoginError("Username atau password salah!");
+      } else {
+        router.push("/admin");
       }
     } catch (error) {
       console.error(error);

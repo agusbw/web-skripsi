@@ -3,22 +3,12 @@ import * as React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import SidebarList from "./sidebar-list";
-import { fetchWargaByUserId } from "@/lib/data";
-
-import { redirect } from "next/navigation";
 
 const MobileNav = async () => {
   const session = await getServerSession(authOptions);
-  let fullName = "Admin";
 
   if (!session) {
-    redirect("/api/auth/signin");
-  }
-
-  // get fullNamee if it's not an admin
-  if (session.user.role === "WARGA" && session.user.id_warga) {
-    const warga = await fetchWargaByUserId(session.user.id_warga);
-    fullName = warga ? warga.nama : "Warga Desa";
+    return;
   }
 
   return (

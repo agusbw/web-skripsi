@@ -15,7 +15,7 @@ export default async function BiodataPage() {
   const session = await getServerSession(authOptions);
 
   const biodata = await prisma.warga.findUnique({
-    where: { id_user: session?.user.id },
+    where: { id_user: session?.user.id }
   });
 
   return (

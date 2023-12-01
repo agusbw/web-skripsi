@@ -1,22 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import { CalendarDays, Clock3, LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { CalendarDays, Clock3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import React from "react";
-import { useSession } from "next-auth/react";
 
 function DashboardContainer({
   children,
-  title,
+  title
 }: {
   children: React.ReactNode;
   title: string;
 }) {
   const [date, setDate] = useState(new Date());
-  const session = useSession();
 
   useEffect(() => {
     const interval = setInterval(() => setDate(new Date()), 60000);

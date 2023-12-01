@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
+  FormDescription
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverTrigger
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -34,9 +34,10 @@ export default function WargaLoginForm() {
   const form = useForm<z.infer<typeof wargaLoginSchema>>({
     resolver: zodResolver(wargaLoginSchema),
     defaultValues: {
-      nik: "",
-    },
+      nik: ""
+    }
   });
+
   const router = useRouter();
 
   // 2. Define a submit handler.
@@ -45,21 +46,16 @@ export default function WargaLoginForm() {
       const username = values.nik;
       const password = format(values.tanggal_lahir, "ddMMyyyy");
 
-      console.log(password);
-
       const res = await signIn("credentials", {
-        redirect: false,
         username,
         password,
-        role: "WARGA",
+        redirect: false
       });
 
-      console.log(res);
-
-      if (!res?.error) {
-        router.replace("/redirector");
-      } else {
+      if (res?.error) {
         setLoginError("NIK atau tanggal lahir salah!");
+      } else {
+        router.push("/warga");
       }
     } catch (error) {
       console.error(error);

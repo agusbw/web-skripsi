@@ -1,21 +1,18 @@
 import Sidebar from "@/components/sidebar";
 import MobileNav from "@/components/mobile-nav";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import React from "react";
-import { Metadata } from "next";
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
     template: "%s | Dashboard",
-    default: "Dashboard",
+    default: "Dashboard"
   },
-  description: "Dashboard sistem pengajuan surat keterangan Desa Pelapuan.",
+  description: "Dashboard sistem pengajuan surat keterangan Desa Pelapuan."
 };
 
 export default async function AdminDashboardLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

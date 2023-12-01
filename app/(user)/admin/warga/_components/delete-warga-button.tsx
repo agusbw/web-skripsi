@@ -6,7 +6,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import * as React from "react";
@@ -26,7 +26,7 @@ export const DeleteWarga = ({ id }: { id: string }) => {
       toast({
         title: `${result.success ? "Berhasil" : "Gagal"}!`,
         description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
+        variant: `${result.success ? "default" : "destructive"}`
       });
       setAlertOpen(false);
     });

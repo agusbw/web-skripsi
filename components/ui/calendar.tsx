@@ -8,11 +8,11 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker, DropdownProps } from "react-day-picker";
+import { DayPicker, type DropdownProps } from "react-day-picker";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -57,17 +57,17 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        ...classNames,
+        ...classNames
       }}
       components={{
-        Dropdown: ({ value, onChange, children, ...props }: DropdownProps) => {
+        Dropdown: ({ value, onChange, children }: DropdownProps) => {
           const options = React.Children.toArray(
             children
           ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[];
           const selected = options.find((child) => child.props.value === value);
           const handleChange = (value: string) => {
             const changeEvent = {
-              target: { value },
+              target: { value }
             } as React.ChangeEvent<HTMLSelectElement>;
             onChange?.(changeEvent);
           };
@@ -85,7 +85,7 @@ function Calendar({
                 <ScrollArea className="h-80">
                   {options.map((option, id: number) => (
                     <SelectItem
-                      key={`${option.props.value}-${id}`}
+                      key={`${option.props.value?.toString()}-${id}`}
                       value={option.props.value?.toString() ?? ""}
                     >
                       {option.props.children}
@@ -96,8 +96,8 @@ function Calendar({
             </Select>
           );
         },
-        IconLeft: ({ ...props }) => <ChevronLeft className="w-4 h-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="w-4 h-4" />,
+        IconLeft: () => <ChevronLeft className="w-4 h-4" />,
+        IconRight: () => <ChevronRight className="w-4 h-4" />
       }}
       {...props}
     />

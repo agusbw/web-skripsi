@@ -1,12 +1,10 @@
-import { Metadata } from "next";
-import { getServerSession } from "next-auth";
+import type { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { authOptions } from "@/lib/auth";
 import AdminLoginForm from "@/app/(auth)/login/_components/admin-login-form";
 import WargaLoginForm from "@/app/(auth)/login/_components/warga-login-form";
 
 export const metadata: Metadata = {
-  title: "Halaman Login",
+  title: "Halaman Login"
 };
 
 export default async function LoginPage() {
