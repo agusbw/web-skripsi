@@ -1,5 +1,5 @@
 // Ref: https://next-auth.js.org/configuration/nextjs#advanced-usage
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
+import { withAuth, type NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(

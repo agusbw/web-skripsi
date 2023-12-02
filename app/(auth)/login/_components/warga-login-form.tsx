@@ -12,6 +12,7 @@ import {
   FormMessage,
   FormDescription
 } from "@/components/ui/form";
+import { SubmittingIndicator } from "@/components/loading";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { wargaLoginSchema } from "@/types/schema";
@@ -145,7 +146,7 @@ export default function WargaLoginForm() {
           disabled={form.formState.isSubmitting}
           className={"w-full"}
         >
-          Login
+          {form.formState.isSubmitting ? <SubmittingIndicator /> : "Login"}
         </Button>
         <p className="px-8 text-sm text-center text-muted-foreground">
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman

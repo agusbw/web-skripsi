@@ -13,7 +13,8 @@ export function isLinkActive(currentPath: string, itemPath: string) {
   currentPath = currentPath.slice(7, currentPath.length);
 
   const currentPathArray = currentPath.split("/");
-  if (itemPath.includes(currentPathArray[0])) {
+
+  if (itemPath.includes(currentPathArray[0] ?? "")) {
     return true;
   }
 

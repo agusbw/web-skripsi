@@ -1,11 +1,10 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import * as React from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getCurrentSession } from "@/lib/auth";
 import SidebarList from "./sidebar-list";
 
 const MobileNav = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getCurrentSession();
 
   if (!session) {
     return;
