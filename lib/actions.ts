@@ -23,29 +23,29 @@ export async function createWarga(
   if (!validatedData.success) {
     return {
       success: false,
-      message: "Data tidak valid"
+      message: "Data tidak valid",
     };
   }
 
   try {
     const latestTransaction = await prisma.warga.findFirst({
       orderBy: {
-        id: "desc"
-      }
+        id: "desc",
+      },
     });
 
     latestTransaction ? (id = generateDataId("WAR", latestTransaction.id)) : id;
 
     const isExist = await prisma.warga.findFirst({
       where: {
-        nik: validatedData.data.nik
-      }
+        nik: validatedData.data.nik,
+      },
     });
 
     if (isExist) {
       return {
         success: false,
-        message: "NIK sudah terdaftar"
+        message: "NIK sudah terdaftar",
       };
     }
 
@@ -62,10 +62,10 @@ export async function createWarga(
           create: {
             ...validatedData.data,
             jenis_kelamin: validatedData.data.jenis_kelamin === "true",
-            id
-          }
-        }
-      }
+            id,
+          },
+        },
+      },
     });
 
     revalidatePath("/");
@@ -73,13 +73,13 @@ export async function createWarga(
     return {
       success: true,
       message: "Warga berhasil ditambahkan",
-      data: user
+      data: user,
     };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "Terjadi kesalahan pada server"
+      message: "Terjadi kesalahan pada server",
     };
   }
 }
@@ -92,7 +92,7 @@ export async function updateWarga(
   if (!validatedData.success) {
     return {
       success: false,
-      message: "Data tidak valid"
+      message: "Data tidak valid",
     };
   }
 
@@ -100,9 +100,9 @@ export async function updateWarga(
     const user = await prisma.user.findFirst({
       where: {
         warga: {
-          id
-        }
-      }
+          id,
+        },
+      },
     });
 
     if (!user) return { success: false, message: "Warga tidak ditemukan" };
@@ -110,18 +110,18 @@ export async function updateWarga(
     const isExist = await prisma.warga.findFirst({
       where: {
         nik: {
-          equals: validatedData.data.nik
+          equals: validatedData.data.nik,
         },
         NOT: {
-          nik: user.username
-        }
-      }
+          nik: user.username,
+        },
+      },
     });
 
     if (isExist) {
       return {
         success: false,
-        message: "NIK sudah terdaftar"
+        message: "NIK sudah terdaftar",
       };
     }
 
@@ -132,7 +132,7 @@ export async function updateWarga(
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: user.id
+        id: user.id,
       },
       data: {
         password: hashedPassword,
@@ -140,10 +140,10 @@ export async function updateWarga(
         warga: {
           update: {
             ...validatedData.data,
-            jenis_kelamin: validatedData.data.jenis_kelamin === "true"
-          }
-        }
-      }
+            jenis_kelamin: validatedData.data.jenis_kelamin === "true",
+          },
+        },
+      },
     });
 
     revalidatePath("/");
@@ -151,13 +151,13 @@ export async function updateWarga(
     return {
       success: true,
       message: "Warga berhasil diubah",
-      data: updatedUser
+      data: updatedUser,
     };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "Terjadi kesalahan pada server"
+      message: "Terjadi kesalahan pada server",
     };
   }
 }
@@ -167,30 +167,30 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
     const user = await prisma.user.findFirst({
       where: {
         warga: {
-          id
-        }
-      }
+          id,
+        },
+      },
     });
 
     if (!user) return { success: false, message: "Warga tidak ditemukan" };
 
     await prisma.user.delete({
       where: {
-        id: user.id
-      }
+        id: user.id,
+      },
     });
 
     revalidatePath("/");
 
     return {
       success: true,
-      message: "Warga berhasil dihapus"
+      message: "Warga berhasil dihapus",
     };
   } catch (err) {
     console.log(err);
     return {
       success: false,
-      message: "Terjadi kesalahan pada server"
+      message: "Terjadi kesalahan pada server",
     };
   }
 }

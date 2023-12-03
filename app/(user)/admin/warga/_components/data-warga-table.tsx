@@ -9,7 +9,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
 
 import React from "react";
@@ -20,7 +20,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { DataTableViewOptions } from "@/components/data-table-view-options";
@@ -33,7 +33,7 @@ interface DataTableProps<TData, TValue> {
 
 export function WargaDataTable<TData, TValue>({
   columns,
-  data
+  data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -51,31 +51,33 @@ export function WargaDataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
-      columnFilters
-    }
+      columnFilters,
+    },
   });
 
   return (
     <div>
-      <div className="flex items-center gap-3 py-4">
-        <Input
-          placeholder="Cari berdasarkan NIK"
-          type={"search"}
-          value={(table.getColumn("nik")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("nik")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm "
-        />
-        <Input
-          placeholder="Cari berdasarkan nama"
-          type={"search"}
-          value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("nama")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm "
-        />
+      <div className="flex flex-col-reverse md:flex-row md:items-end py-4 gap-2">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 flex-1">
+          <Input
+            placeholder="Cari berdasarkan NIK"
+            type={"search"}
+            value={(table.getColumn("nik")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("nik")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <Input
+            placeholder="Cari berdasarkan nama"
+            type={"search"}
+            value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("nama")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm "
+          />
+        </div>
         <DataTableViewOptions table={table} />
       </div>
       <div className="border rounded-md">

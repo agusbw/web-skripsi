@@ -10,7 +10,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 interface DataTableViewOptionsProps<TData> {
@@ -18,7 +18,7 @@ interface DataTableViewOptionsProps<TData> {
 }
 
 export function DataTableViewOptions<TData>({
-  table
+  table,
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -26,7 +26,7 @@ export function DataTableViewOptions<TData>({
         <Button
           variant="outline"
           size="sm"
-          className="hidden h-8 ml-auto lg:flex"
+          className="h-8 mr-auto md:ml-auto md:flex"
         >
           <MixerHorizontalIcon className="w-4 h-4 mr-2" />
           View

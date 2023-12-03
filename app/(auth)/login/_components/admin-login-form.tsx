@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -18,7 +19,6 @@ import { signIn } from "next-auth/react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SubmittingIndicator } from "@/components/loading";
 
 export default function AdminLoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
@@ -101,7 +101,11 @@ export default function AdminLoginForm() {
           disabled={form.formState.isSubmitting}
           className={"w-full"}
         >
-          {form.formState.isSubmitting ? <SubmittingIndicator /> : "Login"}
+          {form.formState.isSubmitting ? (
+            <Loader2 className={"animate-spin mr-1"} />
+          ) : (
+            "Login"
+          )}
         </Button>
         <p className="px-8 text-sm text-center text-muted-foreground">
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
