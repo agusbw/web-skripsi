@@ -1,4 +1,4 @@
-export default function Loading() {
+export function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center">
       <div className="relative">

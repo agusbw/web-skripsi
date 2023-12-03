@@ -6,7 +6,7 @@ import { createWargaSchema } from "@/types/schema";
 import { format } from "date-fns";
 import { hash } from "bcryptjs";
 import { type ActionsResponse } from "@/types/types";
-import * as z from "zod";
+import type * as z from "zod";
 
 type CreateWarga = z.infer<typeof createWargaSchema>;
 

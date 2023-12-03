@@ -1,15 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -25,8 +26,8 @@ export default function AdminLoginForm() {
     resolver: zodResolver(adminLoginSchema),
     defaultValues: {
       username: "",
-      password: "",
-    },
+      password: ""
+    }
   });
   const router = useRouter();
 
@@ -34,15 +35,15 @@ export default function AdminLoginForm() {
   async function onSubmit(values: z.infer<typeof adminLoginSchema>) {
     try {
       const res = await signIn("credentials", {
-        redirect: false,
         username: values.username,
         password: values.password,
+        redirect: false
       });
 
-      if (!res?.error) {
-        router.replace("/redirector");
-      } else {
+      if (res?.error) {
         setLoginError("Username atau password salah!");
+      } else {
+        router.push("/admin");
       }
     } catch (error) {
       console.error(error);
@@ -100,7 +101,11 @@ export default function AdminLoginForm() {
           disabled={form.formState.isSubmitting}
           className={"w-full"}
         >
-          Login
+          {form.formState.isSubmitting ? (
+            <Loader2 className={"animate-spin mr-1"} />
+          ) : (
+            "Login"
+          )}
         </Button>
         <p className="px-8 text-sm text-center text-muted-foreground">
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman

@@ -1,9 +1,9 @@
 "use client";
 
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -57,25 +57,27 @@ export function WargaDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center gap-3 py-4">
-        <Input
-          placeholder="Cari berdasarkan NIK"
-          type={"search"}
-          value={(table.getColumn("nik")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("nik")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm "
-        />
-        <Input
-          placeholder="Cari berdasarkan nama"
-          type={"search"}
-          value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("nama")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm "
-        />
+      <div className="flex flex-col-reverse md:flex-row md:items-end py-4 gap-2">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 flex-1">
+          <Input
+            placeholder="Cari berdasarkan NIK"
+            type={"search"}
+            value={(table.getColumn("nik")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("nik")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <Input
+            placeholder="Cari berdasarkan nama"
+            type={"search"}
+            value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("nama")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm "
+          />
+        </div>
         <DataTableViewOptions table={table} />
       </div>
       <div className="border rounded-md">

@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { formatEnumValue } from "@/lib/utils";
 import { DeleteWarga } from "./delete-warga-button";
 import { type Warga } from "@/types/types";
@@ -21,7 +21,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
     ),
     cell: ({ row }) => {
       return <span className="font-semibold">{row.original.nik}</span>;
-    },
+    }
   },
   {
     accessorKey: "nama",
@@ -30,7 +30,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
         column={column}
         title="Nama"
       />
-    ),
+    )
   },
   {
     accessorKey: "pekerjaan",
@@ -39,7 +39,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
         column={column}
         title="Pekerjaan"
       />
-    ),
+    )
   },
   {
     accessorKey: "agama",
@@ -55,7 +55,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
           {formatEnumValue(row.original.agama)}
         </span>
       );
-    },
+    }
   },
   {
     accessorKey: "status_perkawinan",
@@ -67,7 +67,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
     ),
     cell: ({ row }) => {
       return <span>{formatEnumValue(row.original.status_perkawinan)}</span>;
-    },
+    }
   },
   {
     id: "actions",
@@ -91,6 +91,6 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
           <DeleteWarga id={row.original.id} />
         </div>
       );
-    },
-  },
+    }
+  }
 ];

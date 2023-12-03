@@ -23,7 +23,7 @@ export const StatusKawinValues = [
 export type ActionsResponse = {
   success: boolean;
   message: string;
-  data?: any;
+  data?: object;
 };
 
 export type Agama = (typeof AgamaValues)[number];

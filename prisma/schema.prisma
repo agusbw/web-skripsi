@@ -16,7 +16,6 @@ model User {
   username  String    @unique @db.VarChar(25)
   password  String
   role      Role @default(WARGA)
-
   warga     Warga?    
 }
 

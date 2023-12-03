@@ -1,8 +1,7 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Info } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { getCurrentSession } from "@/lib/auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 // import AddBiodataForm from "./_components/add-biodata-form";
 import { Separator } from "@/components/ui/separator";
@@ -12,10 +11,10 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function BiodataPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getCurrentSession();
 
   const biodata = await prisma.warga.findUnique({
-    where: { id_user: session?.user.id },
+    where: { id_user: session?.user.id }
   });
 
   return (

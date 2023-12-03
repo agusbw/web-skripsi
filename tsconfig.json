@@ -7,6 +7,8 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+    "checkJs": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -27,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "node_modules/.pnpm/pdf-lib@1.17.1/node_modules/pdf-lib/ts3.4/apps/deno/dummy.d.ts"
+    "node_modules/.pnpm/pdf-lib@1.17.1/node_modules/pdf-lib/ts3.4/apps/deno/dummy.d.ts",
+    ".eslintrc.cjs"
   ],
   "exclude": ["node_modules"]
 }

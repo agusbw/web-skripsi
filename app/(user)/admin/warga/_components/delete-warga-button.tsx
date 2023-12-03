@@ -63,7 +63,7 @@ export const DeleteWarga = ({ id }: { id: string }) => {
             disabled={pending}
             onClick={() => handleDeleteWarga(id)}
           >
-            {pending && <Loader2 className={"animate-spin mr-1"} />} Hapus
+            {pending ? <Loader2 className={"animate-spin mr-1"} /> : "Hapus"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

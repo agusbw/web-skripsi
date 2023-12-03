@@ -1,15 +1,20 @@
-import { Metadata } from "next";
-import { getServerSession } from "next-auth";
+import type { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { authOptions } from "@/lib/auth";
 import AdminLoginForm from "@/app/(auth)/login/_components/admin-login-form";
 import WargaLoginForm from "@/app/(auth)/login/_components/warga-login-form";
+import { getCurrentSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Halaman Login",
+  title: "Halaman Login"
 };
 
 export default async function LoginPage() {
+  const session = await getCurrentSession();
+  if (session) {
+    session.user.role === "warga" ? redirect("/warga") : redirect("/admin");
+  }
+
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <Tabs
