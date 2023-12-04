@@ -16,6 +16,7 @@ export const createWargaSchema = z.object({
   agama: z.enum(AgamaValues, {
     required_error: "Agama tidak boleh kosong",
   }),
+  no_kk: z.string().length(16, "No KK harus terdiri dari 16 digit"),
   kewarganegaraan: z.string().min(1, "Kewarganegaraan tidak boleh kosong"),
   nik: z.string().length(16, "NIK harus terdiri dari 16 digit"),
   pekerjaan: z.string().min(1, "Pekerjaan tidak boleh kosong"),

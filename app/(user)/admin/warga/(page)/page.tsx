@@ -6,7 +6,7 @@ import CreateWarga from "../_components/create-warga-button";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Warga"
+  title: "Warga",
 };
 
 export default async function AdminWargaPage() {

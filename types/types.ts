@@ -28,18 +28,3 @@ export type ActionsResponse = {
 
 export type Agama = (typeof AgamaValues)[number];
 export type StatusKawin = (typeof StatusKawinValues)[number];
-
-export type Warga = {
-  id: string;
-  nama: string;
-  alamat: string;
-  agama: Agama;
-  id_user: string;
-  kewarganegaraan: string;
-  nik: string;
-  pekerjaan: string;
-  tanggal_lahir: Date;
-  tempat_lahir: string;
-  status_perkawinan: StatusKawin;
-  jenis_kelamin: boolean;
-};

@@ -10,6 +10,7 @@ export async function fetchWargaList() {
       select: {
         id: true,
         nik: true,
+        no_kk: true,
         nama: true,
         pekerjaan: true,
         agama: true,
