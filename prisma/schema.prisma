@@ -31,6 +31,7 @@ model Penandatangan{
 model Warga {
   id              String      @id @db.VarChar(255)
   nik             String      @db.VarChar(255)
+  no_kk           String      @db.VarChar(255)
   nama            String      @db.VarChar(255)
   alamat          String      @db.VarChar(255)
   agama           Agama
@@ -59,24 +60,11 @@ model KategoriSurat{
 model Surat{
   id          String      @id @default(uuid())
   no_surat    String      @db.VarChar(255)
-  no_kk       String?      @db.VarChar(255)
   keperluan   String      @db.VarChar(255)
   status      Status      @default(PENDING)
 
-  nik             String      @db.VarChar(255)
-  nama            String      @db.VarChar(255)
-  alamat          String      @db.VarChar(255)
-  agama           Agama
-  kewarganegaraan String      @db.VarChar(255)
-  pekerjaan       String      @db.VarChar(255)
-  tanggal_lahir   DateTime
-  tempat_lahir    String      @db.VarChar(255)
-  jenis_kelamin   Boolean      
-  status_perkawinan StatusKawin
-
-  url             String?     @db.VarChar(255)
   domisili        String?      @db.VarChar(255)
-  keterangan_tambahan String? @db.VarChar(255)
+  pesan           String?      @db.VarChar(255)
 
   id_penandatangan String     @db.VarChar(255)
   penandatangan Penandatangan @relation(fields: [id_penandatangan], references: [id], onDelete: Cascade)

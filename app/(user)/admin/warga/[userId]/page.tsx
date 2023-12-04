@@ -17,19 +17,23 @@ export default async function Page({
   if (!warga) notFound();
 
   return (
-    <DashboardContainer title="Detail Data Warga">
+    <DashboardContainer title="Informasi Warga">
       <div className="flex flex-col gap-5">
         <div className="w-fit">
           <h3 className="mb-4 text-2xl font-semibold">
-            <Contact className="inline-block w-6 h-6 text-primary" /> Profile
-            Warga
+            <Contact className="inline-block w-6 h-6 text-primary" /> Detail
+            Data Warga
           </h3>
-          <div className="flex items-start gap-4">
+          <div className="flex items-start flex-col gap-4">
             <table>
               <tbody>
                 <tr>
                   <td className="font-semibold">NIK</td>
                   <td>: {warga.nik}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">NO KK</td>
+                  <td>: {warga.no_kk}</td>
                 </tr>
                 <tr>
                   <td className="font-semibold">Nama</td>
@@ -54,11 +58,6 @@ export default async function Page({
                   <td className="font-semibold">Pekerjaan</td>
                   <td>: {warga.pekerjaan}</td>
                 </tr>
-              </tbody>
-            </table>
-
-            <table>
-              <tbody>
                 <tr>
                   <td className="font-semibold">Agama</td>
                   <td>: {formatEnumValue(warga.agama)}</td>

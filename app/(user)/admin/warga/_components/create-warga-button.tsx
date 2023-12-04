@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import { useTransition } from "react";
 import { cn } from "@/lib/utils";
@@ -32,7 +32,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import * as React from "react";
 import { CalendarIcon, FileEdit, Loader2 } from "lucide-react";
@@ -41,18 +41,20 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { createWarga, updateWarga } from "@/lib/actions";
-import type { Warga } from "@/types/types";
+import type { Warga } from "@prisma/client";
+
+type CreateWargaForm = Omit<Warga, "createdAt" | "updatedAt" | "id_user">;
 
 export default function CreataWarga({
   buttonText,
   warga = null,
-  variant = "default"
+  variant = "default",
 }: {
-  warga?: Warga | null;
+  warga?: CreateWargaForm | null;
   buttonText?: string | React.ReactNode;
   variant:
     | "outline"
@@ -67,7 +69,7 @@ export default function CreataWarga({
   const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof createWargaSchema>>({
-    resolver: zodResolver(createWargaSchema)
+    resolver: zodResolver(createWargaSchema),
   });
 
   React.useEffect(() => {
@@ -78,6 +80,8 @@ export default function CreataWarga({
     form.setValue("nama", warga ? warga.nama : "");
     form.setValue("pekerjaan", warga ? warga.pekerjaan : "");
     form.setValue("tempat_lahir", warga ? warga.tempat_lahir : "");
+    form.setValue("no_kk", warga ? warga.no_kk : "");
+
     if (warga) {
       form.setValue("tanggal_lahir", new Date(warga.tanggal_lahir));
       form.setValue("agama", warga.agama);
@@ -92,9 +96,9 @@ export default function CreataWarga({
         ? await updateWarga(warga.id, values)
         : await createWarga(values);
       toast({
-        title: `${result.success ? "Berhasil" : "Gagal"}!`,
+        title: `${result.success ? "Berhasil✅" : "Gagal❌"}!`,
         description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`
+        variant: `${result.success ? "default" : "destructive"}`,
       });
 
       setDialogOpen(false);
@@ -147,6 +151,26 @@ export default function CreataWarga({
                   <FormItem>
                     <FormLabel>
                       NIK <span className={"text-destructive"}>*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="5108030XXXXXXXXX"
+                        type="number"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="no_kk"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Nomor Kartu Keluarga{" "}
+                      <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
                       <Input

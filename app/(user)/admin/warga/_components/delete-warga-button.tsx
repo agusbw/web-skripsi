@@ -24,7 +24,7 @@ export const DeleteWarga = ({ id }: { id: string }) => {
     startTransition(async () => {
       const result = await deleteWarga(id);
       toast({
-        title: `${result.success ? "Berhasil" : "Gagal"}!`,
+        title: `${result.success ? "Berhasil✅" : "Gagal❌"}!`,
         description: result.message,
         variant: `${result.success ? "default" : "destructive"}`,
       });
