@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -35,8 +35,8 @@ export default function WargaLoginForm() {
   const form = useForm<z.infer<typeof wargaLoginSchema>>({
     resolver: zodResolver(wargaLoginSchema),
     defaultValues: {
-      nik: ""
-    }
+      nik: "",
+    },
   });
 
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function WargaLoginForm() {
       const res = await signIn("credentials", {
         username,
         password,
-        redirect: false
+        redirect: false,
       });
 
       if (res?.error) {
