@@ -55,3 +55,9 @@ export const wargaLoginSchema = z.object({
     errorMap: errorMap,
   }),
 });
+
+export const createPenandatanganSchema = z.object({
+  nama: z.string().min(1, "Nama tidak boleh kosong"),
+  alamat: z.string().min(1, "Alamat tidak boleh kosong"),
+  jabatan: z.string().min(1, "Jabatan tidak boleh kosong"),
+});

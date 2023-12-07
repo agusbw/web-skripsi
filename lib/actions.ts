@@ -2,13 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import { createWargaSchema } from "@/types/schema";
+import { createWargaSchema, createPenandatanganSchema } from "@/types/schema";
 import { format } from "date-fns";
 import { hash } from "bcryptjs";
 import { type ActionsResponse } from "@/types/types";
 import type * as z from "zod";
 
 type CreateWarga = z.infer<typeof createWargaSchema>;
+type createPenandatangan = z.infer<typeof createPenandatanganSchema>;
 
 function generateDataId(format: string, latestId: string) {
   const latestIdNumber = parseInt(latestId.slice(3));
@@ -185,6 +186,112 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
     return {
       success: true,
       message: "Warga berhasil dihapus",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function createPenandatangan(
+  formData: createPenandatangan
+): Promise<ActionsResponse> {
+  const validatedData = createPenandatanganSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const result = await prisma.penandatangan.create({
+      data: {
+        ...validatedData.data,
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "Penandatangan berhasil ditambahkan",
+      data: result,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function deletePenandatangan(
+  id: string
+): Promise<ActionsResponse> {
+  try {
+    const user = await prisma.penandatangan.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!user)
+      return { success: false, message: "Penandatangan tidak ditemukan" };
+
+    await prisma.penandatangan.delete({
+      where: {
+        id: user.id,
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Penandatangan berhasil dihapus",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function updatePenandatangan(
+  id: string,
+  formData: createPenandatangan
+): Promise<ActionsResponse> {
+  const validatedData = createPenandatanganSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const result = await prisma.penandatangan.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...validatedData.data,
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "Penandatangan berhasil diubah",
+      data: result,
     };
   } catch (err) {
     console.log(err);

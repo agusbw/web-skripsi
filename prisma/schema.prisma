@@ -80,7 +80,7 @@ model Surat{
 }
 
 enum Status {
-  PENDING
+  PENDING 
   DITOLAK
   SELESAI
 }

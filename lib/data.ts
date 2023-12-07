@@ -50,3 +50,29 @@ export async function fetchWargaByUserId(id: string) {
     throw new Error("Failed to fetch revenue data.");
   }
 }
+
+export async function fetchKategoriSurat() {
+  noStore();
+  try {
+    const data = await prisma.kategoriSurat.findMany({
+      include: {
+        surat: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch revenue data.");
+  }
+}
+
+export async function fetchPenandatangan() {
+  noStore();
+  try {
+    const data = await prisma.penandatangan.findMany();
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch revenue data.");
+  }
+}

@@ -2,7 +2,6 @@ import { type ComplaintStep } from "@/types/types";
 import {
   Book,
   CalendarClock,
-  User2,
   User,
   BarChart2,
   LogIn,
@@ -11,6 +10,7 @@ import {
   FilePlus2,
   MailCheck,
   CheckCircle2,
+  ClipboardEdit,
 } from "lucide-react";
 
 export const ComplaintSteps: ComplaintStep[] = [
@@ -66,9 +66,9 @@ const adminSidebar = [
     icon: <Book size={18} />,
   },
   {
-    title: "Statistik",
-    path: "/admin/statistik",
-    icon: <User2 size={18} />,
+    title: "Penandatangan",
+    path: "/admin/penandatangan",
+    icon: <ClipboardEdit size={18} />,
   },
 ];
 
