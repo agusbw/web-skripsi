@@ -21,30 +21,31 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { createPenandatanganSchema } from "@/types/schema";
+import { changePasswordSchema } from "@/types/schema";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
-import { createPenandatangan } from "@/lib/actions";
+import { changePassword } from "@/lib/actions";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
-export default function CreatePenandatanganButton() {
+export default function ChangePasswordButton() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof createPenandatanganSchema>>({
-    resolver: zodResolver(createPenandatanganSchema),
+  const form = useForm<z.infer<typeof changePasswordSchema>>({
+    resolver: zodResolver(changePasswordSchema),
     defaultValues: {
-      alamat: "",
-      jabatan: "",
-      nama: "",
+      old_password: "",
+      new_password: "",
+      confirm_new_password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof createPenandatanganSchema>) {
+  function onSubmit(values: z.infer<typeof changePasswordSchema>) {
     startTransition(async () => {
-      const result = await createPenandatangan(values);
+      const result = await changePassword(values);
+
       toast({
         title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
         description: result.message,
@@ -64,30 +65,37 @@ export default function CreatePenandatanganButton() {
           form.reset();
         }}
       >
-        <Button asChild>
-          <DialogTrigger>Tambah Penandatangan</DialogTrigger>
+        <Button
+          variant={"destructive"}
+          asChild
+        >
+          <DialogTrigger>Ganti Kata Sandi</DialogTrigger>
         </Button>
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Form Tambah Penandatangan</DialogTitle>
+              <DialogTitle>Form Ganti Kata Sandi</DialogTitle>
               <DialogDescription>Lengkapi form dibawah ini!</DialogDescription>
             </DialogHeader>
             <div
               className={
-                "flex flex-col gap-y-3 mt-4 mb-5 max-h-[500px] overflow-auto px-2 py-2"
+                "flex flex-col gap-y-3 mt-4 max-h-[500px] overflow-auto px-2 py-2"
               }
             >
               <FormField
                 control={form.control}
-                name="nama"
+                name="old_password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Nama <span className={"text-destructive"}>*</span>
+                      Kata Sandi Lama{" "}
+                      <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,14 +103,18 @@ export default function CreatePenandatanganButton() {
               />
               <FormField
                 control={form.control}
-                name="jabatan"
+                name="new_password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Jabatan <span className={"text-destructive"}>*</span>
+                      Kata Sandi Baru{" "}
+                      <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,32 +122,38 @@ export default function CreatePenandatanganButton() {
               />
               <FormField
                 control={form.control}
-                name="alamat"
+                name="confirm_new_password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Alamat <span className={"text-destructive"}>*</span>
+                      Konfirmasi Kata Sandi Baru{" "}
+                      <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <p className={"text-sm text-muted-foreground"}>
+            <p className={"text-sm text-muted-foreground mb-4 mt-2"}>
               <span className={"text-destructive"}>*</span>: wajib diisi/dipilih
             </p>
             <DialogFooter>
               <Button
                 disabled={pending || form.formState.isSubmitting}
                 type="submit"
+                className="w-full"
+                variant={"destructive"}
               >
                 {form.formState.isSubmitting || pending ? (
                   <Loader2 className={"animate-spin mr-1"} />
                 ) : (
-                  "Tambah Data"
+                  "Ganti Kata Sandi"
                 )}
               </Button>
             </DialogFooter>

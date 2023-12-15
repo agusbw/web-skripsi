@@ -90,7 +90,7 @@ const wargaSidebar = [
   },
   {
     title: "Riwayat Pengajuan",
-    path: "/warga/penganjuan",
+    path: "/warga/riwayat",
     icon: <CalendarClock size={18} />,
   },
 ];

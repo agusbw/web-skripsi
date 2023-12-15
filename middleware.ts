@@ -20,13 +20,13 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token
-    }
+      authorized: ({ token }) => !!token,
+    },
   }
 );
 
 // Applies next-auth only to matching routes - can be regex
 // Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-  matcher: ["/admin", "/admin/:path*", "/warga", "/warga/:path*"]
+  matcher: ["/admin", "/admin/:path*", "/warga", "/warga/:path*"],
 };

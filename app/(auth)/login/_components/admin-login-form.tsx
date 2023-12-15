@@ -10,7 +10,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,8 @@ export default function AdminLoginForm() {
     resolver: zodResolver(adminLoginSchema),
     defaultValues: {
       username: "",
-      password: ""
-    }
+      password: "",
+    },
   });
   const router = useRouter();
 
@@ -37,7 +37,7 @@ export default function AdminLoginForm() {
       const res = await signIn("credentials", {
         username: values.username,
         password: values.password,
-        redirect: false
+        redirect: false,
       });
 
       if (res?.error) {

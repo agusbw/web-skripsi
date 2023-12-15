@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "./prisma";
 import { unstable_noStore as noStore } from "next/cache";
+import { getCurrentSession } from "./auth";
 
 export async function fetchWargaList() {
   noStore();
@@ -70,6 +71,23 @@ export async function fetchPenandatangan() {
   noStore();
   try {
     const data = await prisma.penandatangan.findMany();
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch revenue data.");
+  }
+}
+
+export async function getUserBiodata() {
+  noStore();
+  const session = await getCurrentSession();
+  const currentUserId = session?.user.id;
+  try {
+    const data = await prisma.warga.findFirst({
+      where: {
+        id_user: currentUserId,
+      },
+    });
     return data;
   } catch (error) {
     console.error("Database Error:", error);

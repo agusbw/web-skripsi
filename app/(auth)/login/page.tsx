@@ -6,13 +6,14 @@ import { getCurrentSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Halaman Login"
+  title: "Halaman Login",
 };
 
 export default async function LoginPage() {
   const session = await getCurrentSession();
+
   if (session) {
-    session.user.role === "warga" ? redirect("/warga") : redirect("/admin");
+    session.user.role === "WARGA" ? redirect("/warga") : redirect("/admin");
   }
 
   return (

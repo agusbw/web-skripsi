@@ -24,7 +24,7 @@ const DeletePenandatanganButton = ({ id }: { id: string }) => {
     startTransition(async () => {
       const result = await deletePenandatangan(id);
       toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❌"}!`,
+        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
         description: result.message,
         variant: `${result.success ? "default" : "destructive"}`,
       });

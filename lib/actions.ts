@@ -2,14 +2,20 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import { createWargaSchema, createPenandatanganSchema } from "@/types/schema";
+import {
+  createPenandatanganSchema,
+  changePasswordSchema,
+  createWargaSchema,
+} from "@/types/schema";
 import { format } from "date-fns";
-import { hash } from "bcryptjs";
+import { hash, compare } from "bcryptjs";
+import { getCurrentSession } from "./auth";
 import { type ActionsResponse } from "@/types/types";
 import type * as z from "zod";
 
 type CreateWarga = z.infer<typeof createWargaSchema>;
-type createPenandatangan = z.infer<typeof createPenandatanganSchema>;
+type CreatePenandatangan = z.infer<typeof createPenandatanganSchema>;
+type ChangePassword = z.infer<typeof changePasswordSchema>;
 
 function generateDataId(format: string, latestId: string) {
   const latestIdNumber = parseInt(latestId.slice(3));
@@ -197,7 +203,7 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
 }
 
 export async function createPenandatangan(
-  formData: createPenandatangan
+  formData: CreatePenandatangan
 ): Promise<ActionsResponse> {
   const validatedData = createPenandatanganSchema.safeParse(formData);
 
@@ -266,7 +272,7 @@ export async function deletePenandatangan(
 
 export async function updatePenandatangan(
   id: string,
-  formData: createPenandatangan
+  formData: CreatePenandatangan
 ): Promise<ActionsResponse> {
   const validatedData = createPenandatanganSchema.safeParse(formData);
 
@@ -295,6 +301,76 @@ export async function updatePenandatangan(
     };
   } catch (err) {
     console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function changePassword(
+  values: ChangePassword
+): Promise<ActionsResponse> {
+  try {
+    const session = await getCurrentSession();
+
+    if (!session) {
+      return {
+        success: false,
+        message: "Anda belum login",
+      };
+    }
+
+    const validatedData = changePasswordSchema.safeParse(values);
+    if (!validatedData.success) {
+      return {
+        success: false,
+        message: "Data tidak valid",
+      };
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: session.user.id,
+      },
+    });
+
+    if (!user) {
+      return {
+        success: false,
+        message: "User tidak ditemukan",
+      };
+    }
+
+    const isPasswordMatch = await compare(
+      validatedData.data.old_password,
+      user.password
+    );
+
+    if (!isPasswordMatch) {
+      return {
+        success: false,
+        message: "Kata sandi lama tidak sesuai",
+      };
+    }
+
+    const hashedPassword = await hash(validatedData.data.new_password, 10);
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Kata sandi berhasil diubah",
+    };
+  } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Terjadi kesalahan pada server",
