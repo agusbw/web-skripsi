@@ -96,7 +96,7 @@ export default function CreataWarga({
         ? await updateWarga(warga.id, values)
         : await createWarga(values);
       toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❌"}!`,
+        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
         description: result.message,
         variant: `${result.success ? "default" : "destructive"}`,
       });

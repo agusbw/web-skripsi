@@ -51,9 +51,11 @@ export const wargaLoginSchema = z.object({
       required_error: "NIK tidak boleh kosong",
     })
     .min(1, "NIK tidak boleh kosong"),
-  tanggal_lahir: z.coerce.date({
-    errorMap: errorMap,
-  }),
+  password: z
+    .string({
+      required_error: "Password tidak boleh kosong",
+    })
+    .min(1, "Password tidak boleh kosong"),
 });
 
 export const createPenandatanganSchema = z.object({
@@ -61,3 +63,16 @@ export const createPenandatanganSchema = z.object({
   alamat: z.string().min(1, "Alamat tidak boleh kosong"),
   jabatan: z.string().min(1, "Jabatan tidak boleh kosong"),
 });
+
+export const changePasswordSchema = z
+  .object({
+    old_password: z.string().min(1, "Kata sandi lama tidak boleh kosong"),
+    confirm_new_password: z
+      .string()
+      .min(1, "Konfirmasi kata sandi tidak boleh kosong"),
+    new_password: z.string().min(1, "Kata sandi baru tidak boleh kosong"),
+  })
+  .refine((data) => data.new_password === data.confirm_new_password, {
+    message: "Kata sandi baru dan konfirmasi kata sandi tidak sama",
+    path: ["confirm_new_password"],
+  });
