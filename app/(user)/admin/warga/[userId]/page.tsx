@@ -56,7 +56,7 @@ export default async function Page({
                 </tr>
                 <tr>
                   <td className="font-semibold">Pekerjaan</td>
-                  <td>: {warga.pekerjaan}</td>
+                  <td>: {warga?.pekerjaan ? warga.pekerjaan : "-"}</td>
                 </tr>
                 <tr>
                   <td className="font-semibold">Agama</td>

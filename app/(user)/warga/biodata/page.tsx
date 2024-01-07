@@ -88,7 +88,9 @@ export default async function BiodataPage() {
               </tr>
               <tr>
                 <td className="font-bold  py-2">Pekerjaan:</td>
-                <td className=" py-2">{biodata.pekerjaan}</td>
+                <td className=" py-2">
+                  {biodata?.pekerjaan ? biodata.pekerjaan : "-"}
+                </td>
               </tr>
               <tr>
                 <td className="font-bold  py-2">Jenis Kelamin:</td>

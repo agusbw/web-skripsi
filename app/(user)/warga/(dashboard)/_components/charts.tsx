@@ -12,65 +12,11 @@ import {
 } from "recharts";
 import React from "react";
 
-const data01 = [
-  { name: "SK Tidak Mampu", value: 400 },
-  { name: "SK Domisili", value: 300 },
-  { name: "SK Belum Menikah", value: 300 },
-  { name: "SK Usaha", value: 200 },
-];
-
-const data = [
-  {
-    name: "Jan",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Feb",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Mar",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Apr",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Mei",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Jun",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Jul",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Agu",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Sep",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Okt",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Nov",
-    total: Math.floor(Math.random() * 10),
-  },
-  {
-    name: "Des",
-    total: Math.floor(Math.random() * 10),
-  },
-];
-
-export function BarChartSurat() {
+export function BarChartSurat({
+  data,
+}: {
+  data: { name: string; total: number }[];
+}) {
   return (
     <ResponsiveContainer
       width="100%"
@@ -89,6 +35,7 @@ export function BarChartSurat() {
           fontSize={12}
           tickLine={false}
           axisLine={false}
+          allowDecimals={false}
         />
         <Bar
           dataKey="total"
@@ -100,7 +47,11 @@ export function BarChartSurat() {
   );
 }
 
-export function PieChartSurat() {
+export function PieChartSurat({
+  data,
+}: {
+  data: { name: string; value: number }[];
+}) {
   return (
     <ResponsiveContainer
       width="100%"
@@ -116,8 +67,7 @@ export function PieChartSurat() {
         >
           <Pie
             dataKey="value"
-            isAnimationActive={false}
-            data={data01}
+            data={data}
             cx="50%"
             cy="50%"
             outerRadius={80}

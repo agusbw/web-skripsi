@@ -10,6 +10,11 @@ import {
 import { BarChartSurat, PieChartSurat } from "./_components/charts";
 import { PengajuanTerakhir } from "./_components/pengajuan-terakhir";
 import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
+import {
+  fetchUserTotalSurat,
+  fetchUserTotalSuratByKategori,
+  fetchUserBarChartData,
+} from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -20,13 +25,17 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function BiodataPage() {
+  const surat = await fetchUserTotalSurat();
+  const suratByKategori = await fetchUserTotalSuratByKategori();
+  const suratByMonth = await fetchUserBarChartData();
+
   return (
     <DashboardContainer title="Dashboard">
       <>
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Total Pengajuan Surat
@@ -34,13 +43,10 @@ export default async function BiodataPage() {
                   <Mails className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">120</div>
-                  <p className="text-xs text-muted-foreground">
-                    +4 dari bulan lalu
-                  </p>
+                  <div className="text-2xl font-bold">{surat?.total}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Surat Pending
@@ -48,27 +54,21 @@ export default async function BiodataPage() {
                   <MailQuestion className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">40</div>
-                  <p className="text-xs text-muted-foreground">
-                    +1 dari bulan lalu
-                  </p>
+                  <div className="text-2xl font-bold">{surat?.pending}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Surat Diterima
+                    Surat Selesai
                   </CardTitle>
                   <MailCheck className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">40</div>
-                  <p className="text-xs text-muted-foreground">
-                    +1 dari bulan lalu
-                  </p>
+                  <div className="text-2xl font-bold">{surat?.selesai}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Surat Ditolak
@@ -76,10 +76,7 @@ export default async function BiodataPage() {
                   <MailX className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">40</div>
-                  <p className="text-xs text-muted-foreground">
-                    +1 dari bulan lalu
-                  </p>
+                  <div className="text-2xl font-bold">{surat?.ditolak}</div>
                 </CardContent>
               </Card>
             </div>
@@ -88,7 +85,7 @@ export default async function BiodataPage() {
                 <CardHeader>
                   <CardTitle>Pengajuan Surat Terakhir</CardTitle>
                   <CardDescription>
-                    Kamu melakukan X pengajuan surat pada bulan ini.
+                    4 data pengajuan surat terakhir yang anda lakukan
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -97,18 +94,18 @@ export default async function BiodataPage() {
               </Card>
               <Card className="col-span-3">
                 <CardHeader>
-                  <CardTitle>Total Pengajuan Surat</CardTitle>
+                  <CardTitle>Grafik Pengajuan Surat</CardTitle>
                 </CardHeader>
                 <CardContent className="-ml-10">
-                  <BarChartSurat />
+                  <BarChartSurat data={suratByMonth} />
                 </CardContent>
               </Card>
               <Card className="col-span-2">
                 <CardHeader>
-                  <CardTitle>Total Berdasarkan Jenis Surat</CardTitle>
+                  <CardTitle>Grafik Jenis Surat</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
-                  <PieChartSurat />
+                  <PieChartSurat data={suratByKategori} />
                 </CardContent>
               </Card>
             </div>

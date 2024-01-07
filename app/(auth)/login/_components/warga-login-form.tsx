@@ -35,12 +35,10 @@ export default function WargaLoginForm() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof wargaLoginSchema>) {
     try {
-      const username = values.nik;
-      const password = values.password;
-
       const res = await signIn("credentials", {
-        username,
-        password,
+        username: values.nik,
+        password: values.password,
+        role: "WARGA",
         redirect: false,
       });
 

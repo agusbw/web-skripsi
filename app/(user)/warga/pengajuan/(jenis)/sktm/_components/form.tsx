@@ -1,0 +1,208 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type * as z from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { createSktmSchema } from "@/types/schema";
+import { createSktm } from "@/lib/actions";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+
+const KEPERLUAN = [
+  {
+    value: "Untuk melengkapi Administrasi Bantuan Pendidikan",
+  },
+  {
+    value: "Untuk melengkapi Administrasi Bantuan Bedah Rumah",
+  },
+  {
+    value: "Untuk melengkapi Administrasi Pengaktifan KIS",
+  },
+  {
+    value: "Untuk melengkapi Administrasi Pendaftaran Sekolah",
+  },
+] as const;
+
+const KETERANGAN = [
+  {
+    id: "dtks",
+    label: "Terdaftar di DTKS (Data Terpadu Kesejahteraan Sosial)",
+  },
+] as const;
+
+export default function SktmForm() {
+  const { toast } = useToast();
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof createSktmSchema>>({
+    resolver: zodResolver(createSktmSchema),
+    defaultValues: {
+      keperluan: "",
+      informasi: [],
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof createSktmSchema>) {
+    startTransition(async () => {
+      const result = await createSktm(values);
+      toast({
+        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
+        description: result.message,
+        variant: `${result.success ? "default" : "destructive"}`,
+      });
+      if (result.success) {
+        router.push("/warga/riwayat");
+      }
+    });
+  }
+
+  return (
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
+          <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="keperluan"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Keperluan Pengajuan
+                    </FormLabel>
+                    <FormDescription>
+                      Tambahkan keperluan pengajuan surat
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      {KEPERLUAN.map((item, index) => (
+                        <FormItem
+                          className="flex items-center space-x-3 space-y-0"
+                          key={index}
+                        >
+                          <FormControl>
+                            <RadioGroupItem value={item.value} />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {item.value}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Lainnya</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="keperluan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Masukkan keperluan anda"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="informasi"
+            render={() => (
+              <FormItem>
+                <div className="mb-4">
+                  <FormLabel className="text-base">Data Pendukung</FormLabel>
+                  <FormDescription>
+                    Tambahkan data pendukung pengajuan surat apabila ada
+                  </FormDescription>
+                </div>
+                {KETERANGAN.map((item) => (
+                  <FormField
+                    key={item.id}
+                    control={form.control}
+                    name="informasi"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={item.id}
+                          className="flex flex-row items-start space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(item.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([...field.value, item.id])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== item.id
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {item.label}
+                          </FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            size={"sm"}
+            type="submit"
+            disabled={form.formState.isSubmitting || pending}
+          >
+            {form.formState.isSubmitting || pending ? (
+              <Loader2 className={"animate-spin mr-1"} />
+            ) : (
+              "Kirim Pengajuan Surat"
+            )}
+          </Button>
+        </form>
+      </Form>
+    </>
+  );
+}

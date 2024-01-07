@@ -37,6 +37,7 @@ export default function AdminLoginForm() {
       const res = await signIn("credentials", {
         username: values.username,
         password: values.password,
+        role: "ADMIN",
         redirect: false,
       });
 

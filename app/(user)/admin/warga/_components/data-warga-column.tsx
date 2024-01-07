@@ -40,6 +40,11 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
         title="Pekerjaan"
       />
     ),
+    cell: ({ row }) => {
+      return (
+        <span>{row.original?.pekerjaan ? row.original.pekerjaan : "-"}</span>
+      );
+    },
   },
   {
     accessorKey: "agama",

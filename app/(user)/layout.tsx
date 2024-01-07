@@ -6,13 +6,13 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: {
     template: "%s | Dashboard",
-    default: "Dashboard"
+    default: "Dashboard",
   },
-  description: "Dashboard sistem pengajuan surat keterangan Desa Pelapuan."
+  description: "Dashboard sistem pengajuan surat keterangan Desa Pelapuan.",
 };
 
 export default async function AdminDashboardLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
@@ -20,7 +20,7 @@ export default async function AdminDashboardLayout({
     <div className={"flex flex-col lg:flex-row"}>
       <Sidebar />
       <MobileNav />
-      <div className="w-full max-h-screen overflow-y-auto">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }

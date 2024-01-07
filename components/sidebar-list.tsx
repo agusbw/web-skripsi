@@ -24,10 +24,12 @@ function SidebarList({ session }: { session: Session }) {
   return (
     <>
       <div className="flex items-center gap-2 p-3 my-6 rounded-md bg-primary/10 lg:mx-5">
-        <Avatar className="w-12 h-12 border-2 shadow-sm">
+        <Avatar className="w-12 h-12 border shadow-sm border-primary">
           <AvatarImage src="/user.webp" />
         </Avatar>
-        <p className="line-clamp-2">{user.display_name}</p>
+        <p className="line-clamp-2 text-sm font-medium text-primary">
+          {user.display_name}
+        </p>
       </div>
       <div className="flex flex-col w-full gap-3">
         {getConfig(user.role).map((item) => (

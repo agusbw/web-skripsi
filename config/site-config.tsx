@@ -10,7 +10,6 @@ import {
   FilePlus2,
   MailCheck,
   CheckCircle2,
-  ClipboardEdit,
 } from "lucide-react";
 
 export const ComplaintSteps: ComplaintStep[] = [
@@ -64,11 +63,6 @@ const adminSidebar = [
     title: "Kategori Surat",
     path: "/admin/kategori",
     icon: <Book size={18} />,
-  },
-  {
-    title: "Penandatangan",
-    path: "/admin/penandatangan",
-    icon: <ClipboardEdit size={18} />,
   },
 ];
 

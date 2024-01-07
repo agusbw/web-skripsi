@@ -19,7 +19,7 @@ export const createWargaSchema = z.object({
   no_kk: z.string().length(16, "No KK harus terdiri dari 16 digit"),
   kewarganegaraan: z.string().min(1, "Kewarganegaraan tidak boleh kosong"),
   nik: z.string().length(16, "NIK harus terdiri dari 16 digit"),
-  pekerjaan: z.string().min(1, "Pekerjaan tidak boleh kosong"),
+  pekerjaan: z.string().optional(),
   tanggal_lahir: z.coerce.date({
     errorMap: errorMap,
   }),
@@ -76,3 +76,11 @@ export const changePasswordSchema = z
     message: "Kata sandi baru dan konfirmasi kata sandi tidak sama",
     path: ["confirm_new_password"],
   });
+
+export const createSktmSchema = z.object({
+  keperluan: z.string().min(1, "Keperluan pengajuan harus diisi"),
+  informasi: z.array(z.string()).refine((value) => {
+    if (value.length === 0) return {};
+    return value.some((item) => item);
+  }, {}),
+});

@@ -13,7 +13,7 @@ const MobileNav = async () => {
   return (
     <div
       className={
-        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between"
+        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-white z-50"
       }
     >
       <p className={"text-xl"}>SIPSK</p>

@@ -29,14 +29,14 @@ export function DataTableViewOptions<TData>({
           className="h-8 mr-auto md:ml-auto md:flex"
         >
           <MixerHorizontalIcon className="w-4 h-4 mr-2" />
-          View
+          Pilih Kolom
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         className="w-[150px]"
       >
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>Tampilkan Kolom</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -52,7 +52,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id.replace(/_/g, " ")}
+                {column.id}
               </DropdownMenuCheckboxItem>
             );
           })}

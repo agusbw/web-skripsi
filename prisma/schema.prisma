@@ -19,24 +19,16 @@ model User {
   warga     Warga?    
 }
 
-model Penandatangan{
-  id       String      @id @default(uuid())
-  nama     String      @db.VarChar(255)
-  jabatan  String      @db.VarChar(255)
-  alamat   String      @db.VarChar(255)
-
-  surat     Surat[]
-}
 
 model Warga {
-  id              String      @id @db.VarChar(255)
+  id              String      @id @default(uuid())
   nik             String      @db.VarChar(255)
   no_kk           String      @db.VarChar(255)
   nama            String      @db.VarChar(255)
   alamat          String      @db.VarChar(255)
   agama           Agama
   kewarganegaraan String      @db.VarChar(255)
-  pekerjaan       String      @db.VarChar(255)
+  pekerjaan       String?      @db.VarChar(255)
   tanggal_lahir   DateTime
   tempat_lahir    String      @db.VarChar(255)
   jenis_kelamin   Boolean 
@@ -46,29 +38,42 @@ model Warga {
   id_user       String       @unique
   @@index([id_user])
   
-
   surat          Surat[]
 }
 
 model KategoriSurat{
   id      String      @id @default(uuid())
   nama    String      @db.VarChar(255)
-
+  kode    KodeSurat   @unique
   surat   Surat[]
 }
 
 model Surat{
+  createdAt DateTime  @default(now())
   id          String      @id @default(uuid())
-  no_surat    String      @db.VarChar(255)
+  no_surat    String?      @db.VarChar(255)
   keperluan   String      @db.VarChar(255)
   status      Status      @default(PENDING)
 
+  nik             String      @db.VarChar(255)
+  no_kk           String      @db.VarChar(255)
+  nama            String      @db.VarChar(255)
+  alamat          String      @db.VarChar(255)
+  agama           Agama
+  kewarganegaraan String      @db.VarChar(255)
+  pekerjaan       String?      @db.VarChar(255)
+  tanggal_lahir   DateTime
+  tempat_lahir    String      @db.VarChar(255)
+  jenis_kelamin   Boolean 
+  status_perkawinan StatusKawin
+
   domisili        String?      @db.VarChar(255)
+  nama_usaha     String?      @db.VarChar(255)
+  lokasi_usaha   String?      @db.VarChar(255)
+  dtks           Boolean?     @default(false)
+
   pesan           String?      @db.VarChar(255)
 
-  id_penandatangan String     @db.VarChar(255)
-  penandatangan Penandatangan @relation(fields: [id_penandatangan], references: [id], onDelete: Cascade)
-  @@index([id_penandatangan])
 
   id_kategori_surat String @db.VarChar(255)
   kategori_surat KategoriSurat @relation(fields: [id_kategori_surat], references: [id], onDelete: Cascade)
@@ -105,4 +110,11 @@ enum StatusKawin {
   BELUM_KAWIN
   CERAI_HIDUP
   CERAI_MATI
+}
+
+enum KodeSurat {
+  SKU
+  SKTM
+  SKBPK
+  SKD
 }

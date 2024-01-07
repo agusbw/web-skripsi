@@ -78,7 +78,7 @@ export default function CreataWarga({
     form.setValue("kewarganegaraan", warga ? warga.kewarganegaraan : "");
     form.setValue("alamat", warga ? warga.alamat : "");
     form.setValue("nama", warga ? warga.nama : "");
-    form.setValue("pekerjaan", warga ? warga.pekerjaan : "");
+    form.setValue("pekerjaan", warga?.pekerjaan ? warga.pekerjaan : "");
     form.setValue("tempat_lahir", warga ? warga.tempat_lahir : "");
     form.setValue("no_kk", warga ? warga.no_kk : "");
 
@@ -257,9 +257,7 @@ export default function CreataWarga({
                   name="pekerjaan"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>
-                        Pekerjaan <span className={"text-destructive"}>*</span>
-                      </FormLabel>
+                      <FormLabel>Pekerjaan</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Pelajar"

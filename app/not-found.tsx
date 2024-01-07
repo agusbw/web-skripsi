@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function Denied() {
+export default function NotFound() {
   return (
     <section className="flex flex-col items-center gap-3 justify-center h-screen">
-      <h1 className="text-4xl font-bold text-primary">Akses Ditolak</h1>
+      <h1 className="text-4xl font-bold text-primary">
+        Resource Tidak Ditemukan
+      </h1>
       <p className="max-w-2xl text-xl text-center">
-        Anda tidak memiliki akses ke halaman ini.
+        Konten yang Anda cari tidak ditemukan.
       </p>
       <Button
         className="rounded-full"
