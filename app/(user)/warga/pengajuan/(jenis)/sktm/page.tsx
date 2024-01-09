@@ -1,9 +1,12 @@
 import SktmForm from "./_components/form";
-import UserData from "../_components/user-data";
+import UserData, { UserDataSkeleton } from "../_components/user-data";
+import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
+import { Suspense } from "react";
+import Link from "next/link";
 
 export default function SktmPage() {
   return (
-    <>
+    <div>
       <p className="text-xl font-medium">
         Pengajuan Surat Keterangan Tidak Mampu (SKTM)
       </p>
@@ -11,9 +14,23 @@ export default function SktmPage() {
         Isi form dibawah ini untuk mengajukan surat keterangan tidak mampu
       </p>
       <div className="space-y-5">
-        <UserData />
+        <div>
+          <p className="font-medium">Data Pengaju Surat</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Apabila terdapat kesalahan data pengaju,{" "}
+            <Link
+              className="text-primary hover:underline"
+              href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
+            >
+              hubungi admin
+            </Link>
+          </p>
+        </div>
+        <Suspense fallback={<UserDataSkeleton />}>
+          <UserData />
+        </Suspense>
         <SktmForm />
       </div>
-    </>
+    </div>
   );
 }

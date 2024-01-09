@@ -1,9 +1,8 @@
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
 import { getUserBiodata } from "@/lib/data";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function DataItem({ label, value }: { label: string; value: string }) {
   return (
@@ -23,16 +22,6 @@ export default async function UserData() {
 
   return (
     <div>
-      <p className="font-medium">Data Pengaju Surat</p>
-      <p className="text-sm text-muted-foreground mb-4">
-        Apabila terdapat kesalahan data pengaju,{" "}
-        <Link
-          className="text-primary hover:underline"
-          href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
-        >
-          hubungi admin
-        </Link>
-      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <DataItem
           label="NIK"
@@ -73,6 +62,51 @@ export default async function UserData() {
           label="Status Perkawinan"
           value={formatEnumValue(userBiodata.status_perkawinan)}
         />
+      </div>
+    </div>
+  );
+}
+
+export function UserDataSkeleton() {
+  return (
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <Label>NIK: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>
+        <div>
+          <Label>Nama: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Jenis Kelamin: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Kewarganegaraan: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Status Perkawinan: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>No KK: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Tempat & Tanggal Lahir: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Agama: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Pekerjaan: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>
       </div>
     </div>
   );

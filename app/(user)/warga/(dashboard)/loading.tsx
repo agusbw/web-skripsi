@@ -1,0 +1,117 @@
+import DashboardContainer from "@/components/layouts/dashboard-container";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default async function Loading() {
+  return (
+    <DashboardContainer title="Dashboard">
+      <>
+        <div className="flex-col md:flex">
+          <div className="flex-1 space-y-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Total Pengajuan Surat
+                  </CardTitle>
+                  <Mails className="h-5 w-5 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-24 h-8" />
+                </CardContent>
+              </Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Surat Pending
+                  </CardTitle>
+                  <MailQuestion className="h-5 w-5 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-24 h-8" />
+                </CardContent>
+              </Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Surat Selesai
+                  </CardTitle>
+                  <MailCheck className="h-5 w-5 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-24 h-8" />
+                </CardContent>
+              </Card>
+              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Surat Ditolak
+                  </CardTitle>
+                  <MailX className="h-5 w-5 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-24 h-8" />
+                </CardContent>
+              </Card>
+            </div>
+            <div className="grid lg:gap-4 gap-y-4 lg:gap-y-0 grid-cols-2 lg:grid-cols-7">
+              <Card className="col-span-2">
+                <CardHeader>
+                  <CardTitle>Pengajuan Surat Terakhir</CardTitle>
+                  <CardDescription>
+                    4 data pengajuan surat terakhir yang anda lakukan
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div
+                        className="flex items-center"
+                        key={i}
+                      >
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            <Skeleton className="w-36 h-4" />
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <Skeleton className="w-24 h-4" />
+                          </p>
+                        </div>
+                        <div className="ml-auto font-medium">
+                          <Skeleton className="w-16 h-4" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="col-span-3">
+                <CardHeader>
+                  <CardTitle>Grafik Pengajuan Surat</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-full h-64" />
+                </CardContent>
+              </Card>
+              <Card className="col-span-2">
+                <CardHeader>
+                  <CardTitle>Grafik Jenis Surat</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="w-full h-64" />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </>
+    </DashboardContainer>
+  );
+}
