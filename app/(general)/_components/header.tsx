@@ -2,10 +2,12 @@ import HeaderNavigationLinks from "@/app/(general)/_components/header-navigation
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 text-gray-600 shadow-md body-font bg-background">
+    <header className="bg-primary z-50 body-font">
       <div className="container flex flex-col items-center justify-between gap-4 p-5 mx-auto sm:flex-row">
-        <a className="flex items-center font-medium text-gray-900 title-font">
-          <span className="ml-3 text-xl font-semibold">SIPSK</span>
+        <a className="flex items-center font-medium title-font">
+          <span className="ml-3 font-medium text-2xl text-primary-foreground">
+            Desa Pelapuan
+          </span>
         </a>
         <HeaderNavigationLinks />
       </div>

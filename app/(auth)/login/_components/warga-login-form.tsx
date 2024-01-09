@@ -19,6 +19,8 @@ import { wargaLoginSchema } from "@/types/schema";
 import { signIn } from "next-auth/react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
+import Link from "next/link";
+import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
 import { useRouter } from "next/navigation";
 
 export default function WargaLoginForm() {
@@ -34,6 +36,13 @@ export default function WargaLoginForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof wargaLoginSchema>) {
+    const checkuser = await fetch(`/api/check-user/${values.nik}`);
+
+    if (!checkuser.ok) {
+      setLoginError("NIK belum terdaftar!");
+      return;
+    }
+
     try {
       const res = await signIn("credentials", {
         username: values.nik,
@@ -43,7 +52,7 @@ export default function WargaLoginForm() {
       });
 
       if (res?.error) {
-        setLoginError("NIK atau password salah!");
+        setLoginError("Password salah!");
       } else {
         router.push("/warga");
       }
@@ -51,6 +60,7 @@ export default function WargaLoginForm() {
       console.error(error);
     }
   }
+
   return (
     <Form {...form}>
       {loginError && (
@@ -115,6 +125,12 @@ export default function WargaLoginForm() {
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
           Dashboard pengaduan.
         </p>
+        <Link
+          href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
+          className="hover:underline text-primary text-sm inline-block"
+        >
+          NIK belum terdaftar? Hubungi admin
+        </Link>
       </form>
     </Form>
   );

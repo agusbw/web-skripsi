@@ -1,31 +1,33 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function Hero() {
   return (
-    <section className="text-gray-600">
-      <div className="container flex flex-col items-center px-5 py-12 mx-auto md:flex-row">
-        <div className="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
-          <h1 className="mb-4 text-3xl font-semibold text-gray-900 sm:text-4xl">
-            Selamat Datang di
-            <br className="hidden lg:inline-block" />
-            Sistem Pengajuan Surat Keterangan
+    <section>
+      <div className="px-20 flex flex-col items-center pt-20 md:flex-row bg-primary text-primary-foreground">
+        <div className="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0 space-y-3">
+          <h1 className="text-3xl font-semibold file: sm:text-4xl">
+            Sistem Informasi Pengajuan Surat Keterangan
           </h1>
-          <p className="mb-8 leading-relaxed">
+          <p className="font-bold text-lg">
+            Desa Pelauan, Kecamatan Busungbiu, Kabupaten Buleleng
+          </p>
+          <p className="leading-relaxed">
             Sistem Pengajuan Surat Keterangan (SIPSK) adalah sistem yang
             digunakan untuk mempermudah masyarakat dalam mengajukan surat
             keterangan kepada pemerintah Desa Pelapuan.
           </p>
           <div className="flex justify-center gap-4">
-            <Button asChild>
-              <Link href="/login">Ajukan Keluhan</Link>
-            </Button>
             <Button
-              asChild
+              size={"lg"}
               variant={"secondary"}
+              className="rounded-full"
+              onClick={() => signIn()}
             >
-              <Link href="#">Lebih Lanjut</Link>
+              Ajukan Surat
             </Button>
           </div>
         </div>
@@ -39,6 +41,16 @@ export default function Hero() {
           />
         </div>
       </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+      >
+        <path
+          fill="#7c3aed"
+          fill-opacity="1"
+          d="M0,96L60,122.7C120,149,240,203,360,208C480,213,600,171,720,133.3C840,96,960,64,1080,64C1200,64,1320,96,1380,112L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+        ></path>
+      </svg>
     </section>
   );
 }

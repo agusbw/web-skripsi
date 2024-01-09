@@ -5,19 +5,20 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
 
 export default function HelpPage() {
   return (
     <div>
       <div
         className={
-          "bg-secondary text-secondary-foreground lg:px-24 lg:py-28 py-16 text-center"
+          "bg-primary text-primary-foreground lg:px-24 lg:pt-32 lg:py-28 py-16 text-center"
         }
       >
         <h1 className={"text-3xl mb-4 font-bold"}>Bantuan Pengguna</h1>
         <p>
-          Kami telah mengumpulkan hal-hal yang sering ditanyakan oleh para
-          pengguna yang lainnya.
+          Kami telah mengumpulkan hal-hal yang sering ditanyakan oleh pengguna
+          lainnya.
         </p>
       </div>
       <div
@@ -52,7 +53,7 @@ export default function HelpPage() {
               Tata cara pengajuan surat tersedia di halaman{" "}
               <Link
                 className="underline text-primary"
-                href="/"
+                href="/#step"
               >
                 Home
               </Link>
@@ -63,7 +64,13 @@ export default function HelpPage() {
               Ada bug atau error, harus lapor kemana?
             </AccordionTrigger>
             <AccordionContent>
-              Anda dapat melaporkan bug atau error melalui kontak berikut:
+              Anda dapat melaporkan bug atau error melalui kontak{" "}
+              <Link
+                className="underline text-primary"
+                href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
+              >
+                berikut
+              </Link>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5">
@@ -72,8 +79,10 @@ export default function HelpPage() {
             </AccordionTrigger>
             <AccordionContent>
               Anda dapat menuju halaman login, lalu klik{" "}
-              <span className="text-primary">&apos;belum punya akun&apos;</span>
-              , lalu anda akan diarahkan menuju kontak Pemerintah Desa Pelapuan
+              <span className="text-primary">
+                &apos;NIK belum terdaftar&apos;
+              </span>
+              , lalu anda akan diarahkan menuju kontak Admin Desa Pelapuan
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-6">
@@ -86,7 +95,7 @@ export default function HelpPage() {
               mempersingkat waktu anda, anda tidak perlu lagi mengajukan surat,
               mengurus data administrasi, menunggu pencetakan surat, dan
               melakukan proses lainnya di Kantor Desa. Hanya anda perlu
-              mengambil suratnya langsung.
+              mengambil suratnya langsung ketika sudah selesai.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-7">
@@ -94,7 +103,10 @@ export default function HelpPage() {
               Ada pertanyaan lain, hubungi kemana?
             </AccordionTrigger>
             <AccordionContent>
-              Anda dapat terhubung dengan admin melalui:
+              Anda dapat terhubung dengan admin melalui kontak{" "}
+              <Link href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}>
+                berikut
+              </Link>
             </AccordionContent>
           </AccordionItem>
         </Accordion>

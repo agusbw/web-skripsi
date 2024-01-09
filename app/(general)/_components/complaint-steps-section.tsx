@@ -3,8 +3,11 @@ import Image from "next/image";
 
 export default function ComplaintStepsSection() {
   return (
-    <section className="py-12 text-gray-600 body-font">
-      <h2 className="text-3xl font-medium text-center text-gray-900">
+    <section
+      className="py-12 body-font"
+      id="step"
+    >
+      <h2 className="text-3xl font-medium text-center">
         Langkah-langkah mengajukan surat
       </h2>
       <div className="container flex flex-wrap px-5 mx-auto mt-10">
@@ -50,11 +53,11 @@ export default function ComplaintStepsSection() {
             })}
           </div>
           <Image
-            className="object-cover object-center mt-12 rounded-lg lg:w-3/5 md:w-1/2 md:mt-0"
-            src="https://dummyimage.com/1200x500"
+            className="hidden lg:block object-center mt-12 rounded-lg lg:w-3/5 md:w-1/2 md:mt-0 scale-90"
+            src="/tata-cara.svg"
             alt="step"
-            width={1200}
-            height={500}
+            width={200}
+            height={200}
           />
         </div>
       </div>
