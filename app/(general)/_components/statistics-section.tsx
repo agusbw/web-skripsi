@@ -1,89 +1,79 @@
+import Link from "next/link";
+import { FileText } from "lucide-react";
+
+function CardItem({
+  title,
+  description,
+  href,
+}: {
+  title: string;
+  description: string;
+  href: string;
+}) {
+  return (
+    <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
+      <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-primary transition-all duration-700 group-hover:scale-[13]" />
+      <div className="relative z-10 mx-auto max-w-md">
+        <span className="grid h-20 w-20 place-items-center rounded-full bg-primary transition-all duration-300 group-hover:bg-violet-500">
+          <FileText className="h-10 w-10 text-white" />
+        </span>
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold leading-7 transition-all duration-300 text-gray-600 group-hover:text-white/90">
+            {title}
+          </h3>
+        </div>
+        <div className="pt-3 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
+          <p>{description}</p>
+        </div>
+        <div className="pt-3 text-base font-semibold leading-7">
+          <p>
+            <Link
+              href={href}
+              className="text-primary transition-all duration-300 group-hover:text-white"
+            >
+              Ajukan surat →
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StatisticsSection() {
   return (
     <section className="body-font">
       <div className="container px-5 pb-12 mx-auto">
         <div className="flex flex-col w-full mb-8 text-center">
-          <h1 className="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">
+          <p className="mb-4 text-2xl font-bold text-primary sm:text-4xl">
             Ajukan Surat Keterangan dengan Mudah
-          </h1>
+          </p>
           <p className="mx-auto text-base leading-relaxed lg:w-2/3">
             Adapun surat keterangan yang dapat diajukan melalui website ini
             antara lain.
           </p>
         </div>
-        <div className="flex flex-wrap -m-4 text-center">
-          <div className="w-full p-4 md:w-1/4 sm:w-1/2">
-            <div className="px-4 py-6 border-2 border-gray-200 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                className="inline-block w-12 h-12 mb-3 text-indigo-500"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 17l4 4 4-4m-4-5v9"></path>
-                <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"></path>
-              </svg>
-              <h2 className="text-3xl font-medium text-gray-900 title-font">
-                2.7K
-              </h2>
-              <p className="leading-relaxed">Downloads</p>
-            </div>
-          </div>
-          <div className="w-full p-4 md:w-1/4 sm:w-1/2">
-            <div className="px-4 py-6 border-2 border-gray-200 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                className="inline-block w-12 h-12 mb-3 text-indigo-500"
-                viewBox="0 0 24 24"
-              >
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
-                <circle
-                  cx="9"
-                  cy="7"
-                  r="4"
-                ></circle>
-                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
-              </svg>
-              <h2 className="text-3xl font-medium text-gray-900 title-font">
-                1.3K
-              </h2>
-              <p className="leading-relaxed">Users</p>
-            </div>
-          </div>
-          <div className="w-full p-4 md:w-1/4 sm:w-1/2">
-            <div className="px-4 py-6 border-2 border-gray-200 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                className="inline-block w-12 h-12 mb-3 text-indigo-500"
-                viewBox="0 0 24 24"
-              >
-                <path d="M3 18v-6a9 9 0 0118 0v6"></path>
-                <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"></path>
-              </svg>
-              <h2 className="text-3xl font-medium text-gray-900 title-font">
-                74
-              </h2>
-              <p className="leading-relaxed">Files</p>
-            </div>
-          </div>
-          <div className="w-full p-4 md:w-1/4 sm:w-1/2">
-            <div className="px-4 py-6 border-2 border-gray-200 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                className="inline-block w-12 h-12 mb-3 text-indigo-500"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-              <h2 className="text-3xl font-medium text-gray-900 title-font">
-                46
-              </h2>
-              <p className="leading-relaxed">Places</p>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-4 lg:gap-0 lg:gap-y-0 lg:grid-cols-4 lg:gap-x-4">
+          <CardItem
+            title="Surat Keterangan Tidak Mampu"
+            description="Surat keterangan untuk masyarakat yang tidak mampu secara ekonomi."
+            href="/warga/pengajuan/sktm"
+          />
+          <CardItem
+            title="Surat Keterangan Domisili"
+            description="Surat keterangan yang menyatakan domisili seseorang."
+            href="/warga/pengajuan/skd"
+          />
+          <CardItem
+            title="Surat Keterangan Belum Pernah Kawin"
+            description="Surat keterangan yang menyatakan bahwa seseorang belum pernah menikah."
+            href="/warga/pengajuan/skbpk"
+          />
+          <CardItem
+            title="Surat Keterangan Usaha"
+            description="Surat keterangan yang menyatakan bahwa seseorang memiliki usaha."
+            href="/warga/pengajuan/sku"
+          />
         </div>
       </div>
     </section>

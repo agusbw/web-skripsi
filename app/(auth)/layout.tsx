@@ -4,7 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import React from "react";
 
 export default async function AuthenticationLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {

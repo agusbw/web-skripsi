@@ -7,9 +7,12 @@ export default function ComplaintStepsSection() {
       className="py-12 body-font"
       id="step"
     >
-      <h2 className="text-3xl font-medium text-center">
-        Langkah-langkah mengajukan surat
-      </h2>
+      <p className="mb-4 text-2xl font-bold text-primary sm:text-4xl text-center">
+        Tata Cara Pengajuan Surat Keterangan
+      </p>
+      <p className="mx-auto text-base leading-relaxed text-center">
+        Berikut adalah tata cara pengajuan surat keterangan melalui website ini.
+      </p>
       <div className="container flex flex-wrap px-5 mx-auto mt-10">
         <div className="flex flex-wrap w-full">
           <div className="lg:w-2/5 md:w-1/2 md:pr-10 md:py-6">

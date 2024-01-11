@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 export default function Hero() {
   return (
     <section>
-      <div className="px-20 flex flex-col items-center pt-20 md:flex-row bg-primary text-primary-foreground">
+      <div className="px-4 lg:px-20 flex flex-col items-center pt-10 lg:pt-20 md:flex-row bg-primary text-primary-foreground">
         <div className="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0 space-y-3">
           <h1 className="text-3xl font-semibold file: sm:text-4xl">
             Sistem Informasi Pengajuan Surat Keterangan
