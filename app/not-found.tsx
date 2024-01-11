@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function NotFound() {
   return (
     <section className="flex flex-col items-center gap-3 justify-center h-screen">
-      <h1 className="text-4xl font-bold text-primary">
+      <h1 className="text-4xl font-bold text-primary text-center">
         Resource Tidak Ditemukan
       </h1>
       <p className="max-w-2xl text-xl text-center">
