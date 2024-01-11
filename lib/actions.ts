@@ -19,6 +19,14 @@ type CreateSktm = z.infer<typeof createSktmSchema>;
 export async function createWarga(
   formData: CreateWarga
 ): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
   const validatedData = createWargaSchema.safeParse(formData);
   if (!validatedData.success) {
     return {
@@ -79,6 +87,14 @@ export async function updateWarga(
   id: string,
   formData: CreateWarga
 ): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
   const validatedData = createWargaSchema.safeParse(formData);
   if (!validatedData.success) {
     return {
@@ -154,6 +170,14 @@ export async function updateWarga(
 }
 
 export async function deleteWarga(id: string): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
   try {
     const user = await prisma.user.findFirst({
       where: {

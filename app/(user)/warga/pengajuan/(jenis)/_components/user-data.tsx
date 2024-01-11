@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { getUserBiodata } from "@/lib/data";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
+import { id } from "date-fns/esm/locale";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function DataItem({ label, value }: { label: string; value: string }) {
@@ -39,7 +40,10 @@ export default async function UserData() {
           label="Tempat & Tanggal Lahir"
           value={`${userBiodata.tempat_lahir}, ${format(
             new Date(userBiodata.tanggal_lahir),
-            "dd MMMM yyyy"
+            "dd MMMM yyyy",
+            {
+              locale: id,
+            }
           )}`}
         />
         <DataItem

@@ -3,6 +3,8 @@
 import { CalendarDays, Clock3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
+import { id } from "date-fns/esm/locale";
+
 import React from "react";
 
 function DashboardContainer({
@@ -24,7 +26,9 @@ function DashboardContainer({
       <div className={"flex gap-3 mb-4"}>
         <span className={"flex items-center gap-1"}>
           <CalendarDays className={"w-4 text-primary"} />{" "}
-          {format(date, "d MMMM yyyy")}
+          {format(date, "d MMMM yyyy", {
+            locale: id,
+          })}
         </span>
         <span className={"flex items-center gap-1"}>
           <Clock3 className={"w-4 text-primary"} /> {format(date, "hh:mm")}

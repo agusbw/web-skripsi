@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { fetchUserLatestSurat } from "@/lib/data";
 import format from "date-fns/format";
+import { id } from "date-fns/locale";
 import { formatEnumValue } from "@/lib/utils";
 
 export async function PengajuanTerakhir() {
@@ -17,7 +18,9 @@ export async function PengajuanTerakhir() {
               {surat?.kategori_surat.nama}
             </p>
             <p className="text-sm text-muted-foreground">
-              {format(surat.createdAt, "dd MMMM yyyy")}
+              {format(surat.createdAt, "dd MMMM yyyy", {
+                locale: id,
+              })}
             </p>
           </div>
           <div className="ml-auto font-medium">

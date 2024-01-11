@@ -13,7 +13,7 @@ export default function Hero() {
             Sistem Informasi Pengajuan Surat Keterangan
           </h1>
           <p className="font-bold text-lg">
-            Desa Pelauan, Kecamatan Busungbiu, Kabupaten Buleleng
+            Desa Pelapuan, Kecamatan Busungbiu, Kabupaten Buleleng
           </p>
           <p className="leading-relaxed">
             Sistem Pengajuan Surat Keterangan (SIPSK) adalah sistem yang
