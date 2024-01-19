@@ -6,6 +6,9 @@ import {
   changePasswordSchema,
   createWargaSchema,
   createSktmSchema,
+  createSkbpkSchema,
+  createSkuSchema,
+  createSkdSchema,
 } from "@/types/schema";
 import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
@@ -15,6 +18,9 @@ import type * as z from "zod";
 type CreateWarga = z.infer<typeof createWargaSchema>;
 type ChangePassword = z.infer<typeof changePasswordSchema>;
 type CreateSktm = z.infer<typeof createSktmSchema>;
+type CreateSkbpk = z.infer<typeof createSkbpkSchema>;
+type CreateSku = z.infer<typeof createSkuSchema>;
+type CreateSkd = z.infer<typeof createSkdSchema>;
 
 export async function createWarga(
   formData: CreateWarga
@@ -321,7 +327,6 @@ export async function createSktm(
     const result = await prisma.surat.create({
       data: {
         keperluan: validatedData.data.keperluan,
-        dtks: validatedData.data.informasi.includes("dtks") ? true : false,
         id_warga: session.user.id_warga,
         id_kategori_surat: kategoriSurat.id,
         agama: warga.agama,
@@ -335,6 +340,225 @@ export async function createSktm(
         kewarganegaraan: warga.kewarganegaraan,
         no_kk: warga.no_kk,
         status_perkawinan: warga.status_perkawinan,
+
+        dtks: validatedData.data.informasi.includes("dtks") ? true : false,
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "Surat keterangan berhasil diajukan",
+      data: result,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function createSkbpk(
+  formData: CreateSkbpk
+): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session) return { success: false, message: "Anda belum login" };
+  if (!session.user.id_warga)
+    return { success: false, message: "Anda belum terdaftar sebagai warga" };
+
+  const validatedData = createSkbpkSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const kategoriSurat = await prisma.kategoriSurat.findUnique({
+      where: {
+        kode: "SKBPK",
+      },
+    });
+
+    const warga = await prisma.warga.findUnique({
+      where: {
+        id: session.user.id_warga,
+      },
+    });
+
+    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+
+    if (!kategoriSurat)
+      return {
+        success: false,
+        message: "Kategori surat tidak ditemukan",
+      };
+
+    const result = await prisma.surat.create({
+      data: {
+        keperluan: validatedData.data.keperluan,
+        id_warga: session.user.id_warga,
+        id_kategori_surat: kategoriSurat.id,
+        agama: warga.agama,
+        jenis_kelamin: warga.jenis_kelamin,
+        nama: warga.nama,
+        nik: warga.nik,
+        pekerjaan: warga.pekerjaan,
+        tempat_lahir: warga.tempat_lahir,
+        alamat: warga.alamat,
+        tanggal_lahir: warga.tanggal_lahir,
+        kewarganegaraan: warga.kewarganegaraan,
+        no_kk: warga.no_kk,
+        status_perkawinan: warga.status_perkawinan,
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "Surat keterangan berhasil diajukan",
+      data: result,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function createSku(formData: CreateSku): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session) return { success: false, message: "Anda belum login" };
+  if (!session.user.id_warga)
+    return { success: false, message: "Anda belum terdaftar sebagai warga" };
+
+  const validatedData = createSkuSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const kategoriSurat = await prisma.kategoriSurat.findUnique({
+      where: {
+        kode: "SKU",
+      },
+    });
+
+    const warga = await prisma.warga.findUnique({
+      where: {
+        id: session.user.id_warga,
+      },
+    });
+
+    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+
+    if (!kategoriSurat)
+      return {
+        success: false,
+        message: "Kategori surat tidak ditemukan",
+      };
+
+    const result = await prisma.surat.create({
+      data: {
+        keperluan: validatedData.data.keperluan,
+        id_warga: session.user.id_warga,
+        id_kategori_surat: kategoriSurat.id,
+        agama: warga.agama,
+        jenis_kelamin: warga.jenis_kelamin,
+        nama: warga.nama,
+        nik: warga.nik,
+        pekerjaan: warga.pekerjaan,
+        tempat_lahir: warga.tempat_lahir,
+        alamat: warga.alamat,
+        tanggal_lahir: warga.tanggal_lahir,
+        kewarganegaraan: warga.kewarganegaraan,
+        no_kk: warga.no_kk,
+        status_perkawinan: warga.status_perkawinan,
+
+        lokasi_usaha: validatedData.data.lokasi_usaha,
+        nama_usaha: validatedData.data.nama_usaha,
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "Surat keterangan berhasil diajukan",
+      data: result,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function createSkd(formData: CreateSkd): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session) return { success: false, message: "Anda belum login" };
+  if (!session.user.id_warga)
+    return { success: false, message: "Anda belum terdaftar sebagai warga" };
+
+  const validatedData = createSkdSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const kategoriSurat = await prisma.kategoriSurat.findUnique({
+      where: {
+        kode: "SKD",
+      },
+    });
+
+    const warga = await prisma.warga.findUnique({
+      where: {
+        id: session.user.id_warga,
+      },
+    });
+
+    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+
+    if (!kategoriSurat)
+      return {
+        success: false,
+        message: "Kategori surat tidak ditemukan",
+      };
+
+    const result = await prisma.surat.create({
+      data: {
+        keperluan: validatedData.data.keperluan,
+        id_warga: session.user.id_warga,
+        id_kategori_surat: kategoriSurat.id,
+        agama: warga.agama,
+        jenis_kelamin: warga.jenis_kelamin,
+        nama: warga.nama,
+        nik: warga.nik,
+        pekerjaan: warga.pekerjaan,
+        tempat_lahir: warga.tempat_lahir,
+        alamat: warga.alamat,
+        tanggal_lahir: warga.tanggal_lahir,
+        kewarganegaraan: warga.kewarganegaraan,
+        no_kk: warga.no_kk,
+        status_perkawinan: warga.status_perkawinan,
+
+        domisili: validatedData.data.domisili,
       },
     });
 

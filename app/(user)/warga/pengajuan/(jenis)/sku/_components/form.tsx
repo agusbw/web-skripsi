@@ -15,53 +15,55 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { createSktmSchema } from "@/types/schema";
-import { createSktm } from "@/lib/actions";
+import { createSkuSchema } from "@/types/schema";
+import { createSku } from "@/lib/actions";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 const KEPERLUAN = [
   {
-    value: "Untuk melengkapi administrasi bantuan pendidikan",
+    value: "Untuk melengkapi administrasi kredit",
   },
   {
-    value: "Untuk melengkapi administrasi bantuan bedah rumah",
+    value:
+      "Untuk melengkapi administrasi permohonan izin pangkalan tabung gas elpiji 3 Kg",
   },
   {
-    value: "Untuk melengkapi administrasi pengaktifan KIS",
-  },
-  {
-    value: "Untuk melengkapi administrasi pendaftaran sekolah",
-  },
-] as const;
-
-const KETERANGAN = [
-  {
-    id: "dtks",
-    label: "Terdaftar di DTKS (Data Terpadu Kesejahteraan Sosial)",
+    value: "Untuk melengkapi administrasi kependudukan",
   },
 ] as const;
 
 export default function SktmForm() {
   const { toast } = useToast();
   const [pending, startTransition] = useTransition();
+  const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
   const router = useRouter();
+  let example_nama = [
+    "Warung Kelontong",
+    "Dagang Gas Elpiji 3 Kg",
+    "Jual Beli Hasil Bumi",
+    "Ternak Ayam",
+    "Dagang",
+    "Toko Bangunan",
+  ];
 
-  const form = useForm<z.infer<typeof createSktmSchema>>({
-    resolver: zodResolver(createSktmSchema),
+  const form = useForm<z.infer<typeof createSkuSchema>>({
+    resolver: zodResolver(createSkuSchema),
     defaultValues: {
       keperluan: "",
-      informasi: [],
+      nama_usaha: "",
+      lokasi_usaha: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof createSktmSchema>) {
+  function onSubmit(values: z.infer<typeof createSkuSchema>) {
     startTransition(async () => {
-      const result = await createSktm(values);
+      const result = await createSku(values);
       toast({
         title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
         description: result.message,
@@ -72,6 +74,12 @@ export default function SktmForm() {
       }
     });
   }
+
+  const watchNamaUsaha = form.watch("nama_usaha");
+
+  example_nama = example_nama.filter((nama) =>
+    nama.toLowerCase().includes(watchNamaUsaha.toLowerCase())
+  );
 
   return (
     <>
@@ -145,54 +153,80 @@ export default function SktmForm() {
             />
           </div>
 
-          <FormField
-            control={form.control}
-            name="informasi"
-            render={() => (
-              <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base">Data Pendukung</FormLabel>
-                  <FormDescription>
-                    Tambahkan data pendukung pengajuan surat apabila ada
-                  </FormDescription>
-                </div>
-                {KETERANGAN.map((item) => (
-                  <FormField
-                    key={item.id}
-                    control={form.control}
-                    name="informasi"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={item.id}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item.id)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([...field.value, item.id])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== item.id
-                                      )
-                                    );
+          <div className="space-y-4 max-w-sm">
+            <div>
+              <FormLabel className="text-base">Data Pendukung</FormLabel>
+              <FormDescription>
+                Tambahkan data pendukung pengajuan surat
+              </FormDescription>
+            </div>
+            <FormField
+              control={form.control}
+              name="nama_usaha"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nama Usaha</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoComplete="off"
+                      placeholder="Warung Kelontong"
+                      {...field}
+                      onFocus={() => setIsScrollbarVisible(true)}
+                      onBlur={() => {
+                        setTimeout(() => setIsScrollbarVisible(false), 200);
+                      }}
+                    />
+                  </FormControl>
+                  {isScrollbarVisible && example_nama.length > 0 && (
+                    <ScrollArea className="w-full max-h-40 overflow-auto rounded-md border">
+                      <div>
+                        {example_nama.map((tag) => (
+                          <div key={tag}>
+                            <div
+                              className="text-sm hover:bg-gray-100 cursor-pointer px-4 py-2"
+                              onClick={() => {
+                                form.setValue("nama_usaha", tag);
+                                setIsScrollbarVisible(false);
                               }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {item.label}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                            >
+                              {tag}
+                            </div>
+                            <Separator />
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  )}
+                  <FormDescription>
+                    Masukkan jenis usaha anda, contohnya: Warung Kelontong, Jual
+                    Beli Hasil Bumi, Ternak Ayam, dll.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lokasi_usaha"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Lokasi Usaha</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Masukkan lokasi usaha anda, contohnya: Banjar Dinas
+                    Bonagung, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <Button
             size={"sm"}
             type="submit"

@@ -15,10 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { createSktmSchema } from "@/types/schema";
-import { createSktm } from "@/lib/actions";
+import { createSkbpkSchema } from "@/types/schema";
+import { createSkbpk } from "@/lib/actions";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
@@ -26,42 +25,25 @@ import { useRouter } from "next/navigation";
 
 const KEPERLUAN = [
   {
-    value: "Untuk melengkapi administrasi bantuan pendidikan",
-  },
-  {
-    value: "Untuk melengkapi administrasi bantuan bedah rumah",
-  },
-  {
-    value: "Untuk melengkapi administrasi pengaktifan KIS",
-  },
-  {
-    value: "Untuk melengkapi administrasi pendaftaran sekolah",
+    value: "Untuk melengkapi administrasi kependudukan",
   },
 ] as const;
 
-const KETERANGAN = [
-  {
-    id: "dtks",
-    label: "Terdaftar di DTKS (Data Terpadu Kesejahteraan Sosial)",
-  },
-] as const;
-
-export default function SktmForm() {
+export default function SkbpkForm() {
   const { toast } = useToast();
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof createSktmSchema>>({
-    resolver: zodResolver(createSktmSchema),
+  const form = useForm<z.infer<typeof createSkbpkSchema>>({
+    resolver: zodResolver(createSkbpkSchema),
     defaultValues: {
       keperluan: "",
-      informasi: [],
     },
   });
 
-  function onSubmit(values: z.infer<typeof createSktmSchema>) {
+  function onSubmit(values: z.infer<typeof createSkbpkSchema>) {
     startTransition(async () => {
-      const result = await createSktm(values);
+      const result = await createSkbpk(values);
       toast({
         title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
         description: result.message,
@@ -144,55 +126,6 @@ export default function SktmForm() {
               )}
             />
           </div>
-
-          <FormField
-            control={form.control}
-            name="informasi"
-            render={() => (
-              <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base">Data Pendukung</FormLabel>
-                  <FormDescription>
-                    Tambahkan data pendukung pengajuan surat apabila ada
-                  </FormDescription>
-                </div>
-                {KETERANGAN.map((item) => (
-                  <FormField
-                    key={item.id}
-                    control={form.control}
-                    name="informasi"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={item.id}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item.id)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([...field.value, item.id])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== item.id
-                                      )
-                                    );
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {item.label}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
             size={"sm"}
             type="submit"

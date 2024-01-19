@@ -58,12 +58,6 @@ export const wargaLoginSchema = z.object({
     .min(1, "Password tidak boleh kosong"),
 });
 
-export const createPenandatanganSchema = z.object({
-  nama: z.string().min(1, "Nama tidak boleh kosong"),
-  alamat: z.string().min(1, "Alamat tidak boleh kosong"),
-  jabatan: z.string().min(1, "Jabatan tidak boleh kosong"),
-});
-
 export const changePasswordSchema = z
   .object({
     old_password: z.string().min(1, "Kata sandi lama tidak boleh kosong"),
@@ -83,4 +77,27 @@ export const createSktmSchema = z.object({
     if (value.length === 0) return {};
     return value.some((item) => item);
   }, {}),
+});
+
+export const createSkbpkSchema = z.object({
+  keperluan: z.string().min(1, "Keperluan pengajuan harus diisi"),
+});
+
+export const createSkuSchema = z.object({
+  keperluan: z.string().min(1, "Keperluan pengajuan harus diisi"),
+  nama_usaha: z.string().min(1, "Nama usaha harus diisi"),
+  lokasi_usaha: z
+    .string({
+      required_error: "Lokasi usaha harus dipilih",
+    })
+    .min(1, "Lokasi usaha harus dipilih"),
+});
+
+export const createSkdSchema = z.object({
+  keperluan: z.string().min(1, "Keperluan pengajuan harus diisi"),
+  domisili: z
+    .string({
+      required_error: "Domisili harus dipilih",
+    })
+    .min(1, "Domisili harus dipilih"),
 });

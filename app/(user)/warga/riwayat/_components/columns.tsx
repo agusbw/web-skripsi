@@ -4,6 +4,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { type Surat, type KategoriSurat } from "@prisma/client";
 import format from "date-fns/format";
+import { formatEnumValue } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -13,19 +14,90 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { MessageSquare } from "lucide-react";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { MessageSquare, Info } from "lucide-react";
+import { id } from "date-fns/locale";
+
+const InfoContent = ({
+  data,
+}: {
+  data: Surat & {
+    kategori_surat: KategoriSurat;
+  };
+}) => {
+  return (
+    <div className="space-y-1 py-2 text-sm text-muted-foreground">
+      <div>
+        <span className="font-semibold">Nomor Surat:</span>{" "}
+        {data?.no_surat ? data.no_surat : "-"}
+      </div>
+      <div>
+        <span className="font-semibold">Jenis Surat:</span>{" "}
+        {data.kategori_surat.nama}
+      </div>
+      <div>
+        <span className="font-semibold">Tanggal Pengajuan:</span>{" "}
+        {format(data.createdAt, "dd MMMM yyyy", {
+          locale: id,
+        })}
+      </div>
+      <div>
+        <span className="font-semibold">Keperluan:</span> {data.keperluan}
+      </div>
+      {data.kategori_surat.kode === "SKU" && (
+        <>
+          <div>
+            <span className="font-semibold">Nama Usaha:</span> {data.nama_usaha}
+          </div>
+          <div>
+            <span className="font-semibold">Lokasi Usaha:</span>{" "}
+            {data.lokasi_usaha}
+          </div>
+        </>
+      )}
+      {data.kategori_surat.kode === "SKD" && (
+        <div>
+          <span className="font-semibold">Domisili:</span> {data.domisili}
+        </div>
+      )}
+      {data.kategori_surat.kode === "SKTM" && (
+        <div>
+          <span className="font-semibold">Terdaftar di DTKS:</span>{" "}
+          {data.dtks ? "Ya" : "Tidak"}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const InfoDialog = ({
+  data,
+}: {
+  data: Surat & {
+    kategori_surat: KategoriSurat;
+  };
+}) => {
+  return (
+    <Dialog>
+      <Button
+        variant={"secondary"}
+        size={"sm"}
+        asChild
+      >
+        <DialogTrigger>
+          <Info className="h-3 w-3 mr-1 -mt-0.5" />
+          Detail
+        </DialogTrigger>
+      </Button>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Detail Informasi Surat</DialogTitle>
+        </DialogHeader>
+        <InfoContent data={data} />
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 export const pendingColumns: ColumnDef<
   Surat & {
@@ -41,13 +113,14 @@ export const pendingColumns: ColumnDef<
     ),
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
-      return createdAt as Date;
+      return createdAt;
     },
-
     cell: ({ row }) => {
       return (
         <span className="text-sm">
-          {format(row.original.createdAt as Date, "dd/MM/yyyy")}
+          {format(row.original.createdAt, "d MMMM yyyy", {
+            locale: id,
+          })}
         </span>
       );
     },
@@ -65,18 +138,24 @@ export const pendingColumns: ColumnDef<
     },
   },
   {
-    accessorKey: "keperluan",
-    header: "Keperluan",
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
       return (
-        <Badge className="rounded-full capitalize bg-yellow-400 hover:bg-yellow-400">
-          {row.original.status}
+        <Badge
+          variant={"outline"}
+          className="rounded-full flex items-center justify-center w-fit"
+        >
+          <div className="w-1.5 h-1.5 rounded-full bg-secondary-foreground mr-1"></div>
+          <div>{formatEnumValue(row.original.status)}</div>
         </Badge>
       );
+    },
+  },
+  {
+    header: "Aksi",
+    cell: ({ row }) => {
+      return <InfoDialog data={row.original} />;
     },
   },
 ];
@@ -95,13 +174,14 @@ export const selesaiColumns: ColumnDef<
     ),
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
-      return createdAt as Date;
+      return createdAt;
     },
-
     cell: ({ row }) => {
       return (
         <span className="text-sm">
-          {format(row.original.createdAt as Date, "dd/MM/yyyy")}
+          {format(row.original.createdAt, "d MMMM yyyy", {
+            locale: id,
+          })}
         </span>
       );
     },
@@ -119,18 +199,24 @@ export const selesaiColumns: ColumnDef<
     },
   },
   {
-    accessorKey: "keperluan",
-    header: "Keperluan",
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
       return (
-        <Badge className="rounded-full capitalize bg-green-400 hover:bg-green-400">
-          {row.original.status}
+        <Badge
+          variant={"default"}
+          className="rounded-full flex items-center justify-center w-fit"
+        >
+          <div className="w-1.5 h-1.5  rounded-full bg-primary-foreground mr-1"></div>
+          <div>{formatEnumValue(row.original.status)}</div>
         </Badge>
       );
+    },
+  },
+  {
+    header: "Aksi",
+    cell: ({ row }) => {
+      return <InfoDialog data={row.original} />;
     },
   },
 ];
@@ -149,13 +235,14 @@ export const ditolakColumns: ColumnDef<
     ),
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
-      return createdAt as Date;
+      return createdAt;
     },
-
     cell: ({ row }) => {
       return (
         <span className="text-sm">
-          {format(row.original.createdAt as Date, "dd/MM/yyyy")}
+          {format(row.original.createdAt, "d MMMM yyyy", {
+            locale: id,
+          })}
         </span>
       );
     },
@@ -173,19 +260,16 @@ export const ditolakColumns: ColumnDef<
     },
   },
   {
-    accessorKey: "keperluan",
-    header: "Keperluan",
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
       return (
         <Badge
-          className="rounded-full capitalize"
           variant={"destructive"}
+          className="rounded-full flex items-center justify-center w-fit"
         >
-          {row.original.status}
+          <div className="w-1.5 h-1.5 rounded-full bg-destructive-foreground mr-1"></div>
+          <div>{formatEnumValue(row.original.status)}</div>
         </Badge>
       );
     },
@@ -193,32 +277,6 @@ export const ditolakColumns: ColumnDef<
   {
     header: "Pesan Penolakan",
     cell: ({ row }) => {
-      const isSmallDevice = useMediaQuery(
-        "only screen and (max-width : 768px)"
-      );
-
-      if (isSmallDevice) {
-        return (
-          <Drawer>
-            <Button
-              variant={"outline"}
-              size={"sm"}
-              asChild
-            >
-              <DrawerTrigger>
-                <MessageSquare className="h-4 w-4" />
-              </DrawerTrigger>
-            </Button>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Pesan Penolakan</DrawerTitle>
-                <DrawerDescription>{row.original.pesan}</DrawerDescription>
-              </DrawerHeader>
-            </DrawerContent>
-          </Drawer>
-        );
-      }
-
       return (
         <Dialog>
           <Button
@@ -238,6 +296,12 @@ export const ditolakColumns: ColumnDef<
           </DialogContent>
         </Dialog>
       );
+    },
+  },
+  {
+    header: "Aksi",
+    cell: ({ row }) => {
+      return <InfoDialog data={row.original} />;
     },
   },
 ];
