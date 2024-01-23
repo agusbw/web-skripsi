@@ -4,6 +4,7 @@ import { listWargaColumns } from "../_components/data-warga-column";
 import { fetchWargaList } from "@/lib/data";
 import CreateWarga from "../_components/create-warga-button";
 import type { Metadata } from "next";
+import ExportPDF from "../_components/export-pdf";
 
 export const metadata: Metadata = {
   title: "Warga",
@@ -14,8 +15,9 @@ export default async function AdminWargaPage() {
 
   return (
     <DashboardContainer title="Manajemen Data Warga">
-      <div className="flex justify-end w-full">
+      <div className="flex justify-end w-full gap-3">
         <CreateWarga variant="default" />
+        <ExportPDF data={data} />
       </div>
       <WargaDataTable
         columns={listWargaColumns}
