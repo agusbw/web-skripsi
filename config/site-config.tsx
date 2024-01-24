@@ -1,15 +1,18 @@
 import { type ComplaintStep } from "@/types/types";
 import {
-  Book,
+  Users,
   CalendarClock,
   User,
   BarChart2,
+  LayoutList,
   LogIn,
   ScrollText,
   FormInput,
   FilePlus2,
+  FileCheck,
   MailCheck,
   CheckCircle2,
+  Layers,
 } from "lucide-react";
 
 export const ComplaintSteps: ComplaintStep[] = [
@@ -45,24 +48,30 @@ export const ComplaintSteps: ComplaintStep[] = [
 
 const adminSidebar = [
   {
-    title: "Ringkasan Data",
+    title: "Ringkasan",
     path: "/admin",
     icon: <BarChart2 size={18} />,
   },
   {
-    title: "Pengajuan Surat",
-    path: "/admin/surat",
-    icon: <Book size={18} />,
+    title: "Data Warga",
+    path: "/admin/warga",
+    icon: <Users size={18} />,
   },
   {
-    title: "Warga",
-    path: "/admin/warga",
-    icon: <CalendarClock size={18} />,
+    title: "Data Pengajuan",
+    path: "/admin/pengajuan",
+    icon: <LayoutList size={18} />,
   },
+  {
+    title: "Data Riwayat Pengambilan",
+    path: "/admin/pengambilan",
+    icon: <FileCheck size={18} />,
+  },
+
   {
     title: "Kategori Surat",
     path: "/admin/kategori",
-    icon: <Book size={18} />,
+    icon: <Layers size={18} />,
   },
 ];
 

@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import { fetchUserLatestSurat } from "@/lib/data";
+import { fetchLatestSurat } from "@/lib/data";
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
 import { formatEnumValue } from "@/lib/utils";
 import Image from "next/image";
 
 export async function PengajuanTerakhir() {
-  const latestSurat = await fetchUserLatestSurat();
+  const latestSurat = await fetchLatestSurat();
 
   if (latestSurat?.length === 0) {
     return (
@@ -27,32 +27,32 @@ export async function PengajuanTerakhir() {
   return (
     <div className="space-y-8">
       {latestSurat?.map((surat, index) => (
-        <div
-          className="flex items-center"
-          key={index}
-        >
+        <div key={index}>
           <div className="space-y-1">
             <p className="text-sm font-medium leading-none">
               {surat?.kategori_surat.nama}
             </p>
-            <p className="text-sm text-muted-foreground">
-              {format(surat.createdAt, "dd MMMM yyyy", {
-                locale: id,
-              })}
+            <p className="text-xs font-medium leading-none text-muted-foreground line-clamp-1">
+              {surat?.warga.nama}
             </p>
-          </div>
-          <div className="ml-auto font-medium">
-            <Badge
-              variant={
-                surat?.status === "SELESAI"
-                  ? "default"
-                  : surat?.status === "PENDING"
-                  ? "outline"
-                  : "destructive"
-              }
-            >
-              {formatEnumValue(surat?.status)}
-            </Badge>
+            <div className="flex justify-between gap-4">
+              <p className="text-xs text-muted-foreground">
+                {format(surat.createdAt, "dd MMMM yyyy", {
+                  locale: id,
+                })}
+              </p>
+              <Badge
+                variant={
+                  surat?.status === "SELESAI"
+                    ? "default"
+                    : surat?.status === "PENDING"
+                    ? "outline"
+                    : "destructive"
+                }
+              >
+                {formatEnumValue(surat?.status)}
+              </Badge>
+            </div>
           </div>
         </div>
       ))}

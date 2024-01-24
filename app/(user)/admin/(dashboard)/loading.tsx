@@ -1,5 +1,4 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
-import { type Metadata } from "next";
 import {
   Card,
   CardContent,
@@ -7,40 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BarChartSurat, PieChartSurat } from "./_components/charts";
-import { PengajuanTerakhir } from "./_components/pengajuan-terakhir";
 import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
-import {
-  fetchTotalSurat,
-  fetchTotalSuratByKategori,
-  fetchBarChartData,
-} from "@/lib/data";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export const metadata: Metadata = {
-  title: "Overview",
-  description: "Dashboard utama admin",
-};
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-export default async function AdminDashboardPage() {
-  const suratPromise = fetchTotalSurat();
-  const suratByKategoriPromise = fetchTotalSuratByKategori();
-  const suratByMonthPromise = fetchBarChartData();
-
-  const [surat, suratByKategori, suratByMonth] = await Promise.all([
-    suratPromise,
-    suratByKategoriPromise,
-    suratByMonthPromise,
-  ]);
-
+export default async function Loading() {
   return (
     <DashboardContainer title="Dashboard Admin">
       <>
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
@@ -49,7 +24,7 @@ export default async function AdminDashboardPage() {
                   <Mails className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{surat?.total}</div>
+                  <Skeleton className="w-24 h-8" />
                 </CardContent>
               </Card>
               <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
@@ -60,7 +35,7 @@ export default async function AdminDashboardPage() {
                   <MailQuestion className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{surat?.pending}</div>
+                  <Skeleton className="w-24 h-8" />
                 </CardContent>
               </Card>
               <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
@@ -71,7 +46,7 @@ export default async function AdminDashboardPage() {
                   <MailCheck className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{surat?.selesai}</div>
+                  <Skeleton className="w-24 h-8" />
                 </CardContent>
               </Card>
               <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
@@ -82,7 +57,7 @@ export default async function AdminDashboardPage() {
                   <MailX className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{surat?.ditolak}</div>
+                  <Skeleton className="w-24 h-8" />
                 </CardContent>
               </Card>
             </div>
@@ -95,23 +70,42 @@ export default async function AdminDashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <PengajuanTerakhir />
+                  <div className="space-y-6">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div
+                        className="flex items-center"
+                        key={i}
+                      >
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            <Skeleton className="w-36 h-4" />
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <Skeleton className="w-24 h-4" />
+                          </p>
+                        </div>
+                        <div className="ml-auto font-medium">
+                          <Skeleton className="w-16 h-4" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
               <Card className="col-span-3">
                 <CardHeader>
                   <CardTitle>Grafik Pengajuan Surat</CardTitle>
                 </CardHeader>
-                <CardContent className="-ml-10">
-                  <BarChartSurat data={suratByMonth} />
+                <CardContent>
+                  <Skeleton className="w-full h-64" />
                 </CardContent>
               </Card>
               <Card className="col-span-2">
                 <CardHeader>
                   <CardTitle>Grafik Jenis Surat</CardTitle>
                 </CardHeader>
-                <CardContent className="pl-2">
-                  <PieChartSurat data={suratByKategori} />
+                <CardContent>
+                  <Skeleton className="w-full h-64" />
                 </CardContent>
               </Card>
             </div>

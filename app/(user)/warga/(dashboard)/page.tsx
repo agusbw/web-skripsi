@@ -24,10 +24,16 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function BiodataPage() {
-  const surat = await fetchUserTotalSurat();
-  const suratByKategori = await fetchUserTotalSuratByKategori();
-  const suratByMonth = await fetchUserBarChartData();
+export default async function WargaDashboardPage() {
+  const suratPromise = fetchUserTotalSurat();
+  const suratByKategoriPromise = fetchUserTotalSuratByKategori();
+  const suratByMonthPromise = fetchUserBarChartData();
+
+  const [surat, suratByKategori, suratByMonth] = await Promise.all([
+    suratPromise,
+    suratByKategoriPromise,
+    suratByMonthPromise,
+  ]);
 
   return (
     <DashboardContainer title="Dashboard">

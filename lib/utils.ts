@@ -1,3 +1,4 @@
+import { type Status } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -32,4 +33,15 @@ export function formatEnumValue(input: string): string {
   );
 
   return capitalizedWords.join(" ");
+}
+
+export function getTableBadgeColor(status: Status) {
+  switch (status) {
+    case "DITOLAK":
+      return "destructive";
+    case "PENDING":
+      return "outline";
+    case "SELESAI":
+      return "default";
+  }
 }

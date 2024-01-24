@@ -1,10 +1,7 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import DashboardContainer from "@/components/layouts/dashboard-container";
-import { fetchWargaByUserId, fetchSuratByUserId } from "@/lib/data";
-import { notFound } from "next/navigation";
-import CreateWarga from "../_components/create-warga-button";
+import { UserDataSkeleton } from "@/app/(user)/warga/pengajuan/(jenis)/_components/user-data";
 import { Contact, FileBarChart, FileClock } from "lucide-react";
-import WargaBiodata from "./_components/warga-biodata";
-import DataTableWrapper from "./_components/table-wrapper";
 import {
   Card,
   CardHeader,
@@ -12,17 +9,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 
-export default async function Page({
-  params,
-}: {
-  params: {
-    userId: string;
-  };
-}) {
-  const warga = await fetchWargaByUserId(params.userId);
-  const surat = await fetchSuratByUserId(params.userId);
-  if (!warga) notFound();
-
+export default function Loading() {
   return (
     <DashboardContainer title="Informasi Warga">
       <div className="flex flex-col gap-5">
@@ -31,13 +18,9 @@ export default async function Page({
             <Contact className="inline-block w-6 h-6 text-primary" /> Detail
             Data Warga
           </h3>
-          <WargaBiodata warga={warga} />
+          <UserDataSkeleton />
           <div className="mt-5 ml-auto w-fit">
-            <CreateWarga
-              variant="default"
-              warga={warga}
-              buttonText="Ubah Data Warga"
-            />
+            <Skeleton className="w-32 h-8" />
           </div>
         </div>
         <div>
@@ -50,7 +33,7 @@ export default async function Page({
               <CardHeader>
                 <CardTitle className="text-primary">Total</CardTitle>
                 <CardDescription className="font-medium text-sm">
-                  {surat.length} Surat
+                  <Skeleton className="w-10 h-4" />
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -58,7 +41,7 @@ export default async function Page({
               <CardHeader>
                 <CardTitle className="text-primary">Pending</CardTitle>
                 <CardDescription className="font-medium text-sm">
-                  {surat.filter((s) => s.status === "PENDING").length} Surat
+                  <Skeleton className="w-10 h-4" />
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -66,7 +49,7 @@ export default async function Page({
               <CardHeader>
                 <CardTitle className="text-primary">Selesai</CardTitle>
                 <CardDescription className="font-medium text-sm">
-                  {surat.filter((s) => s.status === "SELESAI").length} Surat
+                  <Skeleton className="w-10 h-4" />
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -74,7 +57,7 @@ export default async function Page({
               <CardHeader>
                 <CardTitle className="text-primary">Ditolak</CardTitle>
                 <CardDescription className="font-medium text-sm">
-                  {surat.filter((s) => s.status === "DITOLAK").length} Surat
+                  <Skeleton className="w-10 h-4" />
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -85,7 +68,20 @@ export default async function Page({
             <FileClock className="inline-block w-6 h-6 text-primary" /> Riwayat
             Pengajuan Surat
           </h3>
-          <DataTableWrapper data={surat} />
+          <div className="border border-gray-200 rounded-lg">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+            </div>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+              <Skeleton className="w-24 h-6" />
+            </div>
+          </div>
         </div>
       </div>
     </DashboardContainer>

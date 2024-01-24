@@ -26,7 +26,7 @@ export function DataTableViewOptions<TData>({
         <Button
           variant="outline"
           size="sm"
-          className="h-8 mr-auto md:ml-auto md:flex"
+          className="h-8 w-fit"
         >
           <MixerHorizontalIcon className="w-4 h-4 mr-2" />
           Pilih Kolom
