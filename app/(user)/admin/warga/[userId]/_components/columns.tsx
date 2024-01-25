@@ -4,7 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import type { Surat, KategoriSurat } from "@prisma/client";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
-import { formatEnumValue, getTableBadgeColor } from "@/lib/utils";
+import { formatEnumValue, getBadgeVariant } from "@/lib/utils";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -56,7 +56,7 @@ export const columns: ColumnDef<
       />
     ),
     cell: ({ row }) => {
-      const badgeColor = getTableBadgeColor(row.original.status);
+      const badgeColor = getBadgeVariant(row.original.status);
 
       return (
         <Badge

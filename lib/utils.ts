@@ -35,7 +35,7 @@ export function formatEnumValue(input: string): string {
   return capitalizedWords.join(" ");
 }
 
-export function getTableBadgeColor(status: Status) {
+export function getBadgeVariant(status: Status) {
   switch (status) {
     case "DITOLAK":
       return "destructive";

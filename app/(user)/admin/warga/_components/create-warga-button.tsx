@@ -438,11 +438,10 @@ export default function CreataWarga({
                 type="submit"
                 disabled={form.formState.isSubmitting || pending}
               >
-                {form.formState.isSubmitting || pending ? (
+                {(form.formState.isSubmitting || pending) && (
                   <Loader2 className={"animate-spin mr-1"} />
-                ) : (
-                  "Simpan"
                 )}
+                {warga ? "Update" : "Tambah"}
               </Button>
             </DialogFooter>
           </form>

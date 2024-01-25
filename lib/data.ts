@@ -5,6 +5,7 @@ import { getCurrentSession } from "./auth";
 
 export async function fetchWargaList() {
   noStore();
+
   try {
     const data = await prisma.warga.findMany({
       select: {
@@ -599,6 +600,7 @@ export async function fetchTotalSuratByKategori() {
 
 export async function fetchTotalSuratByMonth(month: number) {
   noStore();
+
   const session = await getCurrentSession();
   if (session?.user.role !== "ADMIN") {
     throw new Error("Failed to fetch total surat by kategori.");
@@ -623,18 +625,18 @@ export async function fetchTotalSuratByMonth(month: number) {
 export async function fetchBarChartData() {
   noStore();
   try {
-    const jan = fetchUserTotalSuratByMonth(0);
-    const feb = fetchUserTotalSuratByMonth(1);
-    const mar = fetchUserTotalSuratByMonth(2);
-    const apr = fetchUserTotalSuratByMonth(3);
-    const mei = fetchUserTotalSuratByMonth(4);
-    const jun = fetchUserTotalSuratByMonth(5);
-    const jul = fetchUserTotalSuratByMonth(6);
-    const agu = fetchUserTotalSuratByMonth(7);
-    const sep = fetchUserTotalSuratByMonth(8);
-    const okt = fetchUserTotalSuratByMonth(9);
-    const nov = fetchUserTotalSuratByMonth(10);
-    const des = fetchUserTotalSuratByMonth(11);
+    const jan = fetchTotalSuratByMonth(0);
+    const feb = fetchTotalSuratByMonth(1);
+    const mar = fetchTotalSuratByMonth(2);
+    const apr = fetchTotalSuratByMonth(3);
+    const mei = fetchTotalSuratByMonth(4);
+    const jun = fetchTotalSuratByMonth(5);
+    const jul = fetchTotalSuratByMonth(6);
+    const agu = fetchTotalSuratByMonth(7);
+    const sep = fetchTotalSuratByMonth(8);
+    const okt = fetchTotalSuratByMonth(9);
+    const nov = fetchTotalSuratByMonth(10);
+    const des = fetchTotalSuratByMonth(11);
 
     const data = await Promise.all([
       jan,
