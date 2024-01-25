@@ -14,7 +14,7 @@ import type { z } from "zod";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { formatEnumValue } from "@/lib/utils";
 import { createWargaSchema } from "@/types/schema";
 import {
@@ -65,7 +65,6 @@ export default function CreataWarga({
     | "ghost";
 }) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const { toast } = useToast();
   const [pending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof createWargaSchema>>({
@@ -95,11 +94,18 @@ export default function CreataWarga({
       const result = warga
         ? await updateWarga(warga.id, values)
         : await createWarga(values);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+
+      if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
+      }
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
 
       setDialogOpen(false);
     });

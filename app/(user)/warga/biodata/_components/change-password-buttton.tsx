@@ -25,13 +25,12 @@ import { changePasswordSchema } from "@/types/schema";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import { changePassword } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 export default function ChangePasswordButton() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pending, startTransition] = useTransition();
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
@@ -46,11 +45,17 @@ export default function ChangePasswordButton() {
     startTransition(async () => {
       const result = await changePassword(values);
 
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+      if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
+      }
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
 
       setDialogOpen(false);
     });

@@ -77,7 +77,7 @@ export async function createWarga(
 
     return {
       success: true,
-      message: "Warga berhasil ditambahkan",
+      message: "Berhasil menambahkan data warga",
       data: user,
     };
   } catch (error) {
@@ -163,7 +163,7 @@ export async function updateWarga(
 
     return {
       success: true,
-      message: "Warga berhasil diubah",
+      message: "Berhasil mengubah data warga",
       data: updatedUser,
     };
   } catch (error) {
@@ -205,7 +205,7 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
 
     return {
       success: true,
-      message: "Warga berhasil dihapus",
+      message: "Data warga berhasil dihapus",
     };
   } catch (err) {
     console.log(err);
@@ -275,7 +275,7 @@ export async function changePassword(
 
     return {
       success: true,
-      message: "Kata sandi berhasil diubah",
+      message: "Berhasil mengubah kata sandi",
     };
   } catch (error) {
     console.log(error);

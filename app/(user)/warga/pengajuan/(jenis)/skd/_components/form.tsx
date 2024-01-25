@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { createSkdSchema } from "@/types/schema";
 import { createSkd } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,6 @@ const KEPERLUAN = [
 ] as const;
 
 export default function SkdForm() {
-  const { toast } = useToast();
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -50,12 +49,17 @@ export default function SkdForm() {
   function onSubmit(values: z.infer<typeof createSkdSchema>) {
     startTransition(async () => {
       const result = await createSkd(values);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
+
       if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
         router.push("/warga/riwayat");
       }
     });

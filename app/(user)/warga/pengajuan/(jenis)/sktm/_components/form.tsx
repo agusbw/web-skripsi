@@ -19,7 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { createSktmSchema } from "@/types/schema";
 import { createSktm } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,6 @@ const KETERANGAN = [
 ] as const;
 
 export default function SktmForm() {
-  const { toast } = useToast();
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -62,12 +61,16 @@ export default function SktmForm() {
   function onSubmit(values: z.infer<typeof createSktmSchema>) {
     startTransition(async () => {
       const result = await createSktm(values);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
       if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
         router.push("/warga/riwayat");
       }
     });

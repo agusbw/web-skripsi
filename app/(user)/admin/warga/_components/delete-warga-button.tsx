@@ -13,21 +13,26 @@ import * as React from "react";
 import { Trash2Icon } from "lucide-react";
 import { deleteWarga } from "@/lib/actions";
 import { Loader2 } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 export const DeleteWarga = ({ id }: { id: string }) => {
   const [alertOpen, setAlertOpen] = React.useState<boolean | undefined>(false);
   const [pending, startTransition] = React.useTransition();
-  const { toast } = useToast();
 
   async function handleDeleteWarga(id: string) {
     startTransition(async () => {
       const result = await deleteWarga(id);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+      if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
+      }
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
       setAlertOpen(false);
     });
   }

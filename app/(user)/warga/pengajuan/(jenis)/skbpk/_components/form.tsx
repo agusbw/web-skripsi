@@ -18,9 +18,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { createSkbpkSchema } from "@/types/schema";
 import { createSkbpk } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const KEPERLUAN = [
@@ -30,7 +30,6 @@ const KEPERLUAN = [
 ] as const;
 
 export default function SkbpkForm() {
-  const { toast } = useToast();
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -44,12 +43,16 @@ export default function SkbpkForm() {
   function onSubmit(values: z.infer<typeof createSkbpkSchema>) {
     startTransition(async () => {
       const result = await createSkbpk(values);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
       if (result.success) {
+        toast.success("Sukses", {
+          description: result.message,
+        });
         router.push("/warga/riwayat");
       }
     });

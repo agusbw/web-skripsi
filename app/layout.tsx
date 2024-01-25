@@ -1,14 +1,9 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font";
-import { Toaster } from "@/components/ui/toaster";
+
+import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/app/providers";
 import { cn } from "@/lib/utils";
-
-export const metadata: Metadata = {
-  title: "SIPEM",
-  description: "Sistem Informasi Pengaduan Masyarakat",
-};
+import { inter } from "@/lib/constant";
 
 export default function RootLayout({
   children,
@@ -18,7 +13,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(GeistSans.className, "light")}
+      className={cn(inter.className, "light")}
       style={{
         colorScheme: "light",
       }}
@@ -26,7 +21,10 @@ export default function RootLayout({
       <body>
         <Providers>
           {children}
-          <Toaster />
+          <Toaster
+            richColors
+            closeButton
+          />
         </Providers>
       </body>
     </html>

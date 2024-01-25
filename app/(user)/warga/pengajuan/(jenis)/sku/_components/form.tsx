@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { createSkuSchema } from "@/types/schema";
 import { createSku } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,6 @@ const KEPERLUAN = [
 ] as const;
 
 export default function SktmForm() {
-  const { toast } = useToast();
   const [pending, startTransition] = useTransition();
   const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
   const router = useRouter();
@@ -64,12 +63,16 @@ export default function SktmForm() {
   function onSubmit(values: z.infer<typeof createSkuSchema>) {
     startTransition(async () => {
       const result = await createSku(values);
-      toast({
-        title: `${result.success ? "Berhasil✅" : "Gagal❎"}!`,
-        description: result.message,
-        variant: `${result.success ? "default" : "destructive"}`,
-      });
+
+      if (!result.success) {
+        toast.error("Gagal", {
+          description: result.message,
+        });
+      }
       if (result.success) {
+        toast.success("Berhasil", {
+          description: result.message,
+        });
         router.push("/warga/riwayat");
       }
     });
