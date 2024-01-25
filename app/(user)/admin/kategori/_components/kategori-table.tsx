@@ -37,7 +37,7 @@ export async function KategoriTable({
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
         <DateFilter />
         <ExportPDF data={data} />
       </div>

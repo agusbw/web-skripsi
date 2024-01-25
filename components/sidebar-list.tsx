@@ -45,7 +45,7 @@ function SidebarList({ session }: { session: Session }) {
           >
             <p className={"flex items-center gap-3"}>
               <span className="text-primary">{item.icon}</span>
-              <span>{item.title}</span>
+              <span className="text-left">{item.title}</span>
             </p>
           </Link>
         ))}
