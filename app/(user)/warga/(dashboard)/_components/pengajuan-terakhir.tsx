@@ -1,9 +1,8 @@
-import { Badge } from "@/components/ui/badge";
 import { fetchUserLatestSurat } from "@/lib/data";
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
-import { formatEnumValue, getBadgeVariant, cn } from "@/lib/utils";
 import Image from "next/image";
+import SuratStatusBadge from "@/components/surat-status-badge";
 
 export async function PengajuanTerakhir() {
   const latestSurat = await fetchUserLatestSurat();
@@ -42,20 +41,7 @@ export async function PengajuanTerakhir() {
             </p>
           </div>
           <div className="ml-auto font-medium">
-            <Badge
-              variant={getBadgeVariant(surat?.status)}
-              className="rounded-full flex items-center justify-center w-fit"
-            >
-              <div
-                className={cn(
-                  "w-1.5 h-1.5 rounded-full mr-1",
-                  getBadgeVariant(surat?.status) === "outline"
-                    ? "bg-black"
-                    : "bg-white"
-                )}
-              ></div>
-              <div>{formatEnumValue(surat?.status)}</div>
-            </Badge>
+            <SuratStatusBadge status={surat.status} />
           </div>
         </div>
       ))}

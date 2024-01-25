@@ -3,9 +3,8 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { type Surat, type KategoriSurat } from "@prisma/client";
+import SuratStatusBadge from "@/components/surat-status-badge";
 import format from "date-fns/format";
-import { formatEnumValue } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -141,15 +140,7 @@ export const pendingColumns: ColumnDef<
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      return (
-        <Badge
-          variant={"outline"}
-          className="rounded-full flex items-center justify-center w-fit"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-secondary-foreground mr-1"></div>
-          <div>{formatEnumValue(row.original.status)}</div>
-        </Badge>
-      );
+      return <SuratStatusBadge status={row.original.status} />;
     },
   },
   {
@@ -202,15 +193,7 @@ export const selesaiColumns: ColumnDef<
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      return (
-        <Badge
-          variant={"default"}
-          className="rounded-full flex items-center justify-center w-fit"
-        >
-          <div className="w-1.5 h-1.5  rounded-full bg-primary-foreground mr-1"></div>
-          <div>{formatEnumValue(row.original.status)}</div>
-        </Badge>
-      );
+      return <SuratStatusBadge status={row.original.status} />;
     },
   },
   {
@@ -263,15 +246,7 @@ export const ditolakColumns: ColumnDef<
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      return (
-        <Badge
-          variant={"destructive"}
-          className="rounded-full flex items-center justify-center w-fit"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-destructive-foreground mr-1"></div>
-          <div>{formatEnumValue(row.original.status)}</div>
-        </Badge>
-      );
+      return <SuratStatusBadge status={row.original.status} />;
     },
   },
   {
