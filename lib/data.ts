@@ -2,6 +2,8 @@ import "server-only";
 import prisma from "./prisma";
 import { unstable_noStore as noStore } from "next/cache";
 import { getCurrentSession } from "./auth";
+import type { KodeSurat } from "@prisma/client";
+import { generateTotalFromSuratStatusGroup } from "./utils";
 
 export async function fetchWargaList() {
   noStore();
@@ -78,15 +80,60 @@ export async function fetchSuratByUserId(id: string) {
   }
 }
 
-export async function fetchKategoriSurat() {
+export async function fetchCountSuratByKategoriFiltered(
+  startDate: Date | null | undefined,
+  endDate: Date | null | undefined
+) {
   noStore();
-  try {
-    const data = await prisma.kategoriSurat.findMany({
-      include: {
-        surat: true,
+
+  function generateWhereClause(kode: KodeSurat) {
+    return {
+      kategori_surat: {
+        kode: kode,
       },
+      createdAt: startDate && endDate ? { gte: startDate, lte: endDate } : {},
+    };
+  }
+
+  try {
+    const sktmCountsPromise = prisma.surat.groupBy({
+      by: ["status"],
+      where: generateWhereClause("SKTM"),
+      _count: true,
     });
-    return data;
+
+    const skuCountsPromise = prisma.surat.groupBy({
+      by: ["status"],
+      where: generateWhereClause("SKU"),
+      _count: true,
+    });
+
+    const skbpkCountsPromise = prisma.surat.groupBy({
+      by: ["status"],
+      where: generateWhereClause("SKBPK"),
+      _count: true,
+    });
+
+    const skdCountsPromise = prisma.surat.groupBy({
+      by: ["status"],
+      where: generateWhereClause("SKD"),
+      _count: true,
+    });
+
+    const [sktmCounts, skuCounts, skbpkCounts, skdCounts] =
+      await prisma.$transaction([
+        sktmCountsPromise,
+        skuCountsPromise,
+        skbpkCountsPromise,
+        skdCountsPromise,
+      ]);
+
+    return {
+      SKTM: generateTotalFromSuratStatusGroup(sktmCounts),
+      SKU: generateTotalFromSuratStatusGroup(skuCounts),
+      SKBPK: generateTotalFromSuratStatusGroup(skbpkCounts),
+      SKD: generateTotalFromSuratStatusGroup(skdCounts),
+    };
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch kategori surat.");
@@ -195,42 +242,21 @@ export async function fetchUserTotalSurat() {
   }
   const currentWargaid = session?.user.id_warga;
   try {
-    const total = prisma.surat.count({
+    const countSurat = await prisma.surat.groupBy({
+      by: ["status"],
+      _count: true,
       where: {
         id_warga: currentWargaid,
-      },
-    });
-    const pending = prisma.surat.count({
-      where: {
-        id_warga: currentWargaid,
-        status: "PENDING",
-      },
-    });
-    const selesai = prisma.surat.count({
-      where: {
-        id_warga: currentWargaid,
-        status: "SELESAI",
-      },
-    });
-    const ditolak = prisma.surat.count({
-      where: {
-        id_warga: currentWargaid,
-        status: "DITOLAK",
       },
     });
 
-    const data = await prisma.$transaction([total, pending, selesai, ditolak]);
+    const count = generateTotalFromSuratStatusGroup(countSurat);
 
     return {
-      total: data[0],
-      pending: data[1],
-      selesai: data[2],
-      ditolak: data[3],
-    } as {
-      total: number;
-      pending: number;
-      selesai: number;
-      ditolak: number;
+      total: count.total,
+      pending: count.pending,
+      selesai: count.selesai,
+      ditolak: count.ditolak,
     };
   } catch (error) {
     console.error("Database Error:", error);
@@ -461,35 +487,18 @@ export async function fetchTotalSurat() {
   }
 
   try {
-    const total = prisma.surat.count();
-    const pending = prisma.surat.count({
-      where: {
-        status: "PENDING",
-      },
-    });
-    const selesai = prisma.surat.count({
-      where: {
-        status: "SELESAI",
-      },
-    });
-    const ditolak = prisma.surat.count({
-      where: {
-        status: "DITOLAK",
-      },
+    const countSurat = await prisma.surat.groupBy({
+      by: ["status"],
+      _count: true,
     });
 
-    const data = await prisma.$transaction([total, pending, selesai, ditolak]);
+    const count = generateTotalFromSuratStatusGroup(countSurat);
 
     return {
-      total: data[0],
-      pending: data[1],
-      selesai: data[2],
-      ditolak: data[3],
-    } as {
-      total: number;
-      pending: number;
-      selesai: number;
-      ditolak: number;
+      total: count.total,
+      pending: count.pending,
+      selesai: count.selesai,
+      ditolak: count.ditolak,
     };
   } catch (error) {
     console.error("Database Error:", error);

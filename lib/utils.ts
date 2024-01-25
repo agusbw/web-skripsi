@@ -1,4 +1,4 @@
-import { type Status } from "@prisma/client";
+import { type Status, type Prisma } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -44,4 +44,33 @@ export function getBadgeVariant(status: Status) {
     case "SELESAI":
       return "default";
   }
+}
+
+export function generateTotalFromSuratStatusGroup(
+  data: (Prisma.PickEnumerable<Prisma.SuratGroupByOutputType, "status"[]> & {
+    _count: number;
+  })[]
+) {
+  const total = data.reduce((acc, curr) => {
+    return acc + curr._count;
+  }, 0);
+
+  const pending = data.reduce((acc, curr) => {
+    return curr.status === "PENDING" ? acc + curr._count : acc;
+  }, 0);
+
+  const selesai = data.reduce((acc, curr) => {
+    return curr.status === "SELESAI" ? acc + curr._count : acc;
+  }, 0);
+
+  const ditolak = data.reduce((acc, curr) => {
+    return curr.status === "DITOLAK" ? acc + curr._count : acc;
+  }, 0);
+
+  return {
+    total,
+    pending,
+    selesai,
+    ditolak,
+  };
 }
