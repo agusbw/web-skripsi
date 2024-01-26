@@ -395,112 +395,87 @@ export async function fetchUserTotalSuratByKategori() {
   }
 }
 
-export async function fetchUserTotalSuratByMonth(month: number) {
+export async function fetchUserBarChartData() {
   noStore();
   const session = await getCurrentSession();
   const currentWargaid = session?.user.id_warga;
 
   try {
-    const data = await prisma.surat.count({
+    const data = await prisma.surat.findMany({
       where: {
         id_warga: currentWargaid,
         createdAt: {
-          gte: new Date(new Date().getFullYear(), month, 1),
-          lt: new Date(new Date().getFullYear(), month + 1, 1),
+          gte: new Date(new Date().getFullYear(), 0, 1),
+          lt: new Date(new Date().getFullYear() + 1, 0, 1),
         },
       },
+      select: {
+        createdAt: true,
+      },
     });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch total surat by month.");
-  }
-}
 
-export async function fetchUserBarChartData() {
-  noStore();
-  try {
-    const jan = fetchUserTotalSuratByMonth(0);
-    const feb = fetchUserTotalSuratByMonth(1);
-    const mar = fetchUserTotalSuratByMonth(2);
-    const apr = fetchUserTotalSuratByMonth(3);
-    const mei = fetchUserTotalSuratByMonth(4);
-    const jun = fetchUserTotalSuratByMonth(5);
-    const jul = fetchUserTotalSuratByMonth(6);
-    const agu = fetchUserTotalSuratByMonth(7);
-    const sep = fetchUserTotalSuratByMonth(8);
-    const okt = fetchUserTotalSuratByMonth(9);
-    const nov = fetchUserTotalSuratByMonth(10);
-    const des = fetchUserTotalSuratByMonth(11);
+    // Initialize an array with 12 elements for each month
+    const monthlyData = Array(12).fill(0) as number[];
 
-    const data = await Promise.all([
-      jan,
-      feb,
-      mar,
-      apr,
-      mei,
-      jun,
-      jul,
-      agu,
-      sep,
-      okt,
-      nov,
-      des,
-    ]);
+    // Fill the array with the data from the database
+    data.forEach((item) => {
+      const month = item.createdAt.getMonth();
+      monthlyData[month]++;
+    });
 
     return [
       {
         name: "Jan",
-        total: data[0],
+        total: monthlyData[0],
       },
       {
         name: "Feb",
-        total: data[1],
+        total: monthlyData[1],
       },
       {
         name: "Mar",
-        total: data[2],
+        total: monthlyData[2],
       },
       {
         name: "Apr",
-        total: data[3],
+        total: monthlyData[3],
       },
       {
         name: "Mei",
-        total: data[4],
+        total: monthlyData[4],
       },
       {
         name: "Jun",
-        total: data[5],
+        total: monthlyData[5],
       },
       {
         name: "Jul",
-        total: data[6],
+        total: monthlyData[6],
       },
       {
         name: "Agu",
-        total: data[7],
+        total: monthlyData[7],
       },
       {
         name: "Sep",
-        total: data[8],
+        total: monthlyData[8],
       },
       {
         name: "Okt",
-        total: data[9],
+        total: monthlyData[9],
       },
       {
         name: "Nov",
-        total: data[10],
+        total: monthlyData[10],
       },
       {
         name: "Des",
-        total: data[11],
+        total: monthlyData[11],
       },
-    ];
+    ] as { name: string; total: number }[];
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch bar chart data.");
+    throw new Error("Failed to fetch total surat by month.");
   }
 }
 
@@ -632,114 +607,83 @@ export async function fetchTotalSuratByKategori() {
     throw new Error("Failed to fetch total surat by kategori.");
   }
 }
-
-export async function fetchTotalSuratByMonth(month: number) {
-  noStore();
-
-  const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
-    throw new Error("Failed to fetch total surat by kategori.");
-  }
-
-  try {
-    const data = await prisma.surat.count({
-      where: {
-        createdAt: {
-          gte: new Date(new Date().getFullYear(), month, 1),
-          lt: new Date(new Date().getFullYear(), month + 1, 1),
-        },
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch total surat by month.");
-  }
-}
-
 export async function fetchBarChartData() {
   noStore();
-  try {
-    const jan = fetchTotalSuratByMonth(0);
-    const feb = fetchTotalSuratByMonth(1);
-    const mar = fetchTotalSuratByMonth(2);
-    const apr = fetchTotalSuratByMonth(3);
-    const mei = fetchTotalSuratByMonth(4);
-    const jun = fetchTotalSuratByMonth(5);
-    const jul = fetchTotalSuratByMonth(6);
-    const agu = fetchTotalSuratByMonth(7);
-    const sep = fetchTotalSuratByMonth(8);
-    const okt = fetchTotalSuratByMonth(9);
-    const nov = fetchTotalSuratByMonth(10);
-    const des = fetchTotalSuratByMonth(11);
 
-    const data = await Promise.all([
-      jan,
-      feb,
-      mar,
-      apr,
-      mei,
-      jun,
-      jul,
-      agu,
-      sep,
-      okt,
-      nov,
-      des,
-    ]);
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(new Date().getFullYear(), 0, 1),
+          lt: new Date(new Date().getFullYear() + 1, 0, 1),
+        },
+      },
+      select: {
+        createdAt: true,
+      },
+    });
+
+    // Initialize an array with 12 elements for each month
+    const monthlyData = Array(12).fill(0) as number[];
+
+    // Fill the array with the data from the database
+    data.forEach((item) => {
+      const month = item.createdAt.getMonth();
+      monthlyData[month]++;
+    });
 
     return [
       {
         name: "Jan",
-        total: data[0],
+        total: monthlyData[0],
       },
       {
         name: "Feb",
-        total: data[1],
+        total: monthlyData[1],
       },
       {
         name: "Mar",
-        total: data[2],
+        total: monthlyData[2],
       },
       {
         name: "Apr",
-        total: data[3],
+        total: monthlyData[3],
       },
       {
         name: "Mei",
-        total: data[4],
+        total: monthlyData[4],
       },
       {
         name: "Jun",
-        total: data[5],
+        total: monthlyData[5],
       },
       {
         name: "Jul",
-        total: data[6],
+        total: monthlyData[6],
       },
       {
         name: "Agu",
-        total: data[7],
+        total: monthlyData[7],
       },
       {
         name: "Sep",
-        total: data[8],
+        total: monthlyData[8],
       },
       {
         name: "Okt",
-        total: data[9],
+        total: monthlyData[9],
       },
       {
         name: "Nov",
-        total: data[10],
+        total: monthlyData[10],
       },
       {
         name: "Des",
-        total: data[11],
+        total: monthlyData[11],
       },
-    ];
+    ] as { name: string; total: number }[];
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch bar chart data.");
+    throw new Error("Failed to fetch total surat by month.");
   }
 }
