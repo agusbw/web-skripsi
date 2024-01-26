@@ -18,8 +18,6 @@ function SidebarList({
   session: Session;
   displayName: string;
 }) {
-  // TODO: we get the displayname from the session, so it wont change when the admin change their name unless they relogin
-
   const pathname = usePathname();
   const user = session.user;
   const getConfig = (role: string) => {
