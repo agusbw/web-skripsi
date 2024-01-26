@@ -14,4 +14,11 @@ const BANJAR_DINAS = [
   "Banjar Dinas Satria",
 ];
 
-export { ADMIN_WHATSAPP_NUMBER, BANJAR_DINAS };
+const WHATSAPP_TEXT = {
+  laporBug: `Halo admin, saya menemukan masalah pada Sistem Pengajuan Surat Keterangan. Masalah yang saya temukan adalah {masukkan masalah anda}`,
+  daftarAkun: `Halo admin, NIK saya belum terdaftar pada Sistem Pengajuan Surat Keterangan. Saya ingin mendaftarkan NIK saya.`,
+  lupaPassword: `Halo admin, saya lupa password akun di Sistem Pengajuan Surat Keterangan. NIK saya adalah {masukkan NIK anda}`,
+  kesalahanData: `Halo admin, saya ingin melaporkan kesalahan data pribadi pada Sistem Pengajuan Surat Keterangan. Kesalahan data diri saya adalah {masukkan kesalahan data anda}`,
+};
+
+export { ADMIN_WHATSAPP_NUMBER, BANJAR_DINAS, WHATSAPP_TEXT };

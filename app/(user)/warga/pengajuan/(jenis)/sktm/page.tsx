@@ -1,6 +1,6 @@
 import SktmForm from "./_components/form";
 import UserData, { UserDataSkeleton } from "../_components/user-data";
-import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
+import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
 import { Suspense } from "react";
 import Link from "next/link";
 
@@ -20,7 +20,9 @@ export default function SktmPage() {
             Apabila terdapat kesalahan data pengaju,{" "}
             <Link
               className="text-primary hover:underline"
-              href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}/?text=${WHATSAPP_TEXT.kesalahanData}`}
             >
               hubungi admin
             </Link>

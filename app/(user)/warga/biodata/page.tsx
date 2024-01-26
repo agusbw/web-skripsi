@@ -1,7 +1,7 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
+import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
 import { AlertCircle, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ChangePasswordButton from "./_components/change-password-buttton";
@@ -36,7 +36,7 @@ export default async function BiodataPage() {
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
+              href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}/?text=${WHATSAPP_TEXT.kesalahanData}`}
             >
               <MessageSquare className="w-4 h-4 mr-1" />
               Hubungi Admin

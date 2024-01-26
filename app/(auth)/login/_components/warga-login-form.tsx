@@ -20,7 +20,7 @@ import { signIn } from "next-auth/react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import Link from "next/link";
-import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
+import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
 import { useRouter } from "next/navigation";
 
 export default function WargaLoginForm() {
@@ -125,12 +125,23 @@ export default function WargaLoginForm() {
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
           Dashboard pengaduan.
         </p>
-        <Link
-          href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
-          className="hover:underline text-primary text-sm inline-block"
-        >
-          NIK belum terdaftar? Hubungi admin
-        </Link>
+        <div className="flex flex-col">
+          <Link
+            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.lupaPassword}`}
+            className="hover:underline text-primary text-sm inline-block"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Lupa kata sandi?
+          </Link>
+          <Link
+            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.daftarAkun}`}
+            className="hover:underline text-primary text-sm inline-block"
+            rel="noreferrer noopener"
+          >
+            NIK belum terdaftar?
+          </Link>
+        </div>
       </form>
     </Form>
   );
