@@ -118,7 +118,7 @@ export async function updateWarga(
       },
     });
 
-    if (!user) return { success: false, message: "Warga tidak ditemukan" };
+    if (!user) return { success: false, message: "Data warga tidak ditemukan" };
 
     const isExist = await prisma.warga.findFirst({
       where: {
@@ -193,7 +193,7 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
       },
     });
 
-    if (!user) return { success: false, message: "Warga tidak ditemukan" };
+    if (!user) return { success: false, message: "Data warga tidak ditemukan" };
 
     await prisma.user.delete({
       where: {
@@ -246,7 +246,7 @@ export async function changePassword(
     if (!user) {
       return {
         success: false,
-        message: "User tidak ditemukan",
+        message: "Data user tidak ditemukan",
       };
     }
 
@@ -316,12 +316,13 @@ export async function createSktm(
       },
     });
 
-    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+    if (!warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
 
     if (!kategoriSurat)
       return {
         success: false,
-        message: "Kategori surat tidak ditemukan",
+        message: "Data kategori surat tidak tersedia",
       };
 
     const result = await prisma.surat.create({
@@ -390,12 +391,13 @@ export async function createSkbpk(
       },
     });
 
-    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+    if (!warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
 
     if (!kategoriSurat)
       return {
         success: false,
-        message: "Kategori surat tidak ditemukan",
+        message: "Data kategori surat tidak tersedia",
       };
 
     const result = await prisma.surat.create({
@@ -460,12 +462,13 @@ export async function createSku(formData: CreateSku): Promise<ActionsResponse> {
       },
     });
 
-    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+    if (!warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
 
     if (!kategoriSurat)
       return {
         success: false,
-        message: "Kategori surat tidak ditemukan",
+        message: "Data kategori surat tidak tersedia",
       };
 
     const result = await prisma.surat.create({
@@ -533,12 +536,13 @@ export async function createSkd(formData: CreateSkd): Promise<ActionsResponse> {
       },
     });
 
-    if (!warga) return { success: false, message: "Warga tidak ditemukan" };
+    if (!warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
 
     if (!kategoriSurat)
       return {
         success: false,
-        message: "Kategori surat tidak ditemukan",
+        message: "Data kategori surat tidak tersedia",
       };
 
     const result = await prisma.surat.create({

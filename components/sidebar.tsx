@@ -1,5 +1,6 @@
 import SidebarList from "@/components/sidebar-list";
 import { getCurrentSession } from "@/lib/auth";
+import { fetchUserDisplayName } from "@/lib/data";
 
 const Sidebar = async () => {
   const session = await getCurrentSession();
@@ -7,6 +8,8 @@ const Sidebar = async () => {
   if (!session) {
     return;
   }
+
+  const data = await fetchUserDisplayName();
 
   return (
     <>
@@ -17,7 +20,10 @@ const Sidebar = async () => {
           Sistem Pengajuan Surat Keterangan
         </p>
 
-        <SidebarList session={session} />
+        <SidebarList
+          session={session}
+          displayName={data?.warga?.nama ?? "Warga"}
+        />
       </div>
     </>
   );

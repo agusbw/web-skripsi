@@ -19,8 +19,13 @@ export default async function Page({
     userId: string;
   };
 }) {
-  const warga = await fetchWargaByUserId(params.userId);
-  const surat = await fetchSuratByUserId(params.userId);
+  // TODO: tambahin aksi pada table surat
+
+  const wargaPromise = fetchWargaByUserId(params.userId);
+  const suratPromise = fetchSuratByUserId(params.userId);
+
+  const [warga, surat] = await Promise.all([wargaPromise, suratPromise]);
+
   if (!warga) notFound();
 
   return (

@@ -124,11 +124,12 @@ export async function KategoriTable({
 export async function KategoriTableSkeleton() {
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
         <DateFilter />
         <Skeleton className="h-8 w-32" />
       </div>
-      <Table className="border mt-4">
+      <p className="my-2 text-sm">Sedang memuat data...</p>
+      <Table className="border">
         <TableHeader>
           <TableRow>
             <TableHead>Jenis Surat</TableHead>

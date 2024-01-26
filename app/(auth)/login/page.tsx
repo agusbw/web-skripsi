@@ -6,7 +6,7 @@ import { getCurrentSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Halaman Login",
+  title: "Login",
 };
 
 export default async function LoginPage() {

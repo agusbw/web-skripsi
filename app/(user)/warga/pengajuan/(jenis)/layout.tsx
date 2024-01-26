@@ -1,6 +1,6 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 
-export default async function AdminDashboardLayout({
+export default function AdminDashboardLayout({
   children,
 }: {
   children: React.ReactNode;

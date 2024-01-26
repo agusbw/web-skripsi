@@ -6,8 +6,16 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 import { ADMIN_WHATSAPP_NUMBER } from "@/lib/constant";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Pusat Bantuan",
+  description: "Pusat Bantuan Sistem Informasi Pengajuan Surat Keterangan",
+};
 
 export default function HelpPage() {
+  // TODO: Benerin question dan answer
+
   return (
     <div>
       <div

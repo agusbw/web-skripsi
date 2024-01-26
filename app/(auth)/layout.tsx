@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import React from "react";
 
-export default async function AuthenticationLayout({
+export default function AuthenticationLayout({
   children,
 }: {
   children: React.ReactNode;

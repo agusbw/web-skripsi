@@ -2,6 +2,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import * as React from "react";
 import { getCurrentSession } from "@/lib/auth";
 import SidebarList from "./sidebar-list";
+import { fetchUserDisplayName } from "@/lib/data";
 
 const MobileNav = async () => {
   const session = await getCurrentSession();
@@ -9,6 +10,8 @@ const MobileNav = async () => {
   if (!session) {
     return;
   }
+
+  const data = await fetchUserDisplayName();
 
   return (
     <div
@@ -31,7 +34,10 @@ const MobileNav = async () => {
               "flex flex-col space-y-4 text-center mt-10 sm:text-left "
             }
           >
-            <SidebarList session={session} />
+            <SidebarList
+              session={session}
+              displayName={data?.warga?.nama ?? "Warga"}
+            />
           </div>
         </SheetContent>
       </Sheet>

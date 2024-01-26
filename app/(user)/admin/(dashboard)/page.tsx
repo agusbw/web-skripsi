@@ -7,14 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BarChartSurat, PieChartSurat } from "./_components/charts";
-import { PengajuanTerakhir } from "./_components/pengajuan-terakhir";
+import { BarChartSurat, PieChartSurat } from "@/components/dashboard/charts";
+import { AdminLatestRequest as LatestRequest } from "@/components/dashboard/latest-request";
 import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
 import {
   fetchTotalSurat,
   fetchTotalSuratByKategori,
   fetchBarChartData,
+  fetchLatestSurat,
 } from "@/lib/data";
+import SuratCountCard from "@/components/dashboard/surat-count-card";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -28,12 +30,16 @@ export default async function AdminDashboardPage() {
   const suratPromise = fetchTotalSurat();
   const suratByKategoriPromise = fetchTotalSuratByKategori();
   const suratByMonthPromise = fetchBarChartData();
+  const latestSuratPromise = fetchLatestSurat();
 
-  const [surat, suratByKategori, suratByMonth] = await Promise.all([
-    suratPromise,
-    suratByKategoriPromise,
-    suratByMonthPromise,
-  ]);
+  const [surat, suratByKategori, suratByMonth, latestSurat] = await Promise.all(
+    [
+      suratPromise,
+      suratByKategoriPromise,
+      suratByMonthPromise,
+      latestSuratPromise,
+    ]
+  );
 
   return (
     <DashboardContainer title="Dashboard Admin">
@@ -41,50 +47,26 @@ export default async function AdminDashboardPage() {
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Total Pengajuan Surat
-                  </CardTitle>
-                  <Mails className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{surat?.total}</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Pending
-                  </CardTitle>
-                  <MailQuestion className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{surat?.pending}</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Selesai
-                  </CardTitle>
-                  <MailCheck className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{surat?.selesai}</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Ditolak
-                  </CardTitle>
-                  <MailX className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{surat?.ditolak}</div>
-                </CardContent>
-              </Card>
+              <SuratCountCard
+                count={surat?.total}
+                title="Total Surat"
+                Icon={Mails}
+              />
+              <SuratCountCard
+                count={surat?.pending}
+                title="Surat Pending"
+                Icon={MailQuestion}
+              />
+              <SuratCountCard
+                count={surat?.selesai}
+                title="Surat Selesai"
+                Icon={MailCheck}
+              />
+              <SuratCountCard
+                count={surat?.ditolak}
+                title="Surat Ditolak"
+                Icon={MailX}
+              />
             </div>
             <div className="grid lg:gap-4 gap-y-4 lg:gap-y-0 grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-2">
@@ -95,7 +77,7 @@ export default async function AdminDashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <PengajuanTerakhir />
+                  <LatestRequest data={latestSurat} />
                 </CardContent>
               </Card>
               <Card className="col-span-3">

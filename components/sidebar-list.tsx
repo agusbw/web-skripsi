@@ -11,7 +11,15 @@ import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
 
-function SidebarList({ session }: { session: Session }) {
+function SidebarList({
+  session,
+  displayName,
+}: {
+  session: Session;
+  displayName: string;
+}) {
+  // TODO: we get the displayname from the session, so it wont change when the admin change their name unless they relogin
+
   const pathname = usePathname();
   const user = session.user;
   const getConfig = (role: string) => {
@@ -28,7 +36,7 @@ function SidebarList({ session }: { session: Session }) {
           <AvatarImage src="/user.webp" />
         </Avatar>
         <p className="line-clamp-2 text-sm font-medium text-primary">
-          {user.display_name}
+          {user.role === "WARGA" ? displayName : "Admin"}
         </p>
       </div>
       <div className="flex flex-col w-full gap-3">

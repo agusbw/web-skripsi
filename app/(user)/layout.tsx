@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Dashboard sistem pengajuan surat keterangan Desa Pelapuan.",
 };
 
-export default async function AdminDashboardLayout({
+export default function AdminDashboardLayout({
   children,
 }: {
   children: React.ReactNode;

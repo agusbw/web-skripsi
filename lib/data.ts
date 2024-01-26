@@ -55,8 +55,34 @@ export async function fetchWargaByUserId(id: string) {
   }
 }
 
+export async function fetchUserDisplayName() {
+  noStore();
+  const session = await getCurrentSession();
+  const currentUserId = session?.user.id;
+
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: currentUserId,
+      },
+      select: {
+        warga: {
+          select: {
+            nama: true,
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user data.");
+  }
+}
+
 export async function fetchSuratByUserId(id: string) {
   noStore();
+
   try {
     const data = await prisma.surat.findMany({
       where: {
