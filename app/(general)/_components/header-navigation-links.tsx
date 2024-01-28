@@ -11,7 +11,7 @@ export default function HeaderNavigationLinks() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-wrap items-center gap-8 text-base text-primary-foreground">
+    <nav className="flex flex-wrap items-center gap-8 text-base text-primary">
       <Link
         className={cn("", pathname === "/" ? "font-bold" : "")}
         href="/"
@@ -25,11 +25,10 @@ export default function HeaderNavigationLinks() {
         Bantuan
       </Link>
       <Button
-        variant={"secondary"}
         className="rounded-full"
         onClick={() => signIn()}
       >
-        Masuk <EnterIcon className={"ml-1"} />
+        <EnterIcon className={"mr-1"} /> | Masuk
       </Button>
     </nav>
   );

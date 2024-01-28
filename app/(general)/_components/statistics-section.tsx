@@ -11,7 +11,7 @@ function CardItem({
   href: string;
 }) {
   return (
-    <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
+    <div className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-4 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10">
       <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-primary transition-all duration-700 group-hover:scale-[13]" />
       <div className="relative z-10 mx-auto max-w-md">
         <span className="grid h-20 w-20 place-items-center rounded-full bg-primary transition-all duration-300 group-hover:bg-violet-500">
@@ -43,7 +43,7 @@ function CardItem({
 function StatisticsSection() {
   return (
     <section className="body-font">
-      <div className="container px-5 pb-12 mx-auto">
+      <div className="px-5 lg:px-32 pb-12 mx-auto">
         <div className="flex flex-col w-full mb-8 text-center">
           <p className="mb-4 text-2xl font-bold text-primary sm:text-4xl">
             Ajukan Surat Keterangan dengan Mudah

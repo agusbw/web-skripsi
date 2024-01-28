@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 function HelpCta() {
   return (
-    <section className="bg-secondary body-font py-10">
+    <section className="bg-secondary body-font py-10 lg:px-32 px-5">
       <div className="px-5 py-12 mx-auto">
         <div className="flex flex-col items-center gap-4 mx-auto lg:w-2/3 sm:flex-row">
           <h1 className="flex-grow text-2xl font-medium text-center sm:text-left sm:pr-16 title-font">

@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function ComplaintStepsSection() {
   return (
     <section
-      className="py-12 body-font"
+      className="lg:px-32 py-12 body-font"
       id="step"
     >
       <p className="mb-4 text-2xl font-bold text-primary sm:text-4xl text-center">
@@ -59,8 +59,8 @@ export default function ComplaintStepsSection() {
             className="hidden lg:block object-center mt-12 rounded-lg lg:w-3/5 md:w-1/2 md:mt-0 scale-90"
             src="/tata-cara.svg"
             alt="step"
-            width={200}
-            height={200}
+            width={150}
+            height={150}
           />
         </div>
       </div>
