@@ -10,7 +10,13 @@ import {
 import SuratCountCard from "@/components/dashboard/surat-count-card";
 import { BarChartSurat, PieChartSurat } from "@/components/dashboard/charts";
 import { UserLatestRequest as LatestRequest } from "@/components/dashboard/latest-request";
-import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
+import {
+  Mails,
+  MailX,
+  MailCheck,
+  MailQuestion,
+  CheckCheck,
+} from "lucide-react";
 import {
   fetchUserTotalSurat,
   fetchUserTotalSuratByKategori,
@@ -45,25 +51,35 @@ export default async function WargaDashboardPage() {
       <>
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
               <SuratCountCard
                 count={surat?.total}
                 title="Total Surat"
                 Icon={Mails}
+                className="col-span-2 lg:col-span-1"
               />
               <SuratCountCard
                 count={surat?.pending}
                 title="Surat Pending"
                 Icon={MailQuestion}
+                className="bg-yellow-500 text-white"
               />
               <SuratCountCard
                 count={surat?.selesai}
                 title="Surat Selesai"
                 Icon={MailCheck}
+                className="bg-green-500 text-white"
+              />
+              <SuratCountCard
+                count={surat?.ditolak}
+                title="Surat Diambil"
+                Icon={CheckCheck}
+                className="bg-blue-500 text-white"
               />
               <SuratCountCard
                 count={surat?.ditolak}
                 title="Surat Ditolak"
+                className="bg-red-500 text-white"
                 Icon={MailX}
               />
             </div>

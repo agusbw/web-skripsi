@@ -234,6 +234,31 @@ export async function fetchUserSuratSelesai() {
   }
 }
 
+export async function fetchUserSuratDiambil() {
+  noStore();
+  const session = await getCurrentSession();
+  const currentWargaid = session?.user.id_warga;
+
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        id_warga: currentWargaid,
+        status: "DIAMBIL",
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        kategori_surat: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat diambil.");
+  }
+}
+
 export async function fetchUserSuratDitolak() {
   noStore();
   const session = await getCurrentSession();
@@ -283,6 +308,7 @@ export async function fetchUserTotalSurat() {
       pending: count.pending,
       selesai: count.selesai,
       ditolak: count.ditolak,
+      diambil: count.diambil,
     };
   } catch (error) {
     console.error("Database Error:", error);
@@ -500,6 +526,7 @@ export async function fetchTotalSurat() {
       pending: count.pending,
       selesai: count.selesai,
       ditolak: count.ditolak,
+      diambil: count.diambil,
     };
   } catch (error) {
     console.error("Database Error:", error);

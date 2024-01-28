@@ -67,10 +67,15 @@ export function generateTotalFromSuratStatusGroup(
     return curr.status === "DITOLAK" ? acc + curr._count : acc;
   }, 0);
 
+  const diambil = data.reduce((acc, curr) => {
+    return curr.status === "DIAMBIL" ? acc + curr._count : acc;
+  }, 0);
+
   return {
     total,
     pending,
     selesai,
     ditolak,
+    diambil,
   };
 }

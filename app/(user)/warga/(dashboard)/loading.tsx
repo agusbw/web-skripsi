@@ -6,7 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mails, MailX, MailCheck, MailQuestion } from "lucide-react";
+import {
+  Mails,
+  MailX,
+  MailCheck,
+  MailQuestion,
+  CheckCheck,
+} from "lucide-react";
+import { SuratCountCardSkeleton } from "@/components/dashboard/surat-count-card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function Loading() {
@@ -15,51 +22,32 @@ export default async function Loading() {
       <>
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Total Pengajuan Surat
-                  </CardTitle>
-                  <Mails className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="w-24 h-8" />
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Pending
-                  </CardTitle>
-                  <MailQuestion className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="w-24 h-8" />
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Selesai
-                  </CardTitle>
-                  <MailCheck className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="w-24 h-8" />
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 hover:bg-primary/10 transition-all hover:shadow-md border-primary/20">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Surat Ditolak
-                  </CardTitle>
-                  <MailX className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="w-24 h-8" />
-                </CardContent>
-              </Card>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+              <SuratCountCardSkeleton
+                title="Total Surat"
+                className="bg-primary"
+                Icon={Mails}
+              />
+              <SuratCountCardSkeleton
+                title="Surat Pending"
+                className="bg-yellow-500"
+                Icon={MailQuestion}
+              />
+              <SuratCountCardSkeleton
+                className="bg-green-500"
+                title="Surat Selesai"
+                Icon={MailCheck}
+              />
+              <SuratCountCardSkeleton
+                className="bg-blue-500"
+                title="Surat Diambil"
+                Icon={CheckCheck}
+              />
+              <SuratCountCardSkeleton
+                className="bg-red-500"
+                title="Surat Ditolak"
+                Icon={MailX}
+              />
             </div>
             <div className="grid lg:gap-4 gap-y-4 lg:gap-y-0 grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-2">

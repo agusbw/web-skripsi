@@ -10,6 +10,7 @@ import {
   fetchUserSuratPending,
   fetchUserSuratDitolak,
   fetchUserSuratSelesai,
+  fetchUserSuratDiambil,
 } from "@/lib/data";
 import { Terminal } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -27,12 +28,15 @@ export default async function BiodataPage() {
   const fetchSuratPending = fetchUserSuratPending();
   const fetchSuratSelesai = fetchUserSuratSelesai();
   const fetchSuratDitolak = fetchUserSuratDitolak();
+  const fetchSuratDiambil = fetchUserSuratDiambil();
 
-  const [suratPending, suratSelesai, suratDitolak] = await Promise.all([
-    fetchSuratPending,
-    fetchSuratSelesai,
-    fetchSuratDitolak,
-  ]);
+  const [suratPending, suratSelesai, suratDitolak, suratDiambil] =
+    await Promise.all([
+      fetchSuratPending,
+      fetchSuratSelesai,
+      fetchSuratDitolak,
+      fetchSuratDiambil,
+    ]);
 
   return (
     <DashboardContainer title="Riwayat Pengajuan Surat">
@@ -40,6 +44,7 @@ export default async function BiodataPage() {
         <TabsList>
           <TabsTrigger value="pending">Pending</TabsTrigger>
           <TabsTrigger value="selesai">Selesai</TabsTrigger>
+          <TabsTrigger value="diambil">Diambil</TabsTrigger>
           <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
         </TabsList>
         <TabsContent value="pending">
@@ -64,13 +69,27 @@ export default async function BiodataPage() {
             <AlertDescription>
               Pengajuan surat yang telah
               <span className="font-bold"> selesai</span> diproses akan
-              ditampilkan di sini.
-              <p>Surat sudah dapat diambil di kantor desa.</p>
+              ditampilkan di sini, surat sudah dapat diambil di kantor desa.
             </AlertDescription>
           </Alert>
           <DataTable
             columns={selesaiColumns}
             data={suratSelesai}
+          />
+        </TabsContent>
+        <TabsContent value="diambil">
+          <Alert>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Informasi!</AlertTitle>
+            <AlertDescription>
+              Surat yang telah
+              <span className="font-bold"> diambil</span> akan ditampilkan di
+              sini, surat berikut sudah anda ambil di kantor desa.
+            </AlertDescription>
+          </Alert>
+          <DataTable
+            columns={selesaiColumns}
+            data={suratDiambil}
           />
         </TabsContent>
         <TabsContent value="ditolak">
