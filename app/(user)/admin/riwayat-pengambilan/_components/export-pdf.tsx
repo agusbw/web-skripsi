@@ -68,7 +68,7 @@ export default function ExportPDF({ data }: { data: Props[] }) {
         variant={"secondary"}
         onClick={exportPDF}
       >
-        <Printer className="w-4 h-4 mr-1" /> | Print Data
+        <Printer className="w-4 h-4 mr-1" /> | Unduh Data
       </Button>
     </div>
   );

@@ -41,7 +41,7 @@ export default function ExportPDF({
         variant={"secondary"}
         onClick={exportPDF}
       >
-        <Printer className="w-4 h-4 mr-1" /> | Print Data
+        <Printer className="w-4 h-4 mr-1" /> | Unduh Data
       </Button>
     </div>
   );
