@@ -59,7 +59,7 @@ export default function ExportPDF({ data }: { data: Props[] }) {
       theme: "grid",
     });
 
-    doc.save("data-warga.pdf");
+    doc.save("data-pengambilan-surat.pdf");
   }
 
   return (
