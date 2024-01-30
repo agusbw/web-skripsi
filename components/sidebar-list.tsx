@@ -29,11 +29,11 @@ function SidebarList({
 
   return (
     <>
-      <div className="flex items-center gap-2 p-3 my-6 rounded-md bg-primary/10 lg:mx-5">
+      <div className="flex items-center gap-2 p-3 my-6 rounded-md bg-primary text-primary-foreground lg:mx-5">
         <Avatar className="w-12 h-12 border shadow-sm border-primary">
           <AvatarImage src="/user.webp" />
         </Avatar>
-        <p className="line-clamp-2 text-sm font-medium text-primary">
+        <p className="line-clamp-2 text-sm font-medium">
           {user.role === "WARGA" ? displayName : "Admin"}
         </p>
       </div>
@@ -43,14 +43,29 @@ function SidebarList({
             key={item.title}
             href={item.path}
             className={cn(
-              "p-3 rounded-md lg:hover:bg-primary/10 duration-300 lg:mx-5 transition active:border-0 active:outline active:outline-accent",
+              "p-3 rounded-md duration-300 lg:mx-5 transition active:border-0 active:outline active:outline-accent group/item",
               isLinkActive(pathname, item.path)
-                ? "bg-primary/10 text-primary font-semibold"
-                : ""
+                ? "bg-primary text-primary-foreground font-medium"
+                : "lg:hover:bg-primary/10"
             )}
           >
-            <p className={"flex items-center gap-3"}>
-              <span className="text-primary">{item.icon}</span>
+            <p
+              className={cn(
+                "flex items-center gap-3",
+                !isLinkActive(pathname, item.path) &&
+                  "group-hover/item:text-primary"
+              )}
+            >
+              <span
+                className={cn(
+                  "text-primary",
+                  isLinkActive(pathname, item.path)
+                    ? "text-primary-foreground"
+                    : ""
+                )}
+              >
+                {item.icon}
+              </span>
               <span className="text-left">{item.title}</span>
             </p>
           </Link>
