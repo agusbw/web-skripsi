@@ -83,7 +83,7 @@ export const riwayatPengambilanColumns: ColumnDef<
       return (
         <span className="capitalize">
           {row.original.tanggal_pengambilan
-            ? format(row.original?.tanggal_pengambilan as Date, "d MMMM yyyy", {
+            ? format(row.original?.tanggal_pengambilan, "d MMMM yyyy", {
                 locale: id,
               })
             : "-"}
