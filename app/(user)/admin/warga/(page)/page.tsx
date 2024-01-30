@@ -14,7 +14,7 @@ export default async function AdminWargaPage() {
   const data = await fetchWargaList();
 
   return (
-    <DashboardContainer title="Manajemen Data Warga">
+    <DashboardContainer title="Data Warga">
       <div className="flex justify-end w-full gap-3">
         <CreateWarga variant="default" />
         <ExportPDF data={data} />

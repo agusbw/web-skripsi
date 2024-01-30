@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <DashboardContainer title="Manajemen Data Warga">
+    <DashboardContainer title="Data Warga">
       <div className="flex justify-end w-full">
         <Skeleton className="h-10 w-44" />
       </div>
