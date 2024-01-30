@@ -32,7 +32,7 @@ export default async function KategoriPage({
         surat.
       </p>
       <p className="text-sm font-medium text-muted-foreground mb-2">
-        Filter Data:{" "}
+        Pilih Rentang Waktu:{" "}
       </p>
       <Suspense
         key={(startDate ? startDate : "start") + (endDate ? endDate : "end")}
