@@ -752,3 +752,114 @@ export async function fetchSuratDiambil() {
     throw new Error("Failed to fetch surat diambil.");
   }
 }
+
+export async function fetchSuratPending() {
+  noStore();
+  const session = await getCurrentSession();
+  if (session?.user.role !== "ADMIN") {
+    throw new Error("Failed to fetch surat pending.");
+  }
+
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        status: "PENDING",
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        kategori_surat: true,
+        warga: {
+          select: {
+            nama: true,
+            nik: true,
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat pending.");
+  }
+}
+
+export async function fetchSuratSelesai() {
+  noStore();
+  const session = await getCurrentSession();
+  if (session?.user.role !== "ADMIN") {
+    throw new Error("Failed to fetch surat selesai.");
+  }
+
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        status: "SELESAI",
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        kategori_surat: true,
+        warga: {
+          select: {
+            nama: true,
+            nik: true,
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat selesai.");
+  }
+}
+
+export async function fetchSuratDitolak() {
+  noStore();
+  const session = await getCurrentSession();
+  if (session?.user.role !== "ADMIN") {
+    throw new Error("Failed to fetch surat ditolak.");
+  }
+
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        status: "DITOLAK",
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        kategori_surat: true,
+        warga: {
+          select: {
+            nama: true,
+            nik: true,
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat ditolak.");
+  }
+}
