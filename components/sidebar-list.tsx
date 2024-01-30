@@ -103,6 +103,9 @@ function SidebarList({
           <LogOut className="w-4 h-4 ml-2" />
         </Button>
       </div>
+      <p className="text-muted-foreground text-xs text-center mt-8 p-3 lg:mx-5">
+        @2024 Pemerintah Desa Pelapuan
+      </p>
     </>
   );
 }

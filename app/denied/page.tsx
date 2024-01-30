@@ -4,7 +4,7 @@ import { AlertCircle, Home } from "lucide-react";
 
 export default function Denied() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-primary">
+    <div className="flex flex-col items-center justify-center lg:h-screen px-5 text-center mt-20 lg:mt-0 text-primary">
       <AlertCircle className="h-8 w-8" />
       <p className="font-bold text-2xl">403</p>
       <p className="font-semibold text-lg">Akses Ditolak</p>
