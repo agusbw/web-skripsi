@@ -1,7 +1,7 @@
 "use client";
 
 import { adminSidebar, wargaSidebar } from "@/config/site-config";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,15 +27,39 @@ function SidebarList({
     return [];
   };
 
+  const generateAvatar = (displayName: string) => {
+    const name = displayName.split(" ");
+    const firstName = name[0];
+    const lastName = name[1];
+
+    if (!firstName) return "WRG";
+    if (!lastName) return `${firstName[0]}`;
+
+    return `${firstName[0]}${lastName[0]}`;
+  };
+
   return (
     <>
       <div className="flex items-center gap-2 p-3 my-6 rounded-md bg-primary text-primary-foreground lg:mx-5">
         <Avatar className="w-12 h-12 border shadow-sm border-primary">
-          <AvatarImage src="/user.webp" />
+          {user.role === "WARGA" && (
+            <AvatarFallback className="text-primary bg-primary-foreground">
+              {generateAvatar(displayName)}
+            </AvatarFallback>
+          )}
+          {user.role === "ADMIN" && <AvatarImage src="/user.webp" />}
         </Avatar>
-        <p className="line-clamp-2 text-sm font-medium">
-          {user.role === "WARGA" ? displayName : "Admin"}
-        </p>
+        <div className="flex flex-col items-start">
+          <div className="">
+            <div className="h-2.5 w-2.5 bg-green-400 rounded-full inline-block mr-1"></div>
+            <span className="text-xs">Online</span>
+          </div>
+          <div>
+            <p className="line-clamp-1 text-sm font-medium text-left  ">
+              {user.role === "WARGA" ? displayName : "Admin Desa Pelapuan"}
+            </p>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col w-full gap-3">
         {getConfig(user.role).map((item) => (
