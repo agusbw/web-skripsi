@@ -58,6 +58,7 @@ export async function KategoriTable({
             <TableHead>Jumlah Pengajuan</TableHead>
             <TableHead>Pending</TableHead>
             <TableHead>Selesai</TableHead>
+            <TableHead>Diambil</TableHead>
             <TableHead>Ditolak</TableHead>
           </TableRow>
         </TableHeader>
@@ -69,6 +70,7 @@ export async function KategoriTable({
             <TableCell>{SKTM.total}</TableCell>
             <TableCell>{SKTM.pending}</TableCell>
             <TableCell>{SKTM.selesai}</TableCell>
+            <TableCell>{SKTM.diambil}</TableCell>
             <TableCell>{SKTM.ditolak}</TableCell>
           </TableRow>
           <TableRow>
@@ -78,6 +80,7 @@ export async function KategoriTable({
             <TableCell>{SKU.total}</TableCell>
             <TableCell>{SKU.pending}</TableCell>
             <TableCell>{SKU.selesai}</TableCell>
+            <TableCell>{SKU.diambil}</TableCell>
             <TableCell>{SKU.ditolak}</TableCell>
           </TableRow>
           <TableRow>
@@ -87,6 +90,7 @@ export async function KategoriTable({
             <TableCell>{SKD.total}</TableCell>
             <TableCell>{SKD.pending}</TableCell>
             <TableCell>{SKD.selesai}</TableCell>
+            <TableCell>{SKD.diambil}</TableCell>
             <TableCell>{SKD.ditolak}</TableCell>
           </TableRow>
           <TableRow>
@@ -96,6 +100,7 @@ export async function KategoriTable({
             <TableCell>{SKBPK.total}</TableCell>
             <TableCell>{SKBPK.pending}</TableCell>
             <TableCell>{SKBPK.selesai}</TableCell>
+            <TableCell>{SKBPK.diambil}</TableCell>
             <TableCell>{SKBPK.ditolak}</TableCell>
           </TableRow>
         </TableBody>
@@ -110,6 +115,9 @@ export async function KategoriTable({
             </TableCell>
             <TableCell>
               {SKTM.selesai + SKU.selesai + SKD.selesai + SKBPK.selesai}
+            </TableCell>
+            <TableCell>
+              {SKTM.diambil + SKU.diambil + SKD.diambil + SKBPK.diambil}
             </TableCell>
             <TableCell>
               {SKTM.ditolak + SKU.ditolak + SKD.ditolak + SKBPK.ditolak}
@@ -136,6 +144,7 @@ export async function KategoriTableSkeleton() {
             <TableHead>Jumlah Pengajuan</TableHead>
             <TableHead>Pending</TableHead>
             <TableHead>Selesai</TableHead>
+            <TableHead>Diambil</TableHead>
             <TableHead>Ditolak</TableHead>
           </TableRow>
         </TableHeader>
@@ -143,6 +152,9 @@ export async function KategoriTableSkeleton() {
           <TableRow>
             <TableCell className="font-medium py-2">
               Surat Keterangan Tidak Mampu
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
@@ -173,10 +185,16 @@ export async function KategoriTableSkeleton() {
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="font-medium py-2">
               Surat Keterangan Domisili
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
@@ -207,11 +225,17 @@ export async function KategoriTableSkeleton() {
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
           </TableRow>
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell>Total</TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>

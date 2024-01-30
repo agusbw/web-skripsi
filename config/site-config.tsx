@@ -64,7 +64,7 @@ const adminSidebar = [
   },
   {
     title: "Data Riwayat Pengambilan",
-    path: "/admin/pengambilan",
+    path: "/admin/riwayat-pengambilan",
     icon: <FileCheck size={18} />,
   },
 

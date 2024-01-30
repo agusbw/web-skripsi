@@ -66,6 +66,7 @@ model Surat{
   tempat_lahir    String      @db.VarChar(255)
   jenis_kelamin   Boolean 
   status_perkawinan StatusKawin
+  tanggal_pengambilan DateTime? 
 
   domisili        String?      @db.VarChar(255)
   nama_usaha     String?      @db.VarChar(255)

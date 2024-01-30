@@ -48,6 +48,7 @@ export async function fetchWargaByUserId(id: string) {
         id_user: id,
       },
     });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -712,5 +713,42 @@ export async function fetchBarChartData() {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch total surat by month.");
+  }
+}
+
+export async function fetchSuratDiambil() {
+  noStore();
+  const session = await getCurrentSession();
+  if (session?.user.role !== "ADMIN") {
+    throw new Error("Failed to fetch surat diambil.");
+  }
+
+  try {
+    const data = await prisma.surat.findMany({
+      where: {
+        status: "DIAMBIL",
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        kategori_surat: true,
+        warga: {
+          select: {
+            nama: true,
+            nik: true,
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat diambil.");
   }
 }

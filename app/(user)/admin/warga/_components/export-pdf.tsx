@@ -29,6 +29,7 @@ export default function ExportPDF({
       head: [["NIK", "Nama", "Alamat", "Tanggal Lahir", "Total Pengajuan"]],
       body: rows,
       theme: "grid",
+      foot: [["Total", "", "", "", rows.length]],
     });
 
     doc.save("data-warga.pdf");
