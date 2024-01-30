@@ -16,13 +16,13 @@ const MobileNav = async () => {
   return (
     <div
       className={
-        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-white z-50"
+        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-primary-foreground text-primary z-50"
       }
     >
       <p className={"text-xl"}>SIPSK</p>
       <Sheet>
         <SheetTrigger>
-          <div className="p-2 border rounded-md border-primary/20">
+          <div className="p-2 rounded-md">
             <span className="after:content-[''] after:block after:h-0.5 after:mb-1 after:rounded-full after:w-5 after:bg-primary"></span>
             <span className="after:content-[''] after:block after:h-0.5 after:mb-1 after:rounded-full after:w-5 after:bg-primary"></span>
             <span className="after:content-[''] after:block after:h-0.5  after:rounded-full after:w-5 after:bg-primary"></span>
