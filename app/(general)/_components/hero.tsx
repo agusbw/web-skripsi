@@ -31,12 +31,12 @@ export default function Hero() {
             </button>
           </div>
         </div>
-        <div className="w-5/6 lg:max-w-lg lg:flex justify-center lg:w-full md:w-1/2 hidden">
+        <div className="w-5/6 lg:max-w-lg lg:flex justify-center lg:w-full md:w-1/2">
           <Image
             className="object-cover object-center"
             alt="hero"
-            src="/hero.svg"
-            width={350}
+            src="/kegiatan-1.jpeg"
+            width={450}
             height={350}
           />
         </div>

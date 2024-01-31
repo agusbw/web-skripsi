@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -20,7 +22,12 @@ export default function AuthenticationLayout({
           </Link>
         </div>
         <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
+          <img
+            src="/login-banner.jpg"
+            alt=""
+            className="absolute inset-0 h-full object-cover w-full"
+          />
+          <div className="absolute inset-0 bg-black opacity-60"></div>
           <div className="relative z-20 flex items-center text-lg font-medium">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +46,10 @@ export default function AuthenticationLayout({
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;Websiteku cepet kok, device mu aja yang bapuk.&rdquo;
+                “Kami berkomitmen untuk memberikan pelayanan terbaik kepada
+                masyarakat Desa Pelapuan”
               </p>
-              <footer className="text-sm">Warren Buffering</footer>
+              <footer className="text-sm">Pemerintah Desa Pelapuan</footer>
             </blockquote>
           </div>
         </div>

@@ -24,7 +24,7 @@ export const ComplaintSteps: ComplaintStep[] = [
   {
     title: "Pilih Jenis Surat",
     description:
-      "Pilih jenis surat yang ingin diajukan. Pastikan jenis surat yang dipilih sesuai dengan kebutuhan.",
+      "Cari menu lalu tekan menu Ajukan Surat dan pilih jenis surat yang ingin diajukan. Pastikan jenis surat yang dipilih sesuai dengan kebutuhan.",
     icon: <ScrollText />,
   },
   {

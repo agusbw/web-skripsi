@@ -1,6 +1,7 @@
 import SidebarList from "@/components/sidebar-list";
 import { getCurrentSession } from "@/lib/auth";
 import { fetchUserDisplayName } from "@/lib/data";
+import Image from "next/image";
 
 const Sidebar = async () => {
   const session = await getCurrentSession();
@@ -14,8 +15,15 @@ const Sidebar = async () => {
   return (
     <>
       <div className="sticky top-0 hidden w-3/12 h-screen transition-all duration-300 border-r border-slate-300 lg:block">
+        <Image
+          src="/logo-desa.png"
+          alt="Logo Desa"
+          width={50}
+          height={50}
+          className="mx-auto mt-12"
+        />
         <p
-          className={`mt-16 text-xl px-3 transition inline-block mx-auto w-full py-4  text-center  font-semibold`}
+          className={`text-xl px-3 transition inline-block mx-auto w-full py-4  text-center  font-semibold`}
         >
           Sistem Pengajuan Surat Keterangan
         </p>

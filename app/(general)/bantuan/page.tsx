@@ -14,8 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default function HelpPage() {
-  // TODO: Benerin question dan answer
-
   return (
     <div>
       <div
@@ -37,24 +35,25 @@ export default function HelpPage() {
           collapsible
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger>SIPSK itu aplikasi apa?</AccordionTrigger>
+            <AccordionTrigger className="text-left">
+              SIPSK itu aplikasi apa?
+            </AccordionTrigger>
             <AccordionContent>
               SIPSK adalah website yang digunakan untuk mempermudah masyarakat
-              dalam mengajukan surat keterangan kepada pemerintah Desa Pelapuan.
+              dalam mengajukan surat keterangan Desa Pelapuan.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>
+            <AccordionTrigger className="text-left">
               Apa yang melatarbelakangi dibangunnya SIPSK?
             </AccordionTrigger>
             <AccordionContent>
               SIPSK dilatarbelakangi oleh kurangnya aksesibilitas masyarakat
-              dalam mengajukan surat keterangan secara online kepada pemerintah
-              Desa Pelapuan.
+              dalam mengajukan surat keterangan secara online Desa Pelapuan.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger>
+            <AccordionTrigger className="text-left">
               Bagaimana caranya mengajukan surat?
             </AccordionTrigger>
             <AccordionContent>
@@ -63,16 +62,16 @@ export default function HelpPage() {
                 className="underline text-primary"
                 href="/#step"
               >
-                Home
+                beranda
               </Link>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
-            <AccordionTrigger>
-              Ada bug atau error, harus lapor kemana?
+            <AccordionTrigger className="text-left">
+              Jika ada kendala atau masalah, kemana saya harus melapor?
             </AccordionTrigger>
             <AccordionContent>
-              Anda dapat melaporkan bug atau error melalui kontak{" "}
+              Anda dapat melaporkan masalah atau kendala melalui kontak{" "}
               <Link
                 className="underline text-primary"
                 href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}
@@ -82,7 +81,7 @@ export default function HelpPage() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5">
-            <AccordionTrigger>
+            <AccordionTrigger className="text-left">
               Saya tidak punya akun, harus bagaimana?
             </AccordionTrigger>
             <AccordionContent>
@@ -90,11 +89,12 @@ export default function HelpPage() {
               <span className="text-primary">
                 &apos;NIK belum terdaftar&apos;
               </span>
-              , lalu anda akan diarahkan menuju kontak Admin Desa Pelapuan
+              , lalu anda akan diarahkan menuju kontak petugas untuk melakukan
+              pendaftaran.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-6">
-            <AccordionTrigger>
+            <AccordionTrigger className="text-left">
               Apakah saya tetap mengambil surat di Kantor Desa?
             </AccordionTrigger>
             <AccordionContent>
@@ -104,17 +104,6 @@ export default function HelpPage() {
               mengurus data administrasi, menunggu pencetakan surat, dan
               melakukan proses lainnya di Kantor Desa. Hanya anda perlu
               mengambil suratnya langsung ketika sudah selesai.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-7">
-            <AccordionTrigger>
-              Ada pertanyaan lain, hubungi kemana?
-            </AccordionTrigger>
-            <AccordionContent>
-              Anda dapat terhubung dengan admin melalui kontak{" "}
-              <Link href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}`}>
-                berikut
-              </Link>
             </AccordionContent>
           </AccordionItem>
         </Accordion>

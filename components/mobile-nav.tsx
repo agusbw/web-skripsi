@@ -3,6 +3,7 @@ import * as React from "react";
 import { getCurrentSession } from "@/lib/auth";
 import SidebarList from "./sidebar-list";
 import { fetchUserDisplayName } from "@/lib/data";
+import Image from "next/image";
 
 const MobileNav = async () => {
   const session = await getCurrentSession();
@@ -19,7 +20,15 @@ const MobileNav = async () => {
         "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-primary-foreground text-primary z-50"
       }
     >
-      <p className={"text-xl"}>SIPSK</p>
+      <div className="flex items-center gap-2">
+        <Image
+          src="/logo-desa.png"
+          alt="Logo Desa"
+          width={50}
+          height={50}
+        />
+        <span className="">SIPSK</span>
+      </div>
       <Sheet>
         <SheetTrigger>
           <div className="p-2 rounded-md">
