@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { HelpCircle, Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -13,6 +13,24 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { wargaLoginSchema } from "@/types/schema";
@@ -21,7 +39,72 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import Link from "next/link";
 import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { useRouter } from "next/navigation";
+
+export function RenderPasswordInfoDrawerDialog() {
+  const [open, setOpen] = useState(false);
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+
+  if (!isSmallDevice) {
+    return (
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <DialogTrigger asChild>
+          <Button variant="outline">
+            <HelpCircle className="h-4 w-4" />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Informasi</DialogTitle>
+            <DialogDescription>
+              Password bawaan adalah tanggal lahir anda dengan format
+              (ddmmyyyy). Contoh: 01111997 untuk tanggal lahir 1 November 1997.
+              <p className="text-destructive mt-2">
+                Disarankan untuk mengganti password anda setelah login pertama
+                kali di halaman biodata.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <DrawerTrigger asChild>
+        <Button variant="outline">
+          <HelpCircle className="h-4 w-4" />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>Informasi</DrawerTitle>
+          <DrawerDescription>
+            Password bawaan adalah tanggal lahir anda dengan format (ddmmyyyy).
+            Contoh: 01111997 untuk tanggal lahir 1 November 1997.
+            <p className="text-destructive mt-2">
+              Disarankan untuk mengganti password anda setelah login pertama
+              kali di halaman biodata.
+            </p>
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Tutup</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 export default function WargaLoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
@@ -93,6 +176,7 @@ export default function WargaLoginForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="password"
@@ -100,16 +184,20 @@ export default function WargaLoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  type={"password"}
-                  {...field}
-                />
+                <div className="flex gap-3 items-end">
+                  <Input
+                    type={"password"}
+                    {...field}
+                  />
+                  <RenderPasswordInfoDrawerDialog />
+                </div>
               </FormControl>
-              <FormMessage />
               <FormDescription>Password anda</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
+
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
