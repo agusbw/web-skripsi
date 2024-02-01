@@ -266,7 +266,9 @@ export const ditolakColumns: ColumnDef<
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Pesan Penolakan</DialogTitle>
-              <DialogDescription>{row.original.pesan}</DialogDescription>
+              <DialogDescription>
+                {row.original.pesan_penolakan}
+              </DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>

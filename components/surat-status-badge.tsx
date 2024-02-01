@@ -2,7 +2,13 @@ import { type Status } from "@prisma/client";
 import { cn, formatEnumValue } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 
-export default function SuratStatusBadge({ status }: { status: Status }) {
+export default function SuratStatusBadge({
+  status,
+  className,
+}: {
+  status: Status;
+  className?: string;
+}) {
   function getBadgeVariant(status: Status) {
     switch (status) {
       case "DIAMBIL":
@@ -22,7 +28,8 @@ export default function SuratStatusBadge({ status }: { status: Status }) {
     <Badge
       className={cn(
         "rounded-full flex items-center justify-center w-fit text-white",
-        getBadgeVariant(status)
+        getBadgeVariant(status),
+        className
       )}
     >
       <div className={cn("w-1.5 h-1.5 rounded-full mr-1", "bg-white")}></div>

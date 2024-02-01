@@ -101,3 +101,7 @@ export const createSkdSchema = z.object({
     })
     .min(1, "Domisili harus dipilih"),
 });
+
+export const tolakSuratSchema = z.object({
+  pesan_penolakan: z.string().min(1, "Pesan penolakan harus diisi"),
+});

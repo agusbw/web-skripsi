@@ -9,6 +9,7 @@ import {
   createSkbpkSchema,
   createSkuSchema,
   createSkdSchema,
+  tolakSuratSchema,
 } from "@/types/schema";
 import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
@@ -21,6 +22,7 @@ type CreateSktm = z.infer<typeof createSktmSchema>;
 type CreateSkbpk = z.infer<typeof createSkbpkSchema>;
 type CreateSku = z.infer<typeof createSkuSchema>;
 type CreateSkd = z.infer<typeof createSkdSchema>;
+type TolakSurat = z.infer<typeof tolakSuratSchema>;
 
 export async function createWarga(
   formData: CreateWarga
@@ -571,6 +573,62 @@ export async function createSkd(formData: CreateSkd): Promise<ActionsResponse> {
       success: true,
       message: "Surat keterangan berhasil diajukan",
       data: result,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function tolakSurat(
+  id: string,
+  formData: TolakSurat
+): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  const validatedData = tolakSuratSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    await prisma.surat.update({
+      where: {
+        id: surat.id,
+      },
+      data: {
+        status: "DITOLAK",
+        pesan_penolakan: validatedData.data.pesan_penolakan,
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Pengajuan berhasil ditolak",
     };
   } catch (err) {
     console.log(err);

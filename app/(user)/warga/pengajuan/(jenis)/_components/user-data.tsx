@@ -4,17 +4,7 @@ import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
 import { id } from "date-fns/esm/locale";
 import { Skeleton } from "@/components/ui/skeleton";
-
-function DataItem({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <Label>{label}: </Label>
-      <div className="p-2 bg-accent text-accent-foreground border cursor-not-allowed">
-        <p className="text-sm">{value ? value : "-"}</p>
-      </div>
-    </div>
-  );
-}
+import DataItem from "@/components/data-item-field";
 
 export default async function UserData() {
   const userBiodata = await getUserBiodata();

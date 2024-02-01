@@ -73,7 +73,7 @@ model Surat{
   lokasi_usaha   String?      @db.VarChar(255)
   dtks           Boolean?     @default(false)
 
-  pesan           String?      @db.VarChar(255)
+  pesan_penolakan           String?      @db.VarChar(255)
 
 
   id_kategori_surat String @db.VarChar(255)

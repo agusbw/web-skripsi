@@ -863,3 +863,33 @@ export async function fetchSuratDitolak() {
     throw new Error("Failed to fetch surat ditolak.");
   }
 }
+
+export async function fetchSuratById(id: string) {
+  noStore();
+
+  try {
+    const data = await prisma.surat.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        kategori_surat: true,
+        warga: {
+          select: {
+            nama: true,
+            nik: true,
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch surat by id.");
+  }
+}

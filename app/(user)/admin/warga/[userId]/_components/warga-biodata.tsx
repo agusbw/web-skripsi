@@ -1,19 +1,8 @@
-import { Label } from "@/components/ui/label";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
 import { id } from "date-fns/esm/locale";
 import { type Warga } from "@prisma/client";
-
-function DataItem({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <Label>{label}: </Label>
-      <div className="p-2 bg-accent text-accent-foreground border cursor-not-allowed">
-        <p className="text-sm">{value ? value : "-"}</p>
-      </div>
-    </div>
-  );
-}
+import DataItem from "@/components/data-item-field";
 
 export default async function WargaBiodata({ warga }: { warga: Warga }) {
   return (
