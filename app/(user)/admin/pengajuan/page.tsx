@@ -1,10 +1,6 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  fetchSuratPending,
-  fetchSuratDitolak,
-  fetchSuratSelesai,
-} from "@/lib/data";
+import { fetchAllSurat } from "@/lib/data";
 import DataTableWrapper from "./_components/table-wrapper";
 import {
   pendingColumns,
@@ -23,15 +19,11 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function PengajuanPage() {
-  const suratPendingPromise = fetchSuratPending();
-  const suratDitolakPromise = fetchSuratDitolak();
-  const suratSelesaiPromise = fetchSuratSelesai();
+  const surat = await fetchAllSurat();
 
-  const [suratPending, suratDitolak, suratSelesai] = await Promise.all([
-    suratPendingPromise,
-    suratDitolakPromise,
-    suratSelesaiPromise,
-  ]);
+  const suratPending = surat.filter((item) => item.status === "PENDING");
+  const suratSelesai = surat.filter((item) => item.status === "SELESAI");
+  const suratDitolak = surat.filter((item) => item.status === "DITOLAK");
 
   return (
     <DashboardContainer title="Data Pengajuan Surat">

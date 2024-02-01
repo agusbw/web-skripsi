@@ -1,7 +1,5 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { fetchSuratDiambil } from "@/lib/data";
-import { AlertCircle } from "lucide-react";
 import { RiwayatPengambilanTable } from "./_components/data-table";
 import { riwayatPengambilanColumns } from "./_components/columns";
 import ExportPDF from "./_components/export-pdf";
@@ -20,14 +18,10 @@ export default async function RiwayatPengambilanPage() {
 
   return (
     <DashboardContainer title="Data Pengambilan Surat">
-      <Alert>
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Informasi</AlertTitle>
-        <AlertDescription>
-          Berikut adalah riwayat pengambilan surat yang telah dilakukan oleh
-          warga.
-        </AlertDescription>
-      </Alert>
+      <p className="mb-5 text-muted-foreground">
+        Berikut adalah data riwayat pengambilan surat yang telah dilakukan oleh
+        warga.
+      </p>
       <div className="w-full flex justify-end mt-5">
         <ExportPDF data={data} />
       </div>

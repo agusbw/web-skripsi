@@ -185,7 +185,7 @@ export async function getUserBiodata() {
   }
 }
 
-export async function fetchUserSuratPending() {
+export async function fetchALlUserSurat() {
   noStore();
   const session = await getCurrentSession();
   const currentWargaid = session?.user.id_warga;
@@ -194,7 +194,6 @@ export async function fetchUserSuratPending() {
     const data = await prisma.surat.findMany({
       where: {
         id_warga: currentWargaid,
-        status: "PENDING",
       },
       orderBy: {
         createdAt: "desc",
@@ -206,82 +205,7 @@ export async function fetchUserSuratPending() {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat pending.");
-  }
-}
-
-export async function fetchUserSuratSelesai() {
-  noStore();
-  const session = await getCurrentSession();
-  const currentWargaid = session?.user.id_warga;
-
-  try {
-    const data = await prisma.surat.findMany({
-      where: {
-        id_warga: currentWargaid,
-        status: "SELESAI",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        kategori_surat: true,
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat selesai.");
-  }
-}
-
-export async function fetchUserSuratDiambil() {
-  noStore();
-  const session = await getCurrentSession();
-  const currentWargaid = session?.user.id_warga;
-
-  try {
-    const data = await prisma.surat.findMany({
-      where: {
-        id_warga: currentWargaid,
-        status: "DIAMBIL",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        kategori_surat: true,
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat diambil.");
-  }
-}
-
-export async function fetchUserSuratDitolak() {
-  noStore();
-  const session = await getCurrentSession();
-  const currentWargaid = session?.user.id_warga;
-
-  try {
-    const data = await prisma.surat.findMany({
-      where: {
-        id_warga: currentWargaid,
-        status: "DITOLAK",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        kategori_surat: true,
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat ditolak.");
+    throw new Error("Failed to fetch all user surat.");
   }
 }
 
@@ -753,7 +677,7 @@ export async function fetchSuratDiambil() {
   }
 }
 
-export async function fetchSuratPending() {
+export async function fetchAllSurat() {
   noStore();
   const session = await getCurrentSession();
   if (session?.user.role !== "ADMIN") {
@@ -762,9 +686,6 @@ export async function fetchSuratPending() {
 
   try {
     const data = await prisma.surat.findMany({
-      where: {
-        status: "PENDING",
-      },
       orderBy: {
         createdAt: "desc",
       },
@@ -786,81 +707,7 @@ export async function fetchSuratPending() {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat pending.");
-  }
-}
-
-export async function fetchSuratSelesai() {
-  noStore();
-  const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
-    throw new Error("Failed to fetch surat selesai.");
-  }
-
-  try {
-    const data = await prisma.surat.findMany({
-      where: {
-        status: "SELESAI",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        kategori_surat: true,
-        warga: {
-          select: {
-            nama: true,
-            nik: true,
-            user: {
-              select: {
-                id: true,
-              },
-            },
-          },
-        },
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat selesai.");
-  }
-}
-
-export async function fetchSuratDitolak() {
-  noStore();
-  const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
-    throw new Error("Failed to fetch surat ditolak.");
-  }
-
-  try {
-    const data = await prisma.surat.findMany({
-      where: {
-        status: "DITOLAK",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        kategori_surat: true,
-        warga: {
-          select: {
-            nama: true,
-            nik: true,
-            user: {
-              select: {
-                id: true,
-              },
-            },
-          },
-        },
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch surat ditolak.");
+    throw new Error("Failed to fetch all surat.");
   }
 }
 

@@ -7,12 +7,7 @@ import {
 import { DataTable } from "./_components/data-table";
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  fetchUserSuratPending,
-  fetchUserSuratDitolak,
-  fetchUserSuratSelesai,
-  fetchUserSuratDiambil,
-} from "@/lib/data";
+import { fetchALlUserSurat } from "@/lib/data";
 import { Terminal } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { type Metadata } from "next";
@@ -26,18 +21,12 @@ export const metadata: Metadata = {
 };
 
 export default async function BiodataPage() {
-  const fetchSuratPending = fetchUserSuratPending();
-  const fetchSuratSelesai = fetchUserSuratSelesai();
-  const fetchSuratDitolak = fetchUserSuratDitolak();
-  const fetchSuratDiambil = fetchUserSuratDiambil();
+  const surat = await fetchALlUserSurat();
 
-  const [suratPending, suratSelesai, suratDitolak, suratDiambil] =
-    await Promise.all([
-      fetchSuratPending,
-      fetchSuratSelesai,
-      fetchSuratDitolak,
-      fetchSuratDiambil,
-    ]);
+  const suratPending = surat.filter((item) => item.status === "PENDING");
+  const suratSelesai = surat.filter((item) => item.status === "SELESAI");
+  const suratDiambil = surat.filter((item) => item.status === "DIAMBIL");
+  const suratDitolak = surat.filter((item) => item.status === "DITOLAK");
 
   return (
     <DashboardContainer title="Riwayat Pengajuan Surat">

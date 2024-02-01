@@ -2,6 +2,8 @@
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
+import { Trash2 } from "lucide-react";
+import Link from "next/link";
 import type { Surat, KodeSurat } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import format from "date-fns/format";
@@ -100,17 +102,15 @@ export const riwayatPengambilanColumns: ColumnDef<
           <Button
             variant={"secondary"}
             size={"sm"}
-            onClick={() => {
-              console.log(row.original);
-            }}
+            asChild
           >
-            Detail
+            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
           <Button
             variant={"destructive"}
             size={"sm"}
           >
-            Hapus
+            <Trash2 size={15} />
           </Button>
         </div>
       );

@@ -156,9 +156,25 @@ export default async function DetailSurat({
             <p className="font-medium text-sm">Status:</p>
             <SuratStatusBadge
               status={surat.status}
-              className="ml-2 rounded-none"
+              className="ml-2"
             />
           </div>
+          {surat.status === "DIAMBIL" && surat.tanggal_pengambilan && (
+            <DataItem
+              className="w-full max-w-sm"
+              label="Tanggal Pengambilan Surat"
+              value={format(surat.tanggal_pengambilan, "dd MMMM yyyy", {
+                locale: id,
+              })}
+            />
+          )}
+          {surat.status === "DITOLAK" && (
+            <DataItem
+              className="w-full max-w-sm"
+              label="Pesan Penolakan"
+              value={surat.pesan_penolakan as string}
+            />
+          )}
           <div className="grid lg:grid-cols-2 lg:gap-x-4 gap-y-2">
             <DataItem
               label="Jenis Surat"
@@ -198,22 +214,6 @@ export default async function DetailSurat({
               />
             )}
           </div>
-        </div>
-      )}
-      {surat.status === "DITOLAK" && (
-        <div className="my-4">
-          <p className="font-medium text-lg">Alasan Penolakan:</p>
-          <p className="">{surat.pesan_penolakan}</p>
-        </div>
-      )}
-      {surat.status === "DIAMBIL" && surat.tanggal_pengambilan && (
-        <div className="my-4">
-          <p className="font-medium text-lg">Tanggal Pengambilan:</p>
-          <p className="">
-            {format(surat.tanggal_pengambilan, "dd MMMM yyyy", {
-              locale: id,
-            })}
-          </p>
         </div>
       )}
     </DashboardContainer>
