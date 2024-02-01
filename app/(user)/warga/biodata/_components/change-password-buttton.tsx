@@ -74,12 +74,12 @@ export default function ChangePasswordButton() {
           variant={"destructive"}
           asChild
         >
-          <DialogTrigger>Ganti Kata Sandi</DialogTrigger>
+          <DialogTrigger>Ganti Password</DialogTrigger>
         </Button>
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Form Ganti Kata Sandi</DialogTitle>
+              <DialogTitle>Form Ganti Password</DialogTitle>
               <DialogDescription>Lengkapi form dibawah ini!</DialogDescription>
             </DialogHeader>
             <div
@@ -93,7 +93,7 @@ export default function ChangePasswordButton() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Kata Sandi Lama{" "}
+                      Password Lama{" "}
                       <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
@@ -112,7 +112,7 @@ export default function ChangePasswordButton() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Kata Sandi Baru{" "}
+                      Password Baru{" "}
                       <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
@@ -131,7 +131,7 @@ export default function ChangePasswordButton() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Konfirmasi Kata Sandi Baru{" "}
+                      Konfirmasi Password Baru{" "}
                       <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
@@ -158,7 +158,7 @@ export default function ChangePasswordButton() {
                 {form.formState.isSubmitting || pending ? (
                   <Loader2 className={"animate-spin mr-1"} />
                 ) : (
-                  "Ganti Kata Sandi"
+                  "Ganti Password"
                 )}
               </Button>
             </DialogFooter>

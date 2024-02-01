@@ -60,14 +60,14 @@ export const wargaLoginSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
-    old_password: z.string().min(1, "Kata sandi lama tidak boleh kosong"),
+    old_password: z.string().min(1, "Password lama tidak boleh kosong"),
     confirm_new_password: z
       .string()
-      .min(1, "Konfirmasi kata sandi tidak boleh kosong"),
-    new_password: z.string().min(1, "Kata sandi baru tidak boleh kosong"),
+      .min(1, "Konfirmasi password tidak boleh kosong"),
+    new_password: z.string().min(1, "Password baru tidak boleh kosong"),
   })
   .refine((data) => data.new_password === data.confirm_new_password, {
-    message: "Kata sandi baru dan konfirmasi kata sandi tidak sama",
+    message: "Password baru dan konfirmasi password tidak sama",
     path: ["confirm_new_password"],
   });
 

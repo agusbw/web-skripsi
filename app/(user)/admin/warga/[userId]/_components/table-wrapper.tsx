@@ -4,6 +4,8 @@ import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import type { KategoriSurat, Surat } from "@prisma/client";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 export default function DataTableWrapper({
   data,
@@ -30,6 +32,7 @@ export default function DataTableWrapper({
       <div className="flex gap-x-2 items-center my-3">
         <input
           type="date"
+          id="startDateInput"
           className="border-2 rounded-lg p-1 focus:outline-primary"
           onChange={(e) => {
             if (e.target.value) setStartDate(new Date(e.target.value));
@@ -39,12 +42,31 @@ export default function DataTableWrapper({
         <span className="font-semibold">-</span>
         <input
           type="date"
+          id="endDateInput"
           className="border-2 rounded-lg p-1 focus:outline-primary"
           onChange={(e) => {
             if (e.target.value) setEndDate(new Date(e.target.value));
             else setEndDate(null);
           }}
         />
+        <Button
+          size={"icon"}
+          variant={"outline"}
+          onClick={() => {
+            setStartDate(null);
+            setEndDate(null);
+            const startDateInput = document.getElementById(
+              "startDateInput"
+            ) as HTMLInputElement;
+            const endDateInput = document.getElementById(
+              "endDateInput"
+            ) as HTMLInputElement;
+            if (startDateInput) startDateInput.value = "";
+            if (endDateInput) endDateInput.value = "";
+          }}
+        >
+          <RefreshCcw size={16} />
+        </Button>
       </div>
       <DataTable
         columns={columns}

@@ -47,14 +47,12 @@ export default async function BiodataPage() {
       <div className="grid grid-cols-1 gap-y-4 w-full">
         <Biodata />
         <div className="bg-white p-5 rounded shadow-sm border space-y-2">
-          <h2 className="text-2xl font-semibold">Ganti Kata Sandi</h2>
-          <p>
-            Ubah kata sandi Anda secara berkala untuk menjaga keamanan akun.
-          </p>
+          <h2 className="text-2xl font-semibold">Ganti Password</h2>
+          <p>Ubah password anda secara berkala untuk menjaga keamanan akun.</p>
           <ChangePasswordButton />
           <p className="text-sm text-muted-foreground">
-            Apabila sewaktu-waktu Anda lupa kata sandi, Anda dapat menghubungi
-            admin desa untuk melakukan reset kata sandi.
+            Apabila sewaktu-waktu anda lupa password, anda dapat menghubungi
+            admin desa untuk melakukan reset password.
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import CreateWarga from "../_components/create-warga-button";
 import { Contact, FileBarChart, FileClock } from "lucide-react";
 import WargaBiodata from "./_components/warga-biodata";
 import DataTableWrapper from "./_components/table-wrapper";
+import ResetPasswordButton from "./_components/reset-password";
 import {
   Card,
   CardHeader,
@@ -19,8 +20,6 @@ export default async function Page({
     userId: string;
   };
 }) {
-  // TODO: tambahin aksi pada table surat
-
   const wargaPromise = fetchWargaByUserId(params.userId);
   const suratPromise = fetchSuratByUserId(params.userId);
 
@@ -37,7 +36,8 @@ export default async function Page({
             Data Warga
           </h3>
           <WargaBiodata warga={warga} />
-          <div className="mt-5 ml-auto w-fit">
+          <div className="mt-5 ml-auto w-fit flex gap-3">
+            <ResetPasswordButton userId={warga.id_user} />
             <CreateWarga
               variant="default"
               warga={warga}

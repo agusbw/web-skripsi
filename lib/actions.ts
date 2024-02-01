@@ -262,7 +262,7 @@ export async function changePassword(
     if (!isPasswordMatch) {
       return {
         success: false,
-        message: "Kata sandi lama tidak sesuai",
+        message: "Password lama tidak sesuai",
       };
     }
 
@@ -279,7 +279,7 @@ export async function changePassword(
 
     return {
       success: true,
-      message: "Berhasil mengubah kata sandi",
+      message: "Berhasil mengubah password",
     };
   } catch (error) {
     console.log(error);
@@ -794,6 +794,59 @@ export async function ambilSurat(id: string) {
     };
   } catch (err) {
     console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function resetPasswordWarga(user_id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: user_id,
+      },
+      include: {
+        warga: {
+          select: {
+            tanggal_lahir: true,
+          },
+        },
+      },
+    });
+
+    if (!user || !user.warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
+
+    const hashedPassword = await hash(
+      format(user.warga.tanggal_lahir, "ddMMyyyy"),
+      10
+    );
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Password berhasil direset",
+    };
+  } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Terjadi kesalahan pada server",

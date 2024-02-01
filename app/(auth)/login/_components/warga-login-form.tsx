@@ -39,20 +39,22 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import Link from "next/link";
 import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { useRouter } from "next/navigation";
 
 export function RenderPasswordInfoDrawerDialog() {
-  const [open, setOpen] = useState(false);
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  if (!isSmallDevice) {
-    return (
+  return (
+    <>
       <Dialog
-        open={open}
-        onOpenChange={setOpen}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
       >
-        <DialogTrigger asChild>
+        <DialogTrigger
+          className="hidden sm:block"
+          asChild
+        >
           <Button variant="outline">
             <HelpCircle className="h-4 w-4" />
           </Button>
@@ -63,46 +65,47 @@ export function RenderPasswordInfoDrawerDialog() {
             <DialogDescription>
               Password bawaan adalah tanggal lahir anda dengan format
               (ddmmyyyy). Contoh: 01111997 untuk tanggal lahir 1 November 1997.
-              <p className="text-destructive mt-2">
+              <span className="text-destructive mt-2 block">
                 Disarankan untuk mengganti password anda setelah login pertama
                 kali di halaman biodata.
-              </p>
+              </span>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
-    );
-  }
 
-  return (
-    <Drawer
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <DrawerTrigger asChild>
-        <Button variant="outline">
-          <HelpCircle className="h-4 w-4" />
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Informasi</DrawerTitle>
-          <DrawerDescription>
-            Password bawaan adalah tanggal lahir anda dengan format (ddmmyyyy).
-            Contoh: 01111997 untuk tanggal lahir 1 November 1997.
-            <p className="text-destructive mt-2">
-              Disarankan untuk mengganti password anda setelah login pertama
-              kali di halaman biodata.
-            </p>
-          </DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Tutup</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      <Drawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      >
+        <DrawerTrigger
+          asChild
+          className="block sm:hidden"
+        >
+          <Button variant="outline">
+            <HelpCircle className="h-4 w-4" />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="text-left">
+            <DrawerTitle>Informasi</DrawerTitle>
+            <DrawerDescription>
+              Password bawaan adalah tanggal lahir anda dengan format
+              (ddmmyyyy). Contoh: 01111997 untuk tanggal lahir 1 November 1997.
+              <span className="text-destructive mt-2 block">
+                Disarankan untuk mengganti password anda setelah login pertama
+                kali di halaman biodata.
+              </span>
+            </DrawerDescription>
+          </DrawerHeader>
+          <DrawerFooter className="pt-2">
+            <DrawerClose asChild>
+              <Button variant="outline">Tutup</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 }
 
@@ -112,6 +115,7 @@ export default function WargaLoginForm() {
     resolver: zodResolver(wargaLoginSchema),
     defaultValues: {
       nik: "",
+      password: "",
     },
   });
 
@@ -220,7 +224,7 @@ export default function WargaLoginForm() {
             target="_blank"
             rel="noreferrer noopener"
           >
-            Lupa kata sandi?
+            Lupa password?
           </Link>
           <Link
             href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.daftarAkun}`}
