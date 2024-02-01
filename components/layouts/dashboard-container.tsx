@@ -31,7 +31,7 @@ function DashboardContainer({
           })}
         </span>
         <span className={"flex items-center gap-1"}>
-          <Clock3 className={"w-4 text-primary"} /> {format(date, "hh:mm")}
+          <Clock3 className={"w-4 text-primary"} /> {format(date, "HH:MM")}
         </span>
       </div>
 

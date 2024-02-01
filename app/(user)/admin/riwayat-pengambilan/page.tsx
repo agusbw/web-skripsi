@@ -19,7 +19,7 @@ export default async function RiwayatPengambilanPage() {
   const data = await fetchSuratDiambil();
 
   return (
-    <DashboardContainer title="Data Riwayat Pengambilan">
+    <DashboardContainer title="Data Pengambilan Surat">
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Informasi</AlertTitle>

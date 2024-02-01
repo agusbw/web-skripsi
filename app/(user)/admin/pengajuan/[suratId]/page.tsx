@@ -7,15 +7,16 @@ import { notFound } from "next/navigation";
 import SuratStatusBadge from "@/components/surat-status-badge";
 import { Button } from "@/components/ui/button";
 import DataItem from "@/components/data-item-field";
-import type { KategoriSurat, Status, Surat } from "@prisma/client";
+import type { KategoriSurat, Surat } from "@prisma/client";
 import { formatEnumValue } from "@/lib/utils";
 import TolakButton from "./_components/tolak-button";
 import SelesaiButton from "./_components/selesai-button";
 import NomorSuratButton from "./_components/nomor-surat-button";
+import DiambilButton from "./_components/diambil-button";
 
 export const metadata: Metadata = {
-  title: "Proses Surat",
-  description: "Proses Surat",
+  title: "Detail Surat",
+  description: "Detail Surat",
 };
 
 export const revalidate = 0;
@@ -73,14 +74,6 @@ function DataSuratByKode({
   }
 }
 
-function generateTitle(suratStatus: Status) {
-  if (suratStatus === "PENDING") {
-    return "Proses Pengajuan Surat";
-  }
-
-  return "Detail Surat";
-}
-
 export default async function DetailSurat({
   params,
 }: {
@@ -94,7 +87,7 @@ export default async function DetailSurat({
   }
 
   return (
-    <DashboardContainer title={generateTitle(surat.status)}>
+    <DashboardContainer title={"Detail Pengajuan Surat"}>
       <div>
         <p className="text-xl font-medium text-primary">Data Pemohon Surat</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -199,7 +192,10 @@ export default async function DetailSurat({
               </>
             )}
             {surat.status === "SELESAI" && (
-              <Button className="">Surat Telah Diambil</Button>
+              <DiambilButton
+                suratId={surat.id}
+                noSurat={surat.no_surat}
+              />
             )}
           </div>
         </div>
@@ -208,6 +204,16 @@ export default async function DetailSurat({
         <div className="my-4">
           <p className="font-medium text-lg">Alasan Penolakan:</p>
           <p className="">{surat.pesan_penolakan}</p>
+        </div>
+      )}
+      {surat.status === "DIAMBIL" && surat.tanggal_pengambilan && (
+        <div className="my-4">
+          <p className="font-medium text-lg">Tanggal Pengambilan:</p>
+          <p className="">
+            {format(surat.tanggal_pengambilan, "dd MMMM yyyy", {
+              locale: id,
+            })}
+          </p>
         </div>
       )}
     </DashboardContainer>

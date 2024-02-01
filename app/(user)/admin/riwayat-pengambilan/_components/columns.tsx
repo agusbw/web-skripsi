@@ -109,9 +109,6 @@ export const riwayatPengambilanColumns: ColumnDef<
           <Button
             variant={"destructive"}
             size={"sm"}
-            onClick={() => {
-              console.log(row.original);
-            }}
           >
             Hapus
           </Button>

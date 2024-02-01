@@ -756,3 +756,47 @@ export async function createNomorSurat(
     };
   }
 }
+
+export async function ambilSurat(id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    await prisma.surat.update({
+      where: {
+        id: surat.id,
+      },
+      data: {
+        status: "DIAMBIL",
+        tanggal_pengambilan: new Date(),
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Status surat berhasil diubah menjadi diambil",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}

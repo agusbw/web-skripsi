@@ -6,7 +6,7 @@ import { AlertCircle } from "lucide-react";
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <DashboardContainer title="Data Riwayat Pengambilan">
+    <DashboardContainer title="Data Pengambilan Surat">
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Informasi</AlertTitle>

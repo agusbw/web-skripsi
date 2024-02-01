@@ -2,6 +2,7 @@ import {
   pendingColumns,
   selesaiColumns,
   ditolakColumns,
+  diambilColumns,
 } from "./_components/columns";
 import { DataTable } from "./_components/data-table";
 import DashboardContainer from "@/components/layouts/dashboard-container";
@@ -88,7 +89,7 @@ export default async function BiodataPage() {
             </AlertDescription>
           </Alert>
           <DataTable
-            columns={selesaiColumns}
+            columns={diambilColumns}
             data={suratDiambil}
           />
         </TabsContent>

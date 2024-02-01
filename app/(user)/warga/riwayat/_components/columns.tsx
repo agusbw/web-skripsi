@@ -104,12 +104,7 @@ export const pendingColumns: ColumnDef<
   }
 >[] = [
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Tanggal Pengajuan"
-      />
-    ),
+    header: "Tanggal Pengajuan",
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
       return createdAt;
@@ -157,12 +152,7 @@ export const selesaiColumns: ColumnDef<
   }
 >[] = [
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Tanggal Pengajuan"
-      />
-    ),
+    header: "Tanggal Pengajuan",
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
       return createdAt;
@@ -175,6 +165,13 @@ export const selesaiColumns: ColumnDef<
           })}
         </span>
       );
+    },
+  },
+  {
+    header: "Nomor Surat",
+    accessorKey: "Nomor Surat",
+    accessorFn: (row) => {
+      return row.no_surat;
     },
   },
   {
@@ -210,12 +207,7 @@ export const ditolakColumns: ColumnDef<
   }
 >[] = [
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Tanggal Pengajuan"
-      />
-    ),
+    header: "Tanggal Pengajuan",
     accessorKey: "tanggal pengajuan",
     accessorFn: ({ createdAt }) => {
       return createdAt;
@@ -273,6 +265,77 @@ export const ditolakColumns: ColumnDef<
           </DialogContent>
         </Dialog>
       );
+    },
+  },
+  {
+    header: "Aksi",
+    cell: ({ row }) => {
+      return <InfoDialog data={row.original} />;
+    },
+  },
+];
+
+export const diambilColumns: ColumnDef<
+  Surat & {
+    kategori_surat: KategoriSurat;
+  }
+>[] = [
+  {
+    header: "Tanggal Pengajuan",
+    accessorKey: "tanggal pengajuan",
+    accessorFn: ({ createdAt }) => {
+      return createdAt;
+    },
+    cell: ({ row }) => {
+      return (
+        <span className="text-sm">
+          {format(row.original.createdAt, "d MMMM yyyy", {
+            locale: id,
+          })}
+        </span>
+      );
+    },
+  },
+  {
+    header: "Tanggal Pengambilan",
+    accessorKey: "tanggal pengambilan",
+    accessorFn: ({ tanggal_pengambilan }) => {
+      return tanggal_pengambilan;
+    },
+    cell: ({ row }) => {
+      return (
+        <span className="text-sm">
+          {format(row.original.createdAt, "d MMMM yyyy", {
+            locale: id,
+          })}
+        </span>
+      );
+    },
+  },
+  {
+    header: "Nomor Surat",
+    accessorKey: "Nomor Surat",
+    accessorFn: (row) => {
+      return row.no_surat;
+    },
+  },
+  {
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Jenis Surat"
+      />
+    ),
+    accessorKey: "Jenis Surat",
+    accessorFn: (row) => {
+      return row.kategori_surat.nama;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      return <SuratStatusBadge status={row.original.status} />;
     },
   },
   {

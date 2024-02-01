@@ -48,7 +48,7 @@ export const ComplaintSteps: ComplaintStep[] = [
 
 const adminSidebar = [
   {
-    title: "Ringkasan",
+    title: "Dashboard",
     path: "/admin",
     icon: <BarChart2 size={18} />,
   },
@@ -58,12 +58,12 @@ const adminSidebar = [
     icon: <Users size={18} />,
   },
   {
-    title: "Data Pengajuan",
+    title: "Data Pengajuan Surat",
     path: "/admin/pengajuan",
     icon: <LayoutList size={18} />,
   },
   {
-    title: "Data Riwayat Pengambilan",
+    title: "Data Pengambilan Surat",
     path: "/admin/riwayat-pengambilan",
     icon: <FileCheck size={18} />,
   },
@@ -77,7 +77,7 @@ const adminSidebar = [
 
 const wargaSidebar = [
   {
-    title: "Ringkasan",
+    title: "Dashboard",
     path: "/warga",
     icon: <BarChart2 size={18} />,
   },
