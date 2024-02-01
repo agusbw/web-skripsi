@@ -10,6 +10,8 @@ import DataItem from "@/components/data-item-field";
 import type { KategoriSurat, Status, Surat } from "@prisma/client";
 import { formatEnumValue } from "@/lib/utils";
 import TolakButton from "./_components/tolak-button";
+import SelesaiButton from "./_components/selesai-button";
+import NomorSuratButton from "./_components/nomor-surat-button";
 
 export const metadata: Metadata = {
   title: "Proses Surat",
@@ -142,18 +144,20 @@ export default async function DetailSurat({
       </div>
       <div className="w-full mt-4">
         <p className="text-xl font-medium text-primary">Data Pengajuan Surat</p>
-        <div className="flex gap-3 w-full items-end">
+        <div className="flex gap-3 max-w-full items-end">
           <DataItem
             label="Nomor Surat"
             value={surat.no_surat ? surat.no_surat : "Belum diberi nomor surat"}
+            className="min-w-[300px] max-w-full"
           />
-          <Button
-            variant="secondary"
-            size={"sm"}
-          >
-            Beri Nomor
-          </Button>
+          {surat.status === "PENDING" && (
+            <NomorSuratButton
+              suratId={surat.id}
+              noSurat={surat.no_surat}
+            />
+          )}
         </div>
+
         <div className="space-y-2 mt-2 grid">
           <div className="flex">
             <p className="font-medium text-sm">Status:</p>
@@ -181,20 +185,31 @@ export default async function DetailSurat({
           </div>
         </div>
       </div>
-      <div className="mt-8 flex w-full justify-between">
-        <Button variant={"outline"}>Unduh Template Surat</Button>
-        <div className="flex gap-3">
-          {surat.status === "PENDING" && (
-            <>
-              <TolakButton suratId={surat.id} />
-              <Button className="">Surat Telah Selesai</Button>
-            </>
-          )}
-          {surat.status === "SELESAI" && (
-            <Button className="">Surat Telah Diambil</Button>
-          )}
+      {surat.status !== "DITOLAK" && (
+        <div className="mt-8 flex w-full justify-between">
+          <Button variant={"outline"}>Unduh Template Surat</Button>
+          <div className="flex gap-3">
+            {surat.status === "PENDING" && (
+              <>
+                <TolakButton suratId={surat.id} />
+                <SelesaiButton
+                  suratId={surat.id}
+                  noSurat={surat.no_surat}
+                />
+              </>
+            )}
+            {surat.status === "SELESAI" && (
+              <Button className="">Surat Telah Diambil</Button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
+      {surat.status === "DITOLAK" && (
+        <div className="my-4">
+          <p className="font-medium text-lg">Alasan Penolakan:</p>
+          <p className="">{surat.pesan_penolakan}</p>
+        </div>
+      )}
     </DashboardContainer>
   );
 }

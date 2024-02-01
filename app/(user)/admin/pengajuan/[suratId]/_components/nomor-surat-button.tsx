@@ -1,47 +1,48 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import type { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Textarea } from "@/components/ui/textarea";
-import { tolakSuratSchema } from "@/types/schema";
+import { Input } from "@/components/ui/input";
+import { createNomorSuratSchema } from "@/types/schema";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
 import * as React from "react";
-import { tolakSurat } from "@/lib/actions";
+import { createNomorSurat } from "@/lib/actions";
 
-export default function TolakButton({ suratId }: { suratId: string }) {
+export default function NomorSuratButton({
+  suratId,
+  noSurat,
+}: {
+  suratId: string;
+  noSurat: string | null;
+}) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof tolakSuratSchema>>({
-    resolver: zodResolver(tolakSuratSchema),
+  const form = useForm<z.infer<typeof createNomorSuratSchema>>({
+    resolver: zodResolver(createNomorSuratSchema),
     defaultValues: {
-      pesan_penolakan: "",
+      no_surat: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof tolakSuratSchema>) {
+  async function onSubmit(values: z.infer<typeof createNomorSuratSchema>) {
     startTransition(async () => {
-      const res = await tolakSurat(suratId, values);
+      const res = await createNomorSurat(suratId, values);
 
       if (res.success) {
         toast.success("Sukses", {
@@ -64,29 +65,28 @@ export default function TolakButton({ suratId }: { suratId: string }) {
       >
         <Button
           onClick={() => setDialogOpen(true)}
-          variant={"destructive"}
+          variant={"secondary"}
         >
-          Tolak Pengajuan
+          {noSurat ? "Ubah Nomor" : "Beri Nomor"}
         </Button>
 
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>Tolak Pengajuan</DialogTitle>
-              <DialogDescription>Berikan alasan penolakan!</DialogDescription>
-            </DialogHeader>
             <FormField
               control={form.control}
-              name="pesan_penolakan"
+              name="no_surat"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Nomor Surat</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Anda dapat memberikan pesan penolakan disini"
-                      className="resize-none"
+                    <Input
+                      autoComplete="off"
                       {...field}
                     />
                   </FormControl>
+                  <FormDescription>
+                    Nomor resmi surat yang akan dikeluarkan.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -94,14 +94,13 @@ export default function TolakButton({ suratId }: { suratId: string }) {
             <DialogFooter className="mt-3">
               <Button
                 type="submit"
-                variant={"destructive"}
                 size={"sm"}
                 disabled={form.formState.isSubmitting || pending}
               >
                 {(form.formState.isSubmitting || pending) && (
                   <Loader2 className={"animate-spin mr-1"} />
                 )}
-                Tolak Pengajuan
+                {noSurat ? "Ubah Nomor" : "Beri Nomor"}
               </Button>
             </DialogFooter>
           </form>

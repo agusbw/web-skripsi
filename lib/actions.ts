@@ -10,6 +10,7 @@ import {
   createSkuSchema,
   createSkdSchema,
   tolakSuratSchema,
+  createNomorSuratSchema,
 } from "@/types/schema";
 import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
@@ -23,6 +24,7 @@ type CreateSkbpk = z.infer<typeof createSkbpkSchema>;
 type CreateSku = z.infer<typeof createSkuSchema>;
 type CreateSkd = z.infer<typeof createSkdSchema>;
 type TolakSurat = z.infer<typeof tolakSuratSchema>;
+type CreateNomorSurat = z.infer<typeof createNomorSuratSchema>;
 
 export async function createWarga(
   formData: CreateWarga
@@ -620,6 +622,7 @@ export async function tolakSurat(
       },
       data: {
         status: "DITOLAK",
+        no_surat: null,
         pesan_penolakan: validatedData.data.pesan_penolakan,
       },
     });
@@ -629,6 +632,121 @@ export async function tolakSurat(
     return {
       success: true,
       message: "Pengajuan berhasil ditolak",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function selesaikanSurat(id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    await prisma.surat.update({
+      where: {
+        id: surat.id,
+      },
+      data: {
+        status: "SELESAI",
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Pengajuan berhasil diselesaikan",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function createNomorSurat(
+  id: string,
+  formData: CreateNomorSurat
+): Promise<ActionsResponse> {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  const validatedData = createNomorSuratSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      message: "Data tidak valid",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    if (validatedData.data.no_surat) {
+      const isExist = await prisma.surat.findFirst({
+        where: {
+          no_surat: validatedData.data.no_surat,
+        },
+      });
+
+      if (isExist) {
+        return {
+          success: false,
+          message: "Nomor surat sudah terdaftar",
+        };
+      }
+    }
+
+    await prisma.surat.update({
+      where: {
+        id: surat.id,
+      },
+      data: {
+        no_surat: validatedData.data.no_surat
+          ? validatedData.data.no_surat
+          : null,
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Nomor surat berhasil diubah",
     };
   } catch (err) {
     console.log(err);

@@ -105,3 +105,7 @@ export const createSkdSchema = z.object({
 export const tolakSuratSchema = z.object({
   pesan_penolakan: z.string().min(1, "Pesan penolakan harus diisi"),
 });
+
+export const createNomorSuratSchema = z.object({
+  no_surat: z.string().trim().optional(),
+});
