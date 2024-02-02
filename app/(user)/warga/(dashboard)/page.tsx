@@ -37,8 +37,6 @@ export default async function WargaDashboardPage() {
     userLatestSuratPromise,
   ]);
 
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
   return (
     <DashboardContainer title="Dashboard Warga">
       <>
