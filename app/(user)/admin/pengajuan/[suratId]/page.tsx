@@ -13,6 +13,8 @@ import TolakButton from "./_components/tolak-button";
 import SelesaiButton from "./_components/selesai-button";
 import NomorSuratButton from "./_components/nomor-surat-button";
 import DiambilButton from "./_components/diambil-button";
+import { DeleteSuratButton } from "../_components/columns";
+import { Trash2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Detail Surat",
@@ -194,9 +196,21 @@ export default async function DetailSurat({
           </div>
         </div>
       </div>
-      {surat.status !== "DITOLAK" && (
-        <div className="mt-8 flex w-full justify-between">
-          <Button variant={"outline"}>Unduh Template Surat</Button>
+
+      <div className="mt-8 flex w-full justify-between">
+        <div className="flex gap-3">
+          {surat.status !== "DITOLAK" && (
+            <Button variant={"outline"}>Unduh Template Surat</Button>
+          )}
+          <DeleteSuratButton
+            suratId={surat.id}
+            size={"default"}
+            pushUrl="/admin/pengajuan"
+          >
+            <Trash2 size={17} /> | Hapus Surat
+          </DeleteSuratButton>
+        </div>
+        {surat.status !== "DITOLAK" && (
           <div className="flex gap-3">
             {surat.status === "PENDING" && (
               <>
@@ -214,8 +228,8 @@ export default async function DetailSurat({
               />
             )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </DashboardContainer>
   );
 }

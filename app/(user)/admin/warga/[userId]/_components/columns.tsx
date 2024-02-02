@@ -6,6 +6,9 @@ import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import SuratStatusBadge from "@/components/surat-status-badge";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { DeleteSuratButton } from "../../../pengajuan/_components/columns";
 
 export const columns: ColumnDef<
   Surat & {
@@ -58,6 +61,24 @@ export const columns: ColumnDef<
     },
   },
   {
+    id: "actions",
     header: "Aksi",
+    cell: ({ row }) => {
+      return (
+        <div className="flex gap-3">
+          <Button
+            variant={"secondary"}
+            size={"sm"}
+            asChild
+          >
+            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+          </Button>
+          <DeleteSuratButton
+            size={"sm"}
+            suratId={row.original.id}
+          />
+        </div>
+      );
+    },
   },
 ];

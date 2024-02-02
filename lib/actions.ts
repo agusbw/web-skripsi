@@ -853,3 +853,43 @@ export async function resetPasswordWarga(user_id: string) {
     };
   }
 }
+
+export async function deleteSurat(id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    await prisma.surat.delete({
+      where: {
+        id: surat.id,
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Data surat berhasil dihapus",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}

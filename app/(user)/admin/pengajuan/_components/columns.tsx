@@ -4,24 +4,112 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import Link from "next/link";
 import type { Surat, KategoriSurat } from "@prisma/client";
+import { useTransition, useState, type ReactNode } from "react";
 import SuratStatusBadge from "@/components/surat-status-badge";
+import { useRouter } from "next/navigation";
+import { deleteSurat } from "@/lib/actions";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, Loader2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
 
-export const pendingColumns: ColumnDef<
-  {
-    warga: {
-      nik: string;
-      nama: string;
-      user: {
-        id: string;
-      };
+export type ColumnDefProps = {
+  warga: {
+    nik: string;
+    nama: string;
+    user: {
+      id: string;
     };
-    kategori_surat: KategoriSurat;
-  } & Surat
->[] = [
+  };
+  kategori_surat: KategoriSurat;
+} & Surat;
+
+export function DeleteSuratButton({
+  suratId,
+  size = "default",
+  children,
+  pushUrl,
+}: {
+  suratId: string;
+  children?: ReactNode;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+  pushUrl?: string;
+}) {
+  const [pending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  async function handleDelete(id_surat: string) {
+    startTransition(async () => {
+      const res = await deleteSurat(id_surat);
+      if (res.success) {
+        toast.success("Sukses", {
+          description: res.message,
+        });
+        if (pushUrl) router.push(pushUrl);
+      } else {
+        toast.error("Gagal", {
+          description: res.message,
+        });
+      }
+      setIsOpen(false);
+    });
+  }
+
+  return (
+    <AlertDialog open={isOpen}>
+      <Button
+        variant={"destructive"}
+        size={size}
+        onClick={() => setIsOpen(true)}
+      >
+        {children ? children : <Trash2 size={15} />}
+      </Button>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Yakin menghapus data surat?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Data pengajuan surat yang dihapus tidak dapat dikembalikan. Pastikan
+            data yang dihapus tidak diperlukan lagi.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <Button
+            variant={"outline"}
+            onClick={() => setIsOpen(false)}
+          >
+            Batal
+          </Button>
+          <Button
+            variant={"destructive"}
+            onClick={() => handleDelete(suratId)}
+            disabled={pending}
+          >
+            {pending ? (
+              <Loader2
+                size={15}
+                className="animate-spin mr-1"
+              />
+            ) : null}
+            Hapus
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+export const pendingColumns: ColumnDef<ColumnDefProps>[] = [
   {
     header: "Tanggal Pengajuan",
     accessorKey: "Tanggal Pengajuan",
@@ -87,30 +175,17 @@ export const pendingColumns: ColumnDef<
           >
             <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <Button
-            variant={"destructive"}
+          <DeleteSuratButton
             size={"sm"}
-          >
-            <Trash2 size={15} />
-          </Button>
+            suratId={row.original.id}
+          />
         </div>
       );
     },
   },
 ];
 
-export const selesaiColumns: ColumnDef<
-  {
-    warga: {
-      nik: string;
-      nama: string;
-      user: {
-        id: string;
-      };
-    };
-    kategori_surat: KategoriSurat;
-  } & Surat
->[] = [
+export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
   {
     header: "Tanggal Pengajuan",
     accessorKey: "Tanggal Pengajuan",
@@ -188,30 +263,17 @@ export const selesaiColumns: ColumnDef<
           >
             <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <Button
-            variant={"destructive"}
+          <DeleteSuratButton
             size={"sm"}
-          >
-            <Trash2 size={15} />
-          </Button>
+            suratId={row.original.id}
+          />
         </div>
       );
     },
   },
 ];
 
-export const ditolakColumns: ColumnDef<
-  {
-    warga: {
-      nik: string;
-      nama: string;
-      user: {
-        id: string;
-      };
-    };
-    kategori_surat: KategoriSurat;
-  } & Surat
->[] = [
+export const ditolakColumns: ColumnDef<ColumnDefProps>[] = [
   {
     header: "Tanggal Pengajuan",
     accessorKey: "Tanggal Pengajuan",
@@ -277,12 +339,10 @@ export const ditolakColumns: ColumnDef<
           >
             <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <Button
-            variant={"destructive"}
+          <DeleteSuratButton
             size={"sm"}
-          >
-            <Trash2 size={15} />
-          </Button>
+            suratId={row.original.id}
+          />
         </div>
       );
     },

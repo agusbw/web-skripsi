@@ -2,29 +2,16 @@
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
 import Link from "next/link";
-import type { Surat, KodeSurat } from "@prisma/client";
+import {
+  type ColumnDefProps,
+  DeleteSuratButton,
+} from "../../pengajuan/_components/columns";
 import { Button } from "@/components/ui/button";
 import format from "date-fns/format";
 import id from "date-fns/locale/id";
 
-export const riwayatPengambilanColumns: ColumnDef<
-  {
-    warga: {
-      nik: string;
-      nama: string;
-      user: {
-        id: string;
-      };
-    };
-    kategori_surat: {
-      id: string;
-      nama: string;
-      kode: KodeSurat;
-    };
-  } & Surat
->[] = [
+export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
   {
     accessorKey: "nik",
     header: ({ column }) => (
@@ -106,12 +93,10 @@ export const riwayatPengambilanColumns: ColumnDef<
           >
             <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <Button
-            variant={"destructive"}
+          <DeleteSuratButton
             size={"sm"}
-          >
-            <Trash2 size={15} />
-          </Button>
+            suratId={row.original.id}
+          />
         </div>
       );
     },
