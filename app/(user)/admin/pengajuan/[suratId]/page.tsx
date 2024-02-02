@@ -172,7 +172,7 @@ export default async function DetailSurat({
             <DataItem
               className="w-full max-w-sm"
               label="Pesan Penolakan"
-              value={surat.pesan_penolakan as string}
+              value={surat.pesan_penolakan ? surat.pesan_penolakan : "-"}
             />
           )}
           <div className="grid lg:grid-cols-2 lg:gap-x-4 gap-y-2">
