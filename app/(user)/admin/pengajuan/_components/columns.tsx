@@ -94,6 +94,7 @@ export function DeleteSuratButton({
             variant={"destructive"}
             onClick={() => handleDelete(suratId)}
             disabled={pending}
+            className="mb-2 sm:mb-0"
           >
             {pending ? (
               <Loader2

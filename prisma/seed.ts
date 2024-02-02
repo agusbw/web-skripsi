@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
+import format from "date-fns/format";
 
 const prisma = new PrismaClient();
 async function main() {
@@ -27,7 +28,9 @@ async function main() {
   });
 
   if (!warga) {
-    const hashedPassword = await hash("01072002", 10);
+    const date = new Date("2002-07-01");
+    const formattedDate = format(date, "ddMMyyyy");
+    const hashedPassword = await hash(formattedDate, 10);
     await prisma.user.create({
       data: {
         username: "5108030107020007",
@@ -38,7 +41,7 @@ async function main() {
             nama: "Nyoman Agus Budhiarta Waisnawa",
             nik: "5108030107020007",
             tempat_lahir: "Denpasar",
-            tanggal_lahir: new Date("2002-07-01"),
+            tanggal_lahir: date,
             agama: "HINDU",
             alamat: "Banjar Dinas Pelapuan",
             jenis_kelamin: true,

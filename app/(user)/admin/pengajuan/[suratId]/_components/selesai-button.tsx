@@ -73,6 +73,7 @@ export default function SelesaiButton({
             type="submit"
             disabled={pending}
             onClick={() => handleDeleteWarga(suratId)}
+            className="mb-2 sm:mb-0"
           >
             {pending ? <Loader2 className={"animate-spin mr-1"} /> : null}
             Selesaikan

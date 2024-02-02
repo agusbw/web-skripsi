@@ -63,6 +63,7 @@ export default function ResetPasswordButton({ userId }: { userId: string }) {
             variant={"destructive"}
             disabled={pending}
             onClick={() => handleResetPassword(userId)}
+            className="mb-2 sm:mb-0"
           >
             {pending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             Yakin

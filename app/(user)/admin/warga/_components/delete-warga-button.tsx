@@ -67,6 +67,7 @@ export const DeleteWarga = ({ id }: { id: string }) => {
             type="submit"
             disabled={pending}
             onClick={() => handleDeleteWarga(id)}
+            className="mb-2 sm:mb-0"
           >
             {pending ? <Loader2 className={"animate-spin mr-1"} /> : "Hapus"}
           </Button>
