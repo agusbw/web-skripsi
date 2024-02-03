@@ -46,6 +46,7 @@ export function BarChartSurat({
     <ResponsiveContainer
       width="100%"
       height={350}
+      className={"-ml-10"}
     >
       <BarChart data={data}>
         <XAxis

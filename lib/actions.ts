@@ -908,16 +908,24 @@ export async function deleteSurat(id: string) {
 }
 
 export async function uploadFiles(fd: FormData) {
-  const files = fd.getAll("files");
-  return await utapi.uploadFiles(files);
+  try {
+    const files = fd.getAll("files");
+    return await utapi.uploadFiles(files);
+  } catch (err) {
+    throw new Error("Gagal upload foto");
+  }
 }
 
 export async function deleteFileByURL(url: string) {
-  const parts = url.split("/");
+  try {
+    const parts = url.split("/");
 
-  const filename = parts[parts.length - 1];
-  if (filename) {
-    return await utapi.deleteFiles(filename);
+    const filename = parts[parts.length - 1];
+    if (filename) {
+      return await utapi.deleteFiles(filename);
+    }
+    return false;
+  } catch (err) {
+    throw new Error("Gagal delete foto");
   }
-  return false;
 }

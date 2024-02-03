@@ -100,7 +100,7 @@ export default async function AdminDashboardPage() {
                 <CardHeader>
                   <CardTitle>Grafik Pengajuan Surat</CardTitle>
                 </CardHeader>
-                <CardContent className="-ml-10">
+                <CardContent>
                   <BarChartSurat data={suratByMonth} />
                 </CardContent>
               </Card>
@@ -108,7 +108,7 @@ export default async function AdminDashboardPage() {
                 <CardHeader>
                   <CardTitle>Grafik Jenis Surat</CardTitle>
                 </CardHeader>
-                <CardContent className="pl-2">
+                <CardContent>
                   <PieChartSurat data={suratByKategori} />
                 </CardContent>
               </Card>
