@@ -9,6 +9,7 @@ import {
 } from "./_components/columns";
 
 import { type Metadata } from "next";
+import ExportPDF from "./_components/export-pdf";
 
 export const metadata: Metadata = {
   title: "Pengajuan",
@@ -27,6 +28,9 @@ export default async function PengajuanPage() {
 
   return (
     <DashboardContainer title="Data Pengajuan Surat">
+      <div className="flex justify-end mb-4">
+        <ExportPDF data={surat} />
+      </div>
       <Tabs defaultValue="pending">
         <TabsList>
           <TabsTrigger value="pending">Pending</TabsTrigger>

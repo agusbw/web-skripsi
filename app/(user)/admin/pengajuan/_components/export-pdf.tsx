@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import format from "date-fns/format";
 import id from "date-fns/locale/id";
 import { Printer } from "lucide-react";
-import type { Surat, KodeSurat } from "@prisma/client";
+import type { Surat, KategoriSurat } from "@prisma/client";
+import { formatEnumValue } from "@/lib/utils";
 
 type Props = {
   warga: {
@@ -16,30 +17,23 @@ type Props = {
       id: string;
     };
   };
-  kategori_surat: {
-    id: string;
-    nama: string;
-    kode: KodeSurat;
-  };
+  kategori_surat: KategoriSurat;
 } & Surat;
 
 export default function ExportPDF({ data }: { data: Props[] }) {
   function exportPDF() {
     const rows = data.map((data) => {
-      const tanggalAmbil = data?.tanggal_pengambilan
-        ? format(new Date(data.tanggal_pengambilan), "dd MMMM yyyy", {
-            locale: id,
-          })
-        : "-";
+      const noSurat = data.no_surat ? data.no_surat : "-";
 
       return [
-        data.warga.nik,
-        data.warga.nama,
-        data.kategori_surat.nama,
         format(new Date(data.createdAt), "dd MMMM yyyy", {
           locale: id,
         }),
-        tanggalAmbil,
+        data.warga.nik,
+        data.warga.nama,
+        data.kategori_surat.nama,
+        noSurat,
+        formatEnumValue(data.status),
       ];
     });
 
@@ -47,11 +41,12 @@ export default function ExportPDF({ data }: { data: Props[] }) {
     autoTable(doc, {
       head: [
         [
+          "Tanggal Pengajuan",
           "NIK",
           "Nama",
           "Jenis Surat",
-          "Tanggal Pengajuan",
-          "Tanggal Pengambilan",
+          "Nomor Surat",
+          "Status",
         ],
       ],
       body: rows,
@@ -59,7 +54,7 @@ export default function ExportPDF({ data }: { data: Props[] }) {
       theme: "grid",
     });
 
-    doc.save("data-pengambilan-surat.pdf");
+    doc.save("semua-data-pengajuan-surat.pdf");
   }
 
   return (
@@ -68,7 +63,7 @@ export default function ExportPDF({ data }: { data: Props[] }) {
         variant={"secondary"}
         onClick={exportPDF}
       >
-        <Printer className="w-4 h-4 mr-1" /> | Unduh Data Pengambilan
+        <Printer className="w-4 h-4 mr-1" /> | Unduh Data Surat
       </Button>
     </div>
   );
