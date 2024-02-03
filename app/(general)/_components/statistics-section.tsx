@@ -18,11 +18,11 @@ function CardItem({
           <FileText className="h-10 w-10 text-white" />
         </span>
         <div className="mt-4">
-          <h3 className="text-lg font-semibold leading-7 transition-all duration-300 group-hover:text-white/90">
+          <h3 className="text-lg font-semibold leading-7 text-foreground/70 transition-all duration-300 group-hover:text-white/90">
             {title}
           </h3>
         </div>
-        <div className="pt-3 text-base leading-7 text-muted-foreground transition-all duration-300 group-hover:text-white/90">
+        <div className="pt-3 text-base leading-6 text-muted-foreground transition-all duration-300 group-hover:text-white/90">
           <p>{description}</p>
         </div>
         <div className="pt-3 text-base font-semibold leading-7">

@@ -11,7 +11,7 @@ export default function Hero() {
           <h1 className={"text-3xl font-bold sm:text-4xl"}>
             Sistem Informasi Pengajuan Surat Keterangan
           </h1>
-          <p className="font-medium text-lg">
+          <p className="font-medium text-lg text-foreground">
             Desa Pelapuan, Kecamatan Busungbiu, Kabupaten Buleleng
           </p>
           <p className="leading-relaxed text-muted-foreground text-base">
@@ -33,7 +33,7 @@ export default function Hero() {
         </div>
         <div className="w-5/6 lg:max-w-lg lg:flex justify-center lg:w-full md:w-1/2">
           <Image
-            className="object-cover object-center"
+            className="object-cover object-center rounded-lg shadow-md"
             alt="hero"
             src="/kegiatan-1.jpeg"
             width={450}

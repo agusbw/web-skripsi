@@ -16,12 +16,10 @@ export const metadata: Metadata = {
 export default function HelpPage() {
   return (
     <div>
-      <div
-        className={
-          "bg-primary text-primary-foreground lg:px-24 lg:pt-32 lg:py-28 py-16 text-center"
-        }
-      >
-        <h1 className={"text-3xl mb-4 font-bold"}>Bantuan Pengguna</h1>
+      <div className={"lg:px-24 lg:pt-32 lg:pb-12 pt-16 px-8 text-center"}>
+        <h1 className={"text-4xl mb-4 font-bold text-primary"}>
+          Bantuan Pengguna
+        </h1>
         <p>
           Kami telah mengumpulkan hal-hal yang sering ditanyakan oleh pengguna
           lainnya.
