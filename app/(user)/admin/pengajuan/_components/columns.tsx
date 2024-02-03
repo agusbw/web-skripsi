@@ -20,7 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
+import { cn } from "@/lib/utils";
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
 
@@ -40,11 +40,13 @@ export function DeleteSuratButton({
   size = "default",
   children,
   pushUrl,
+  className,
 }: {
   suratId: string;
   children?: ReactNode;
   size?: "default" | "sm" | "lg" | "icon" | null | undefined;
   pushUrl?: string;
+  className?: string;
 }) {
   const [pending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +75,7 @@ export function DeleteSuratButton({
         variant={"destructive"}
         size={size}
         onClick={() => setIsOpen(true)}
+        className={cn(className)}
       >
         {children ? children : <Trash2 size={15} />}
       </Button>

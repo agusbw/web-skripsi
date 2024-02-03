@@ -230,6 +230,7 @@ export default async function DetailSurat({
             suratId={surat.id}
             size={"sm"}
             pushUrl="/admin/pengajuan"
+            className="w-fit"
           >
             <Trash2 size={17} /> | Hapus Surat
           </DeleteSuratButton>
