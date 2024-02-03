@@ -216,14 +216,19 @@ export default async function DetailSurat({
         </div>
       </div>
 
-      <div className="mt-8">
-        <div className="flex gap-3">
+      <div className="mt-5">
+        <div className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0 sm:gap-x-3">
           {surat.status !== "DITOLAK" && (
-            <Button variant={"outline"}>Unduh Template Surat</Button>
+            <Button
+              size={"sm"}
+              variant={"outline"}
+            >
+              Unduh Template Surat
+            </Button>
           )}
           <DeleteSuratButton
             suratId={surat.id}
-            size={"default"}
+            size={"sm"}
             pushUrl="/admin/pengajuan"
           >
             <Trash2 size={17} /> | Hapus Surat
