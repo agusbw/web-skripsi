@@ -43,6 +43,7 @@ export default function SkdForm() {
     resolver: zodResolver(createSkdSchema),
     defaultValues: {
       keperluan: "",
+      domisili: "",
     },
   });
 
@@ -149,7 +150,7 @@ export default function SkdForm() {
               name="domisili"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Domisili</FormLabel>
+                  <FormLabel>Alamat Domisili</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"

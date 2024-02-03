@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { MessageSquare, Info } from "lucide-react";
 import { id } from "date-fns/locale";
 
@@ -106,6 +107,21 @@ const InfoContent = ({
               <span className="font-semibold">Lokasi Usaha:</span>{" "}
               {data.lokasi_usaha}
             </p>
+            <p>
+              <span className="font-semibold">Foto Usaha:</span>{" "}
+              {data.foto_usaha ? (
+                <Link
+                  href={data.foto_usaha}
+                  className="text-primary hover:underline"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Link Foto
+                </Link>
+              ) : (
+                "Tidak ada foto"
+              )}
+            </p>
           </>
         )}
         {data.kategori_surat.kode === "SKD" && (
@@ -157,11 +173,13 @@ const InfoDialog = ({
           Detail
         </DialogTrigger>
       </Button>
-      <DialogContent>
+      <DialogContent className="max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>Detail Informasi Surat</DialogTitle>
         </DialogHeader>
-        <InfoContent data={data} />
+        <div>
+          <InfoContent data={data} />
+        </div>
       </DialogContent>
     </Dialog>
   );

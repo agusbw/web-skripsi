@@ -7,7 +7,7 @@ import {
   createWargaSchema,
   createSktmSchema,
   createSkbpkSchema,
-  createSkuSchema,
+  insertSkuSchema,
   createSkdSchema,
   tolakSuratSchema,
   createNomorSuratSchema,
@@ -16,12 +16,13 @@ import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
 import { getCurrentSession } from "./auth";
 import { type ActionsResponse } from "@/types/types";
+import { utapi } from "./uploathing";
 import type * as z from "zod";
 type CreateWarga = z.infer<typeof createWargaSchema>;
 type ChangePassword = z.infer<typeof changePasswordSchema>;
 type CreateSktm = z.infer<typeof createSktmSchema>;
 type CreateSkbpk = z.infer<typeof createSkbpkSchema>;
-type CreateSku = z.infer<typeof createSkuSchema>;
+type CreateSku = z.infer<typeof insertSkuSchema>;
 type CreateSkd = z.infer<typeof createSkdSchema>;
 type TolakSurat = z.infer<typeof tolakSuratSchema>;
 type CreateNomorSurat = z.infer<typeof createNomorSuratSchema>;
@@ -444,7 +445,7 @@ export async function createSku(formData: CreateSku): Promise<ActionsResponse> {
   if (!session.user.id_warga)
     return { success: false, message: "Anda belum terdaftar sebagai warga" };
 
-  const validatedData = createSkuSchema.safeParse(formData);
+  const validatedData = insertSkuSchema.safeParse(formData);
 
   if (!validatedData.success) {
     return {
@@ -494,6 +495,7 @@ export async function createSku(formData: CreateSku): Promise<ActionsResponse> {
 
         lokasi_usaha: validatedData.data.lokasi_usaha,
         nama_usaha: validatedData.data.nama_usaha,
+        foto_usaha: validatedData.data.foto_usaha,
       },
     });
 
@@ -868,10 +870,21 @@ export async function deleteSurat(id: string) {
       where: {
         id,
       },
+      include: {
+        kategori_surat: {
+          select: {
+            kode: true,
+          },
+        },
+      },
     });
 
     if (!surat)
       return { success: false, message: "Data surat tidak ditemukan" };
+
+    if (surat.kategori_surat.kode === "SKU" && surat.foto_usaha) {
+      await deleteFileByURL(surat.foto_usaha as string);
+    }
 
     await prisma.surat.delete({
       where: {
@@ -892,4 +905,19 @@ export async function deleteSurat(id: string) {
       message: "Terjadi kesalahan pada server",
     };
   }
+}
+
+export async function uploadFiles(fd: FormData) {
+  const files = fd.getAll("files");
+  return await utapi.uploadFiles(files);
+}
+
+export async function deleteFileByURL(url: string) {
+  const parts = url.split("/");
+
+  const filename = parts[parts.length - 1];
+  if (filename) {
+    return await utapi.deleteFiles(filename);
+  }
+  return false;
 }

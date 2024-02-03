@@ -1,20 +1,14 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
     <DashboardContainer title="Data Pengambilan Surat">
-      <Alert>
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Informasi</AlertTitle>
-        <AlertDescription>
-          Berikut adalah riwayat pengambilan surat yang telah dilakukan oleh
-          warga.
-        </AlertDescription>
-      </Alert>
+      <p className="mb-5 text-muted-foreground">
+        Berikut adalah data riwayat pengambilan surat yang telah dilakukan oleh
+        warga.
+      </p>
       <div className="flex w-full justify-end mt-5">
         <Skeleton className="h-10 w-32" />
       </div>

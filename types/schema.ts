@@ -1,6 +1,9 @@
 import * as z from "zod";
 import { AgamaValues, StatusKawinValues } from "./types";
 
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 const errorMap: z.ZodErrorMap = (issue, ctx) => {
   if (issue.code === z.ZodIssueCode.invalid_date) {
     return { message: "Tanggal lahir tidak boleh kosong" };
@@ -91,6 +94,35 @@ export const createSkuSchema = z.object({
       required_error: "Lokasi usaha harus dipilih",
     })
     .min(1, "Lokasi usaha harus dipilih"),
+  foto_usaha: z
+    .any()
+    .refine((files: FileList) => {
+      console.log(files);
+      return files?.length == 1;
+    }, "Foto usaha wajib diisi")
+    .refine((files: FileList) => {
+      if (files?.[0]?.size) {
+        return files?.[0]?.size <= MAX_FILE_SIZE;
+      }
+      return false;
+    }, `Ukuran foto maksimum 5MB`)
+    .refine((files: FileList) => {
+      if (files?.[0]?.type) {
+        return ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type);
+      }
+      return false;
+    }, "Hanya menerima file .jpg, .jpeg, .png and .webp"),
+});
+
+export const insertSkuSchema = z.object({
+  keperluan: z.string().min(1, "Keperluan pengajuan harus diisi"),
+  nama_usaha: z.string().min(1, "Nama usaha harus diisi"),
+  lokasi_usaha: z
+    .string({
+      required_error: "Lokasi usaha harus dipilih",
+    })
+    .min(1, "Lokasi usaha harus dipilih"),
+  foto_usaha: z.string().min(1, "Foto usaha wajib diisi"),
 });
 
 export const createSkdSchema = z.object({

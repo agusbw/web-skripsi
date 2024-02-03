@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,7 +16,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { createSkuSchema } from "@/types/schema";
-import { createSku } from "@/lib/actions";
+import { createSku, uploadFiles } from "@/lib/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition, useState } from "react";
@@ -57,12 +56,29 @@ export default function SktmForm() {
       keperluan: "",
       nama_usaha: "",
       lokasi_usaha: "",
+      foto_usaha: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof createSkuSchema>) {
+  async function onSubmit(values: z.infer<typeof createSkuSchema>) {
+    const formData = new FormData();
+    formData.append("files", values.foto_usaha[0] as Blob);
+
     startTransition(async () => {
-      const result = await createSku(values);
+      const uploadRes = await uploadFiles(formData);
+
+      if (uploadRes[0]?.error ?? !uploadRes[0]?.data?.url) {
+        toast.error("Gagal", {
+          description:
+            "Terjadi kesalahan upload gambar, gagal mengajukan surat",
+        });
+        return;
+      }
+
+      const result = await createSku({
+        ...values,
+        foto_usaha: uploadRes[0].data.url,
+      });
 
       if (!result.success) {
         toast.error("Gagal", {
@@ -90,6 +106,7 @@ export default function SktmForm() {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6"
+          encType="multipart/form-data"
         >
           <div className="space-y-2">
             <FormField
@@ -223,6 +240,31 @@ export default function SktmForm() {
                   <FormDescription>
                     Masukkan lokasi usaha anda, contohnya: Banjar Dinas
                     Bonagung, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="foto_usaha"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Foto Usaha</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value?.fileName}
+                      onChange={(event) => {
+                        field.onChange(event.target.files);
+                      }}
+                      type="file"
+                      accept="image/*"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Masukkan foto bukti kepemilikan usaha anda (Ukuran maksimal
+                    5MB)
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

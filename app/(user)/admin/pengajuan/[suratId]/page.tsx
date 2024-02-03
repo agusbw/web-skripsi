@@ -6,7 +6,9 @@ import { id } from "date-fns/locale";
 import { notFound } from "next/navigation";
 import SuratStatusBadge from "@/components/surat-status-badge";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import DataItem from "@/components/data-item-field";
+import Link from "next/link";
 import type { KategoriSurat, Surat } from "@prisma/client";
 import { formatEnumValue } from "@/lib/utils";
 import TolakButton from "./_components/tolak-button";
@@ -49,6 +51,23 @@ function DataSuratByKode({
           label="Jenis Usaha"
           value={surat.lokasi_usaha}
         />
+        <div>
+          <Label className="font-semibold">Foto Usaha:</Label>
+          <div className="p-2 bg-accent text-accent-foreground border cursor-not-allowed w-full text-sm">
+            {surat.foto_usaha ? (
+              <Link
+                href={surat.foto_usaha}
+                className="text-primary hover:underline text-sm"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Link Foto Bukti Usaha
+              </Link>
+            ) : (
+              "Tidak ada foto"
+            )}
+          </div>
+        </div>
       </>
     );
   }
