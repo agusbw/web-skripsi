@@ -1,6 +1,6 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import type { Metadata } from "next";
-import { fetchSuratById } from "@/lib/data";
+import { fetchSuratById } from "@/lib/server/data";
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
 import { notFound } from "next/navigation";

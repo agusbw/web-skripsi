@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Trash2Icon } from "lucide-react";
-import { deleteWarga } from "@/lib/actions";
+import { deleteWarga } from "@/lib/server/actions";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 

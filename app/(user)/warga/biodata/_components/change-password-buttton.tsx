@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { changePasswordSchema } from "@/types/schema";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
-import { changePassword } from "@/lib/actions";
+import { changePassword } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 

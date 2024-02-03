@@ -21,7 +21,7 @@ import {
   fetchTotalSuratByKategori,
   fetchBarChartData,
   fetchLatestSurat,
-} from "@/lib/data";
+} from "@/lib/server/data";
 import SuratCountCard from "@/components/dashboard/surat-count-card";
 
 export const metadata: Metadata = {

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import * as React from "react";
-import { ambilSurat } from "@/lib/actions";
+import { ambilSurat } from "@/lib/server/actions";
 import { Loader2, UserCheck } from "lucide-react";
 import { toast } from "sonner";
 

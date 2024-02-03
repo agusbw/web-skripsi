@@ -7,7 +7,7 @@ import {
 import { DataTable } from "./_components/data-table";
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { fetchALlUserSurat } from "@/lib/data";
+import { fetchALlUserSurat } from "@/lib/server/data";
 import { Terminal } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { type Metadata } from "next";

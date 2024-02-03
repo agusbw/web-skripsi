@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 
 import * as React from "react";
-import { tolakSurat } from "@/lib/actions";
+import { tolakSurat } from "@/lib/server/actions";
 
 export default function TolakButton({ suratId }: { suratId: string }) {
   const [dialogOpen, setDialogOpen] = React.useState(false);

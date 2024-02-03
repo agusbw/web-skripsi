@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 
 import * as React from "react";
-import { createNomorSurat } from "@/lib/actions";
+import { createNomorSurat } from "@/lib/server/actions";
 
 export default function NomorSuratButton({
   suratId,

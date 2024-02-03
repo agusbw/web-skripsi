@@ -1,5 +1,5 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
-import { fetchWargaByUserId, fetchSuratByUserId } from "@/lib/data";
+import { fetchWargaByUserId, fetchSuratByUserId } from "@/lib/server/data";
 import { notFound } from "next/navigation";
 import CreateWarga from "../_components/create-warga-button";
 import { Contact, FileBarChart, FileClock } from "lucide-react";

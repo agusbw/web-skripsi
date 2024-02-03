@@ -1,6 +1,6 @@
 import SidebarList from "@/components/sidebar-list";
-import { getCurrentSession } from "@/lib/auth";
-import { fetchUserDisplayName } from "@/lib/data";
+import { getCurrentSession } from "@/lib/server/auth";
+import { fetchUserDisplayName } from "@/lib/server/data";
 import Image from "next/image";
 
 const Sidebar = async () => {

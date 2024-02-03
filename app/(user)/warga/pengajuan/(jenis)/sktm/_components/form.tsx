@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { createSktmSchema } from "@/types/schema";
-import { createSktm } from "@/lib/actions";
+import { createSktm } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";

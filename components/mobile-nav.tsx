@@ -1,8 +1,8 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import * as React from "react";
-import { getCurrentSession } from "@/lib/auth";
+import { getCurrentSession } from "@/lib/server/auth";
 import SidebarList from "./sidebar-list";
-import { fetchUserDisplayName } from "@/lib/data";
+import { fetchUserDisplayName } from "@/lib/server/data";
 import Image from "next/image";
 
 const MobileNav = async () => {

@@ -18,7 +18,7 @@ import {
   MailQuestion,
   CheckCheck,
 } from "lucide-react";
-import { fetchUserTotalSurat, fetchUserLatestSurat } from "@/lib/data";
+import { fetchUserTotalSurat, fetchUserLatestSurat } from "@/lib/server/data";
 
 export const metadata: Metadata = {
   title: "Overview",

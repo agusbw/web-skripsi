@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminLoginForm from "@/app/(auth)/login/_components/admin-login-form";
 import WargaLoginForm from "@/app/(auth)/login/_components/warga-login-form";
-import { getCurrentSession } from "@/lib/auth";
+import { getCurrentSession } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {

@@ -3,7 +3,7 @@ import prisma from "./prisma";
 import { unstable_noStore as noStore } from "next/cache";
 import { getCurrentSession } from "./auth";
 import type { KodeSurat } from "@prisma/client";
-import { generateTotalFromSuratStatusGroup } from "./utils";
+import { generateTotalFromSuratStatusGroup } from "../utils";
 
 export async function fetchWargaList() {
   noStore();

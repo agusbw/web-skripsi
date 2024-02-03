@@ -8,12 +8,6 @@ export const inter = Inter({
 
 const ADMIN_WHATSAPP_NUMBER = "6281353270169";
 
-const BANJAR_DINAS = [
-  "Banjar Dinas Pelapuan",
-  "Banjar Dinas Bonagung",
-  "Banjar Dinas Satria",
-];
-
 const WHATSAPP_TEXT = {
   laporBug: `Halo admin, saya menemukan masalah pada Sistem Pengajuan Surat Keterangan. Masalah yang saya temukan adalah {masukkan masalah anda}`,
   daftarAkun: `Halo admin, NIK saya belum terdaftar pada Sistem Pengajuan Surat Keterangan. Saya ingin mendaftarkan NIK saya.`,
@@ -21,4 +15,4 @@ const WHATSAPP_TEXT = {
   kesalahanData: `Halo admin, saya ingin melaporkan kesalahan data pribadi pada Sistem Pengajuan Surat Keterangan. Kesalahan data diri saya adalah {masukkan kesalahan data anda}`,
 };
 
-export { ADMIN_WHATSAPP_NUMBER, BANJAR_DINAS, WHATSAPP_TEXT };
+export { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT };

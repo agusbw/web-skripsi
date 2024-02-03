@@ -1,5 +1,5 @@
 import { Label } from "@/components/ui/label";
-import { getUserBiodata } from "@/lib/data";
+import { getUserBiodata } from "@/lib/server/data";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
 import { id } from "date-fns/esm/locale";

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { resetPasswordWarga } from "@/lib/actions";
+import { resetPasswordWarga } from "@/lib/server/actions";
 import { toast } from "sonner";
 import {
   AlertDialog,

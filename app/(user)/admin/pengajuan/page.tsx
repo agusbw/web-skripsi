@@ -1,6 +1,6 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { fetchAllSurat } from "@/lib/data";
+import { fetchAllSurat } from "@/lib/server/data";
 import DataTableWrapper from "./_components/table-wrapper";
 import {
   pendingColumns,

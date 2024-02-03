@@ -1,4 +1,4 @@
-import { getUserBiodata } from "@/lib/data";
+import { getUserBiodata } from "@/lib/server/data";
 import UserData, {
   UserDataSkeleton,
 } from "../../pengajuan/(jenis)/_components/user-data";

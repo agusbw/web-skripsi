@@ -7,7 +7,7 @@ import type { Surat, KategoriSurat } from "@prisma/client";
 import { useTransition, useState, type ReactNode } from "react";
 import SuratStatusBadge from "@/components/surat-status-badge";
 import { useRouter } from "next/navigation";
-import { deleteSurat } from "@/lib/actions";
+import { deleteSurat } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Trash2, Loader2, UserCheck } from "lucide-react";

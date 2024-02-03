@@ -1,5 +1,5 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
-import { fetchSuratDiambil } from "@/lib/data";
+import { fetchSuratDiambil } from "@/lib/server/data";
 import { RiwayatPengambilanTable } from "./_components/data-table";
 import { riwayatPengambilanColumns } from "./_components/columns";
 import ExportPDF from "./_components/export-pdf";

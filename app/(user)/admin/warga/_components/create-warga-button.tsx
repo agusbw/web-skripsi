@@ -44,7 +44,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { createWarga, updateWarga } from "@/lib/actions";
+import { createWarga, updateWarga } from "@/lib/server/actions";
 import type { Warga } from "@prisma/client";
 
 type CreateWargaForm = Omit<Warga, "createdAt" | "updatedAt" | "id_user">;

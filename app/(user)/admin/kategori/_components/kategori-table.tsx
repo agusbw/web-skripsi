@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchCountSuratByKategoriFiltered } from "@/lib/data";
+import { fetchCountSuratByKategoriFiltered } from "@/lib/server/data";
 import DateFilter from "./date-filter";
 import { Skeleton } from "@/components/ui/skeleton";
 import format from "date-fns/format";

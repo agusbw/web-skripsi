@@ -16,7 +16,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { createSkuSchema } from "@/types/schema";
-import { createSku, uploadFiles } from "@/lib/actions";
+import { createSku, uploadFiles } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition, useState } from "react";
