@@ -49,9 +49,7 @@ export default function ChangePasswordButton() {
         toast.success("Sukses", {
           description: result.message,
         });
-      }
-
-      if (!result.success) {
+      } else {
         toast.error("Gagal", {
           description: result.message,
         });

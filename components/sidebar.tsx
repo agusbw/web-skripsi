@@ -14,7 +14,7 @@ const Sidebar = async () => {
 
   return (
     <>
-      <div className="sticky top-0 hidden w-3/12 h-screen transition-all duration-300 border-r border-slate-300 lg:block">
+      <div className="sticky top-0 hidden w-3/12 h-screen transition-all duration-300 border-r lg:block">
         <Image
           src="/logo-desa.png"
           alt="Logo Desa"

@@ -7,10 +7,10 @@ export default function ComplaintStepsSection() {
       className="lg:px-32 py-12 body-font"
       id="step"
     >
-      <p className="mb-4 text-2xl font-bold text-primary sm:text-4xl text-center">
+      <p className="mb-4 text-2xl font-semibold text-primary sm:text-3xl text-center">
         Tata Cara Pengajuan Surat Keterangan
       </p>
-      <p className="mx-auto text-base leading-relaxed text-center">
+      <p className="mx-auto text-lg leading-relaxed text-center text-muted-foreground">
         Berikut adalah tata cara pengajuan surat keterangan melalui website ini.
       </p>
       <div className="container flex flex-wrap px-5 mx-auto mt-10">
@@ -27,10 +27,10 @@ export default function ComplaintStepsSection() {
                       {step.icon}
                     </div>
                     <div className="flex-grow pl-4">
-                      <h2 className="mb-1 text-sm font-medium tracking-wider text-gray-900 title-font">
+                      <h2 className="mb-1 font-medium tracking-wider">
                         {step.title}
                       </h2>
-                      <p className="leading-relaxed">{step.description}</p>
+                      <p>{step.description}</p>
                     </div>
                   </div>
                 );
@@ -46,10 +46,10 @@ export default function ComplaintStepsSection() {
                     {step.icon}
                   </div>
                   <div className="flex-grow pl-4">
-                    <h2 className="mb-1 text-sm font-medium tracking-wider text-gray-900 title-font">
+                    <h2 className="mb-1 font-medium tracking-wider">
                       {step.title}
                     </h2>
-                    <p className="leading-relaxed">{step.description}</p>
+                    <p>{step.description}</p>
                   </div>
                 </div>
               );

@@ -17,7 +17,7 @@ const MobileNav = async () => {
   return (
     <div
       className={
-        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-primary-foreground text-primary z-50"
+        "lg:hidden py-5 px-5 border-b border-2 font-semibold flex justify-between sticky top-0 bg-background text-primary z-50"
       }
     >
       <div className="flex items-center gap-2">

@@ -10,8 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  // TODO: Benerin desainnya brok + responsive
-
   return (
     <>
       <Hero />

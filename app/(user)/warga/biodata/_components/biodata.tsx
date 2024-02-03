@@ -12,7 +12,7 @@ export default async function Biodata() {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-2">Biodata</h2>
+      <h2 className="text-2xl font-medium mb-2">Biodata</h2>
       <Suspense fallback={<UserDataSkeleton />}>
         <UserData />
       </Suspense>

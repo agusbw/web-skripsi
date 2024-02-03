@@ -68,14 +68,14 @@ export default function Loading() {
             <FileClock className="inline-block w-6 h-6 text-primary" /> Riwayat
             Pengajuan Surat
           </h3>
-          <div className="border border-gray-200 rounded-lg">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+          <div className="border rounded-lg">
+            <div className="flex items-center justify-between px-4 py-3 border-b border">
               <Skeleton className="w-24 h-6" />
               <Skeleton className="w-24 h-6" />
               <Skeleton className="w-24 h-6" />
               <Skeleton className="w-24 h-6" />
             </div>
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between px-4 py-3 border-b border">
               <Skeleton className="w-24 h-6" />
               <Skeleton className="w-24 h-6" />
               <Skeleton className="w-24 h-6" />

@@ -11,10 +11,10 @@ export default function Hero() {
           <h1 className={"text-3xl font-bold sm:text-4xl"}>
             Sistem Informasi Pengajuan Surat Keterangan
           </h1>
-          <p className="font-bold text-lg text-muted-foreground">
+          <p className="font-medium text-lg">
             Desa Pelapuan, Kecamatan Busungbiu, Kabupaten Buleleng
           </p>
-          <p className="leading-relaxed text-muted-foreground">
+          <p className="leading-relaxed text-muted-foreground text-base">
             Sistem Pengajuan Surat Keterangan (SIPSK) adalah sistem yang
             digunakan untuk mempermudah masyarakat dalam mengajukan surat
             keterangan kepada pemerintah Desa Pelapuan.
@@ -25,7 +25,7 @@ export default function Hero() {
               className="relative inline-flex h-10 overflow-hidden rounded-full p-[3px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
             >
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-white px-3 py-1 text-sm font-medium text-black backdrop-blur-3xl">
+              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-background px-3 py-1 text-sm font-medium text-foreground backdrop-blur-3xl">
                 Ajukan Surat
               </span>
             </button>

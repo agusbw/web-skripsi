@@ -46,8 +46,8 @@ export default async function BiodataPage() {
       </Alert>
       <div className="grid grid-cols-1 gap-y-4 w-full">
         <Biodata />
-        <div className="bg-white p-5 rounded shadow-sm border space-y-2">
-          <h2 className="text-2xl font-semibold">Ganti Password</h2>
+        <div className="p-5 rounded shadow-sm border space-y-2">
+          <h2 className="text-2xl font-medium">Ganti Password</h2>
           <p>Ubah password anda secara berkala untuk menjaga keamanan akun.</p>
           <ChangePasswordButton />
           <p className="text-sm text-muted-foreground">
