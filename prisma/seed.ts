@@ -10,7 +10,7 @@ async function main() {
     },
   });
   if (!admin) {
-    const password: string = process.env.ADMIN_PASSWORD ?? "password";
+    const password: string = process.env.ADMIN_PASSWORD ?? "password123";
     const hashedPassword = await hash(password, 10);
     await prisma.user.create({
       data: {

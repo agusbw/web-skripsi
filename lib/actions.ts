@@ -883,7 +883,7 @@ export async function deleteSurat(id: string) {
       return { success: false, message: "Data surat tidak ditemukan" };
 
     if (surat.kategori_surat.kode === "SKU" && surat.foto_usaha) {
-      await deleteFileByURL(surat.foto_usaha as string);
+      await deleteFileByURL(surat.foto_usaha);
     }
 
     await prisma.surat.delete({
