@@ -10,7 +10,8 @@ import { useRouter } from "next/navigation";
 import { deleteSurat } from "@/lib/actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Trash2, Loader2 } from "lucide-react";
+import { Trash2, Loader2, UserCheck } from "lucide-react";
+import DiambilButton from "../[suratId]/_components/diambil-button";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -264,6 +265,13 @@ export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
           >
             <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
+          <DiambilButton
+            noSurat={row.original.no_surat}
+            suratId={row.original.id}
+            size={"sm"}
+          >
+            <UserCheck className="w-4 h-4" />
+          </DiambilButton>
           <DeleteSuratButton
             size={"sm"}
             suratId={row.original.id}

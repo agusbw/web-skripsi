@@ -11,15 +11,19 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { ambilSurat } from "@/lib/actions";
-import { Loader2 } from "lucide-react";
+import { Loader2, UserCheck } from "lucide-react";
 import { toast } from "sonner";
 
 export default function DiambilButton({
   suratId,
   noSurat,
+  size = "default",
+  children,
 }: {
   suratId: string;
   noSurat: string | null;
+  children?: React.ReactNode;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
 }) {
   const [alertOpen, setAlertOpen] = React.useState<boolean | undefined>(false);
   const [pending, startTransition] = React.useTransition();
@@ -50,8 +54,16 @@ export default function DiambilButton({
             setAlertOpen(true);
           }
         }}
+        size={size}
       >
-        Surat Diambil
+        {children ? (
+          children
+        ) : (
+          <>
+            <UserCheck className="w-4 h-4 mr-1" />
+            <span> | Diambil</span>
+          </>
+        )}
       </Button>
       <AlertDialogContent>
         <AlertDialogHeader>

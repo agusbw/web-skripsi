@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { tolakSuratSchema } from "@/types/schema";
 import { useTransition } from "react";
-import { Loader2 } from "lucide-react";
+import { CircleOff, Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -66,7 +66,7 @@ export default function TolakButton({ suratId }: { suratId: string }) {
           onClick={() => setDialogOpen(true)}
           variant={"destructive"}
         >
-          Tolak Pengajuan
+          <CircleOff className="w-4 h-4 mr-1" /> | Tolak
         </Button>
 
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>

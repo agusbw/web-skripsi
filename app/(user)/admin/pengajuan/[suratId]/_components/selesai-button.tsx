@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { selesaikanSurat } from "@/lib/actions";
-import { Loader2 } from "lucide-react";
+import { CheckCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function SelesaiButton({
@@ -51,7 +51,7 @@ export default function SelesaiButton({
           }
         }}
       >
-        Selesaikan Surat
+        <CheckCheck className="w-4 h-4 mr-1" /> | Selesai
       </Button>
       <AlertDialogContent>
         <AlertDialogHeader>

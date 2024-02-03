@@ -156,13 +156,13 @@ export default async function DetailSurat({
           />
         </div>
       </div>
-      <div className="w-full mt-4">
+      <div className="w-full mt-8">
         <p className="text-xl font-medium text-primary">Data Pengajuan Surat</p>
-        <div className="flex gap-3 max-w-full items-end">
+        <div className="flex gap-3 items-end max-w-full">
           <DataItem
             label="Nomor Surat"
             value={surat.no_surat ? surat.no_surat : "Belum diberi nomor surat"}
-            className="min-w-[300px] max-w-full"
+            className="max-w-full w-[300px]"
           />
           {surat.status === "PENDING" && (
             <NomorSuratButton
@@ -216,7 +216,7 @@ export default async function DetailSurat({
         </div>
       </div>
 
-      <div className="mt-8 flex w-full justify-between">
+      <div className="mt-8">
         <div className="flex gap-3">
           {surat.status !== "DITOLAK" && (
             <Button variant={"outline"}>Unduh Template Surat</Button>
@@ -229,6 +229,8 @@ export default async function DetailSurat({
             <Trash2 size={17} /> | Hapus Surat
           </DeleteSuratButton>
         </div>
+      </div>
+      <div className="flex justify-end mt-8">
         {surat.status !== "DITOLAK" && (
           <div className="flex gap-3">
             {surat.status === "PENDING" && (
