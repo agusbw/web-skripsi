@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BarChartSurat, PieChartSurat } from "@/components/dashboard/charts";
+import { Button } from "@/components/ui/button";
 import { AdminLatestRequest as LatestRequest } from "@/components/dashboard/latest-request";
 import {
   Mails,
@@ -15,6 +16,7 @@ import {
   MailCheck,
   MailQuestion,
   CheckCheck,
+  HelpCircle,
 } from "lucide-react";
 import {
   fetchTotalSurat,
@@ -23,6 +25,15 @@ import {
   fetchLatestSurat,
 } from "@/lib/server/data";
 import SuratCountCard from "@/components/dashboard/surat-count-card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -31,6 +42,60 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+function StatusHelpDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="absolute top-14 right-5 lg:top-28 lg:right-10 z-50"
+        >
+          <HelpCircle size={16} />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="text-left">
+            Keterangan Status Surat
+          </DialogTitle>
+          <DialogDescription>
+            <div className="flex flex-col gap-y-3 mt-4">
+              <Alert className="bg-yellow-500/10 text-yellow-600">
+                <AlertTitle className="text-left">Pending</AlertTitle>
+                <AlertDescription className="text-left">
+                  Tetap biarkan status pending jika pengajuan surat masih dalam
+                  proses dan belum selesai.
+                </AlertDescription>
+              </Alert>
+              <Alert className="bg-green-500/10 text-green-600">
+                <AlertTitle className="text-left">Selesai</AlertTitle>
+                <AlertDescription className="text-left">
+                  Berikan status selesai jika pengajuan telah selesai dan surat
+                  bisa diambil oleh warga.
+                </AlertDescription>
+              </Alert>
+              <Alert className="bg-blue-500/10 text-blue-600">
+                <AlertTitle className="text-left">Diambil</AlertTitle>
+                <AlertDescription className="text-left">
+                  Berikan status diambil jika surat telah diambil oleh warga.
+                </AlertDescription>
+              </Alert>
+              <Alert className="bg-red-500/10 text-red-600">
+                <AlertTitle className="text-left">Ditolak</AlertTitle>
+                <AlertDescription className="text-left">
+                  Berikan status ditolak jika pengajuan surat ditolak dan
+                  berikan warga alasan penolakan.
+                </AlertDescription>
+              </Alert>
+            </div>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default async function AdminDashboardPage() {
   const suratPromise = fetchTotalSurat();
@@ -48,8 +113,9 @@ export default async function AdminDashboardPage() {
   );
 
   return (
-    <DashboardContainer title="Dashboard Admin">
-      <>
+    <div className="relative">
+      <DashboardContainer title="Dashboard Admin">
+        <StatusHelpDialog />
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
@@ -115,7 +181,7 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
         </div>
-      </>
-    </DashboardContainer>
+      </DashboardContainer>
+    </div>
   );
 }
