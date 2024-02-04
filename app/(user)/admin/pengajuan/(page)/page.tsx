@@ -1,15 +1,15 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchAllSurat } from "@/lib/server/data";
-import DataTableWrapper from "./_components/table-wrapper";
+import DataTableWrapper from "../_components/table-wrapper";
 import {
   pendingColumns,
   ditolakColumns,
   selesaiColumns,
-} from "./_components/columns";
+} from "../_components/columns";
 
 import { type Metadata } from "next";
-import ExportPDF from "./_components/export-pdf";
+import ExportPDF from "../_components/export-pdf";
 
 export const metadata: Metadata = {
   title: "Pengajuan",
