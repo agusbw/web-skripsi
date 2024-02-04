@@ -50,7 +50,7 @@ function StatusHelpDialog() {
         <Button
           variant="outline"
           size="sm"
-          className="absolute top-14 right-5 lg:top-28 lg:right-10 z-50"
+          className="absolute top-14 right-5 lg:top-28 lg:right-10"
         >
           <HelpCircle size={16} />
         </Button>
