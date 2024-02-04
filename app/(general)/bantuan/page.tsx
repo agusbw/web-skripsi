@@ -17,7 +17,7 @@ export default function HelpPage() {
   return (
     <div>
       <div className={"lg:px-24 lg:pt-32 lg:pb-12 pt-16 px-8 text-center"}>
-        <h1 className={"text-4xl mb-4 font-bold text-primary"}>
+        <h1 className={"text-3xl mb-4 font-bold text-primary"}>
           Bantuan Pengguna
         </h1>
         <p>

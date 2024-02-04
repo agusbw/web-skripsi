@@ -139,7 +139,7 @@ export default function WargaLoginForm() {
       });
 
       if (res?.error) {
-        setLoginError("Password salah!");
+        setLoginError("Password salah.");
       } else {
         router.push("/warga");
       }
@@ -152,10 +152,9 @@ export default function WargaLoginForm() {
     <Form {...form}>
       {loginError && (
         <Alert
-          variant="destructive"
-          className={"mb-4"}
+          className={"mb-4 bg-red-500/10 text-red-600 border border-red-500/20"}
         >
-          <AlertTitle>Login Gagal!</AlertTitle>
+          <AlertTitle>Login Gagal</AlertTitle>
           <AlertDescription>{loginError}</AlertDescription>
         </Alert>
       )}

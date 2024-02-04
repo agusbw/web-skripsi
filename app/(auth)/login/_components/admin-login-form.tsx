@@ -42,7 +42,7 @@ export default function AdminLoginForm() {
       });
 
       if (res?.error) {
-        setLoginError("Username atau password salah!");
+        setLoginError("Username atau password salah.");
       } else {
         router.push("/admin");
       }
@@ -54,10 +54,9 @@ export default function AdminLoginForm() {
     <Form {...form}>
       {loginError && (
         <Alert
-          variant="destructive"
-          className={"mb-4"}
+          className={"mb-4 bg-red-500/10 text-red-600 border border-red-500/20"}
         >
-          <AlertTitle>Login Gagal!</AlertTitle>
+          <AlertTitle>Login Gagal</AlertTitle>
           <AlertDescription>{loginError}</AlertDescription>
         </Alert>
       )}
