@@ -2,38 +2,50 @@
 
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { MoveRight } from "lucide-react";
 
 export default function Hero() {
   return (
     <section>
-      <div className="px-4 lg:px-32 justify-center flex flex-col items-center py-10 lg:py-32 lg:flex-row text-primary">
-        <div className="flex flex-col items-center mb-16 text-center lg:flex-grow lg:w-1/2 lg:pr-24 lg:items-start lg:text-left lg:mb-0 space-y-3">
-          <h1 className={"text-3xl font-bold sm:text-4xl"}>
+      <div className="px-4 xl:px-20 xl:py-32 justify-center flex flex-col items-center py-12 xl:h-screen xl:flex-row xl:justify-around">
+        <div className="flex xl:self-start flex-col items-center mb-12 text-center xl:flex-grow xl:w-1/2 xl:items-start xl:text-left max-w-[600px]">
+          <h1 className={"text-3xl font-bold sm:text-4xl text-primary"}>
             Sistem Informasi Pengajuan Surat Keterangan
           </h1>
-          <p className="font-medium text-lg text-foreground">
+          <p className="font-semibold text-lg text-foreground/80 my-2">
             Desa Pelapuan, Kecamatan Busungbiu, Kabupaten Buleleng
           </p>
-          <p className="leading-relaxed text-muted-foreground text-base">
+          <p className="leading-relaxed text-muted-foreground text-lg">
             Sistem Pengajuan Surat Keterangan (SIPSK) adalah sistem yang
             digunakan untuk mempermudah masyarakat dalam mengajukan surat
             keterangan kepada pemerintah Desa Pelapuan.
           </p>
-          <div className="flex justify-center gap-4">
-            <button
+          <div className="flex justify-center items-center gap-x-4 mt-6">
+            <Button
+              className="bg-gradient-to-br from-primary to-purple-400 text-white hover:text-white hover:from-primary hover:to-purple-600 rouned-lg"
               onClick={() => signIn()}
-              className="relative inline-flex h-10 overflow-hidden rounded-full p-[3px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
             >
-              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-background px-3 py-1 text-sm font-medium text-foreground backdrop-blur-3xl">
-                Ajukan Surat
-              </span>
-            </button>
+              Ajukan Surat
+            </Button>
+            <Button
+              asChild
+              variant={"link"}
+            >
+              <Link href="/bantuan">
+                Bantuan{" "}
+                <MoveRight
+                  className="ml-1"
+                  size={12}
+                />
+              </Link>
+            </Button>
           </div>
         </div>
-        <div className="w-5/6 lg:max-w-lg lg:flex justify-center lg:w-full md:w-1/2">
+        <div className="w-5/6 xl:max-w-lg lg:flex justify-center xl:w-full md:w-1/2 xl:self-end">
           <Image
-            className="object-cover object-center rounded-lg shadow-md"
+            className="object-cover object-center rounded-2xl shadow-md"
             alt="hero"
             src="/kegiatan-1.jpeg"
             width={450}
