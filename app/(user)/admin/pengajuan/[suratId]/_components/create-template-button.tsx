@@ -61,6 +61,14 @@ function setPdfText(
     `);
   }
 
+  if (kodeSurat === "SKU") {
+    form.getTextField("keterangan")
+      .setText(`Memang benar yang tersebut diatas memiliki usaha ${
+      data.nama_usaha ? `"${data.nama_usaha}"` : ""
+    } yang berlokasi di wilayah ${data.lokasi_usaha ? data.lokasi_usaha : ""}
+    `);
+  }
+
   form.updateFieldAppearances(font);
 }
 
