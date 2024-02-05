@@ -222,7 +222,7 @@ export default async function DetailSurat({
 
       <div className="mt-5">
         <div className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0 sm:gap-x-3">
-          {surat.status !== "DITOLAK" && (
+          {surat.status !== "DITOLAK" && pdf !== null && (
             <CreateTemplateButton
               data={surat}
               pdf={pdf}

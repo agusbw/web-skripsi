@@ -11,7 +11,12 @@ const rootDirectory = path.join(
 export const getPDFData = async (fileName: string) => {
   const filePath = path.join(rootDirectory, fileName);
 
-  const fileContent = await fs.readFile(filePath);
+  try {
+    const fileContent = await fs.readFile(filePath);
 
-  return fileContent;
+    return fileContent;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 };
