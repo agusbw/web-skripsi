@@ -34,7 +34,7 @@ function setPdfText(
   font: PDFFont
 ) {
   form.getTextField("no_surat").setText(data.no_surat ? data.no_surat : "");
-  form.getTextField("nama").setText(data.nama);
+  form.getTextField("nama").setText(data.nama.toUpperCase());
   form.getTextField("nik").setText(data.nik);
   form.getTextField("ttl").setText(
     `${data.tempat_lahir}/${format(data.tanggal_lahir, "dd MMMM yyyy", {
@@ -96,7 +96,7 @@ function CreateTemplateButton({ data, className, pdf }: Props) {
     setPdfText(data.kategori_surat.kode, data, form, bookmanFont);
 
     // Step 4: Save PDF yang sudah diisi form fieldnya
-    form.flatten(); //flat the form field
+    form.flatten();
     const pdfBytes = await pdfDoc.save();
 
     // Step 5: Buat Blob dari PDF yang sudah diisi form fieldnya

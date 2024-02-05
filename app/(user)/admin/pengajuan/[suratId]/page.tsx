@@ -139,6 +139,10 @@ export default async function DetailSurat({
             )}`}
           />
           <DataItem
+            label="Alamat"
+            value={surat.alamat}
+          />
+          <DataItem
             label="Jenis Kelamin"
             value={surat.jenis_kelamin ? "Laki-laki" : "Perempuan"}
           />

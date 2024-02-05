@@ -31,6 +31,10 @@ export default async function WargaBiodata({ warga }: { warga: Warga }) {
           )}`}
         />
         <DataItem
+          label="Alamat"
+          value={warga.alamat}
+        />
+        <DataItem
           label="Jenis Kelamin"
           value={warga.jenis_kelamin ? "Laki-laki" : "Perempuan"}
         />

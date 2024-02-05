@@ -37,6 +37,10 @@ export default async function UserData() {
           )}`}
         />
         <DataItem
+          label="Alamat"
+          value={userBiodata.alamat}
+        />
+        <DataItem
           label="Jenis Kelamin"
           value={userBiodata.jenis_kelamin ? "Laki-laki" : "Perempuan"}
         />
@@ -91,6 +95,10 @@ export function UserDataSkeleton() {
         </div>{" "}
         <div>
           <Label>Tempat & Tanggal Lahir: </Label>
+          <Skeleton className="w-full h-9 rounded-sm" />
+        </div>{" "}
+        <div>
+          <Label>Alamat: </Label>
           <Skeleton className="w-full h-9 rounded-sm" />
         </div>{" "}
         <div>
