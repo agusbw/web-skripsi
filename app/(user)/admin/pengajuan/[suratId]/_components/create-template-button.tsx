@@ -49,8 +49,16 @@ function setPdfText(
   form.getTextField("pekerjaan").setText(data.pekerjaan ? data.pekerjaan : "-");
   form.getTextField("alamat").setText(data.alamat);
   form.getTextField("keperluan").setText(data.keperluan);
+  form
+    .getTextField("tanggal_ttd")
+    .setText(format(new Date(), "dd MMMM yyyy", { locale: id }));
 
-  if (kodeSurat === "SKBPK") {
+  if (kodeSurat === "SKD") {
+    form.getTextField("keterangan")
+      .setText(`Memang benar yang Tersebut Diatas bertempat tinggal ( berdomisili) di ${
+      data.domisili ? data.domisili : ""
+    }
+    `);
   }
 
   form.updateFieldAppearances(font);
