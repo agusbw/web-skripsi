@@ -69,6 +69,10 @@ function setPdfText(
     `);
   }
 
+  if (kodeSurat === "SKTM") {
+    form.getTextField("no_kk").setText(data.no_kk);
+  }
+
   form.updateFieldAppearances(font);
 }
 
