@@ -17,6 +17,7 @@ const config = {
     "@typescript-eslint/consistent-type-definitions": "off",
     // new off
     "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
 
     "@typescript-eslint/consistent-type-imports": [

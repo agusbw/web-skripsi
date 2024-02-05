@@ -5,7 +5,6 @@ import format from "date-fns/format";
 import { id } from "date-fns/locale";
 import { notFound } from "next/navigation";
 import SuratStatusBadge from "@/components/surat-status-badge";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import DataItem from "@/components/data-item-field";
 import Link from "next/link";
@@ -16,7 +15,9 @@ import SelesaiButton from "./_components/selesai-button";
 import NomorSuratButton from "./_components/nomor-surat-button";
 import DiambilButton from "./_components/diambil-button";
 import { DeleteSuratButton } from "../_components/columns";
+import CreateTemplateButton from "./_components/create-template-button";
 import { Trash2 } from "lucide-react";
+import { getPDFData } from "@/lib/server/pdf";
 
 export const metadata: Metadata = {
   title: "Detail Surat",
@@ -26,9 +27,7 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
-function DataSuratByKode({
-  surat,
-}: {
+type DataSuratByKodeProps = {
   surat: Surat & {
     kategori_surat: KategoriSurat;
     warga: {
@@ -39,7 +38,9 @@ function DataSuratByKode({
       nama: string;
     };
   };
-}) {
+};
+
+function DataSuratByKode({ surat }: DataSuratByKodeProps) {
   if (surat.kategori_surat.kode === "SKU") {
     return (
       <>
@@ -106,6 +107,9 @@ export default async function DetailSurat({
   if (!surat) {
     notFound();
   }
+
+  let pdf = await getPDFData(`${surat.kategori_surat.kode}.pdf`);
+  pdf = JSON.parse(JSON.stringify(pdf));
 
   return (
     <DashboardContainer title={"Detail Pengajuan Surat"}>
@@ -219,12 +223,10 @@ export default async function DetailSurat({
       <div className="mt-5">
         <div className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0 sm:gap-x-3">
           {surat.status !== "DITOLAK" && (
-            <Button
-              size={"sm"}
-              variant={"outline"}
-            >
-              Unduh Template Surat
-            </Button>
+            <CreateTemplateButton
+              data={surat}
+              pdf={pdf}
+            />
           )}
           <DeleteSuratButton
             suratId={surat.id}
