@@ -217,7 +217,7 @@ export default function CreataWarga({
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Banjar Dinas Pelapuan, Kec Busungbiu, Kab Buleleng"
+                        placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
                         {...field}
                       />
                     </FormControl>

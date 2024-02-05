@@ -21,15 +21,15 @@ model User {
 
 model Warga {
   id              String      @id @default(uuid())
-  nik             String      @db.VarChar(255) @unique
-  no_kk           String      @db.VarChar(255)
-  nama            String      @db.VarChar(255)
-  alamat          String      @db.VarChar(255)
+  nik             String      @db.VarChar(16) @unique
+  no_kk           String      @db.VarChar(16)
+  nama            String      @db.VarChar(75)
+  alamat          String      @db.VarChar(120)
   agama           Agama
-  kewarganegaraan String      @db.VarChar(255)
-  pekerjaan       String?      @db.VarChar(255)
+  kewarganegaraan String      @db.VarChar(30)
+  pekerjaan       String?      @db.VarChar(50)
   tanggal_lahir   DateTime
-  tempat_lahir    String      @db.VarChar(255)
+  tempat_lahir    String      @db.VarChar(50)
   jenis_kelamin   Boolean 
   status_perkawinan StatusKawin
 
@@ -42,7 +42,7 @@ model Warga {
 
 model KategoriSurat{
   id      String      @id @default(uuid())
-  nama    String      @db.VarChar(255)
+  nama    String      @db.VarChar(60)
   kode    KodeSurat   @unique
   surat   Surat[]
 }
@@ -51,25 +51,25 @@ model Surat{
   createdAt DateTime  @default(now())
   id          String      @id @default(uuid())
   no_surat    String?      @db.VarChar(255) @unique
-  keperluan   String      @db.VarChar(255)
+  keperluan   String      @db.VarChar(100)
   status      Status      @default(PENDING)
 
-  nik             String      @db.VarChar(255)
-  no_kk           String      @db.VarChar(255)
-  nama            String      @db.VarChar(255)
-  alamat          String      @db.VarChar(255)
+  nik             String      @db.VarChar(16)
+  no_kk           String      @db.VarChar(16)
+  nama            String      @db.VarChar(75)
+  alamat          String      @db.VarChar(120)
   agama           Agama
-  kewarganegaraan String      @db.VarChar(255)
-  pekerjaan       String?      @db.VarChar(255)
+  kewarganegaraan String      @db.VarChar(30)
+  pekerjaan       String?      @db.VarChar(50)
   tanggal_lahir   DateTime
-  tempat_lahir    String      @db.VarChar(255)
+  tempat_lahir    String      @db.VarChar(50)
   jenis_kelamin   Boolean 
   status_perkawinan StatusKawin
   tanggal_pengambilan DateTime? 
 
-  domisili        String?     @db.VarChar(255)
-  nama_usaha     String?      @db.VarChar(255)
-  lokasi_usaha   String?      @db.VarChar(255)
+  domisili        String?     @db.VarChar(120)
+  nama_usaha     String?      @db.VarChar(40)
+  lokasi_usaha   String?      @db.VarChar(120)
   dtks           Boolean?     @default(false)
   foto_usaha      String?     @db.VarChar(255)
 
