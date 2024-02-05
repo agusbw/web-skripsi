@@ -89,7 +89,7 @@ enum Status {
   PENDING 
   DITOLAK
   SELESAI
-  DIAMBIL`
+  DIAMBIL
 }
 
 
