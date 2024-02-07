@@ -18,6 +18,7 @@ import { DeleteSuratButton } from "../_components/columns";
 import CreateTemplateButton from "./_components/create-template-button";
 import { Trash2 } from "lucide-react";
 import { getPDFData } from "@/lib/server/pdf";
+import { utcToZonedTime } from "date-fns-tz";
 
 export const metadata: Metadata = {
   title: "Detail Surat",
@@ -110,6 +111,10 @@ export default async function DetailSurat({
 
   let pdf = await getPDFData(`${surat.kategori_surat.kode}.pdf`);
   pdf = JSON.parse(JSON.stringify(pdf));
+
+  // Convert date to Singrapore
+  const date = utcToZonedTime(surat.tanggal_lahir, "Asia/Singapore");
+  surat.tanggal_lahir = date;
 
   return (
     <DashboardContainer title={"Detail Pengajuan Surat"}>

@@ -3,8 +3,13 @@ import { formatEnumValue } from "@/lib/utils";
 import { id } from "date-fns/esm/locale";
 import { type Warga } from "@prisma/client";
 import DataItem from "@/components/data-item-field";
+import { utcToZonedTime } from "date-fns-tz";
 
 export default async function WargaBiodata({ warga }: { warga: Warga }) {
+  // Convert date to Singrapore
+  const date = utcToZonedTime(warga.tanggal_lahir, "Asia/Singapore");
+  warga.tanggal_lahir = date;
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
