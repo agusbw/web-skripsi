@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { getUserBiodata } from "@/lib/server/data";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
+import { utcToZonedTime } from "date-fns-tz";
 import { id } from "date-fns/esm/locale";
 import { Skeleton } from "@/components/ui/skeleton";
 import DataItem from "@/components/data-item-field";
@@ -10,6 +11,10 @@ export default async function UserData() {
   const userBiodata = await getUserBiodata();
 
   if (!userBiodata) return;
+
+  const timeZone = "Asia/Singapore";
+  const date = utcToZonedTime(userBiodata.tanggal_lahir, timeZone);
+  userBiodata.tanggal_lahir = date;
 
   return (
     <div>
