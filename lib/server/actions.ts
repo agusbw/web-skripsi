@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
 import { getCurrentSession } from "./auth";
 import { type ActionsResponse } from "@/types/types";
+import { utcToZonedTime } from "date-fns-tz";
 import { utapi } from "./uploathing";
 import type * as z from "zod";
 type CreateWarga = z.infer<typeof createWargaSchema>;
@@ -60,8 +61,13 @@ export async function createWarga(
       };
     }
 
+    const tanggalLahirZoned = utcToZonedTime(
+      new Date(validatedData.data.tanggal_lahir),
+      "Asia/Singapore"
+    );
+
     const hashedPassword = await hash(
-      format(validatedData.data.tanggal_lahir, "ddMMyyyy"),
+      format(tanggalLahirZoned, "ddMMyyyy"),
       10
     );
 
@@ -121,6 +127,13 @@ export async function updateWarga(
           id,
         },
       },
+      include: {
+        warga: {
+          select: {
+            tanggal_lahir: true,
+          },
+        },
+      },
     });
 
     if (!user) return { success: false, message: "Data warga tidak ditemukan" };
@@ -143,10 +156,31 @@ export async function updateWarga(
       };
     }
 
-    const hashedPassword = await hash(
-      format(validatedData.data.tanggal_lahir, "ddMMyyyy"),
-      10
-    );
+    //check if user change his password
+    let userFormattedTanggalLahir = "";
+
+    if (user.warga?.tanggal_lahir) {
+      const userTanggalLahirZoned = utcToZonedTime(
+        user.warga.tanggal_lahir,
+        "Asia/Singapore"
+      );
+
+      userFormattedTanggalLahir = format(userTanggalLahirZoned, "ddMMyyyy");
+    }
+
+    //compare user formatted tanggal lahir with password
+    const isSame = await compare(userFormattedTanggalLahir, user.password);
+
+    let hashedPassword = user.password;
+
+    if (isSame) {
+      const tanggalLahirZoned = utcToZonedTime(
+        new Date(validatedData.data.tanggal_lahir),
+        "Asia/Singapore"
+      );
+
+      hashedPassword = await hash(format(tanggalLahirZoned, "ddMMyyyy"), 10);
+    }
 
     const updatedUser = await prisma.user.update({
       where: {
@@ -829,8 +863,13 @@ export async function resetPasswordWarga(user_id: string) {
     if (!user || !user.warga)
       return { success: false, message: "Data warga tidak ditemukan" };
 
+    const tanggalLahirZoned = utcToZonedTime(
+      new Date(user.warga.tanggal_lahir),
+      "Asia/Singapore"
+    );
+
     const hashedPassword = await hash(
-      format(user.warga.tanggal_lahir, "ddMMyyyy"),
+      format(tanggalLahirZoned, "ddMMyyyy"),
       10
     );
 
