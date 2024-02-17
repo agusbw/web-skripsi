@@ -25,6 +25,15 @@ import {
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { DataTableViewOptions } from "@/components/data-table-view-options";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,13 +71,43 @@ export function RiwayatPengambilanTable<TData, TValue>({
           <Input
             placeholder="Cari berdasarkan NIK"
             type={"search"}
-            value={(table.getColumn("nik")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("NIK Pengaju")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) =>
-              table.getColumn("nik")?.setFilterValue(event.target.value)
+              table.getColumn("NIK Pengaju")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
+          <Select
+            onValueChange={(value) =>
+              table.getColumn("Jenis Surat")?.setFilterValue(value)
+            }
+          >
+            <SelectTrigger className="w-fit">
+              <SelectValue placeholder="Cari Jenis Surat" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Jenis Surat</SelectLabel>
+                <SelectItem value="">Semua Jenis</SelectItem>
+                <SelectItem value="Surat Keterangan Tidak Mampu">
+                  Surat Keterangan Tidak Mampu
+                </SelectItem>
+                <SelectItem value="Surat Keterangan Belum Pernah Kawin">
+                  Surat Keterangan Belum Pernah Kawin
+                </SelectItem>
+                <SelectItem value="Surat Keterangan Usaha">
+                  Surat Keterangan Usaha
+                </SelectItem>
+                <SelectItem value="Surat Keterangan Domisili">
+                  Surat Keterangan Domisili
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
+        <div className=""></div>
         <DataTableViewOptions table={table} />
       </div>
       <div className="border rounded-md">

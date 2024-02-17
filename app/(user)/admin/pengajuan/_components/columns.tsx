@@ -125,12 +125,7 @@ export const pendingColumns: ColumnDef<ColumnDefProps>[] = [
     },
   },
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="NIK Pengaju"
-      />
-    ),
+    header: "NIK Pengaju",
     accessorKey: "NIK Pengaju",
     accessorFn: (row) => {
       return row.warga.nik;
@@ -201,12 +196,7 @@ export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
     },
   },
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="NIK Pengaju"
-      />
-    ),
+    header: "NIK Pengaju",
     accessorKey: "NIK Pengaju",
     accessorFn: (row) => {
       return row.warga.nik;
@@ -225,12 +215,7 @@ export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
     },
   },
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Nomor Surat"
-      />
-    ),
+    header: "Nomor Surat",
     accessorKey: "Nomor Surat",
     accessorFn: (row) => {
       return row.no_surat ? row.no_surat : "-";
@@ -296,12 +281,7 @@ export const ditolakColumns: ColumnDef<ColumnDefProps>[] = [
     },
   },
   {
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="NIK Pengaju"
-      />
-    ),
+    header: "NIK Pengaju",
     accessorKey: "NIK Pengaju",
     accessorFn: (row) => {
       return row.warga.nik;

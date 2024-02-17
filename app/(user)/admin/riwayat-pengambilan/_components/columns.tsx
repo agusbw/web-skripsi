@@ -13,15 +13,10 @@ import id from "date-fns/locale/id";
 
 export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
   {
-    accessorKey: "nik",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="NIK"
-      />
-    ),
-    cell: ({ row }) => {
-      return <span className="font-semibold">{row.original.nik}</span>;
+    header: "NIK Pengaju",
+    accessorKey: "NIK Pengaju",
+    accessorFn: (row) => {
+      return row.warga.nik;
     },
   },
   {
@@ -34,22 +29,20 @@ export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
     ),
   },
   {
-    accessorKey: "kategori_surat.nama",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title="Jenis Surat"
       />
     ),
+    accessorKey: "Jenis Surat",
+    accessorFn: (row) => {
+      return row.kategori_surat.nama;
+    },
   },
   {
     accessorKey: "tanggal pengajuan",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Tanggal Pengajuan"
-      />
-    ),
+    header: "Tanggal Pengajuan",
     cell: ({ row }) => {
       return (
         <span className="capitalize">
@@ -61,13 +54,11 @@ export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
     },
   },
   {
-    accessorKey: "tanggal_pengambilan",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Tanggal Pengambilan"
-      />
-    ),
+    accessorKey: "Tanggal Pengambilan",
+    header: "Tanggal Pengambilan",
+    accessorFn: (row) => {
+      return row.tanggal_pengambilan;
+    },
     cell: ({ row }) => {
       return (
         <span className="capitalize">

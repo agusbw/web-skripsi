@@ -1,9 +1,9 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { fetchSuratDiambil } from "@/lib/server/data";
-import { RiwayatPengambilanTable } from "./_components/data-table";
 import { riwayatPengambilanColumns } from "./_components/columns";
 import ExportPDF from "./_components/export-pdf";
 import { type Metadata } from "next";
+import DataTableWrapper from "./_components/table-wrapper";
 
 export const metadata: Metadata = {
   title: "Riwayat Pengambilan",
@@ -25,7 +25,7 @@ export default async function RiwayatPengambilanPage() {
       <div className="w-full flex justify-end mt-5">
         <ExportPDF data={data} />
       </div>
-      <RiwayatPengambilanTable
+      <DataTableWrapper
         data={data}
         columns={riwayatPengambilanColumns}
       />
