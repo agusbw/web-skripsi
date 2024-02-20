@@ -136,6 +136,7 @@ export default function SktmForm() {
                   <FormControl>
                     <Input
                       placeholder="Masukkan keperluan anda"
+                      autoComplete="off"
                       {...field}
                     />
                   </FormControl>

@@ -161,6 +161,7 @@ export default function CreataWarga({
                     <FormControl>
                       <Input
                         placeholder="5108030XXXXXXXXX"
+                        autoComplete="off"
                         type="number"
                         {...field}
                       />
@@ -181,6 +182,7 @@ export default function CreataWarga({
                     <FormControl>
                       <Input
                         placeholder="5108030XXXXXXXXX"
+                        autoComplete="off"
                         type="number"
                         {...field}
                       />
@@ -195,11 +197,12 @@ export default function CreataWarga({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Nama <span className={"text-destructive"}>*</span>
+                      Nama Lengkap <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Nyoman xxx"
+                        autoComplete="off"
                         {...field}
                       />
                     </FormControl>
@@ -218,6 +221,7 @@ export default function CreataWarga({
                     <FormControl>
                       <Input
                         placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
+                        autoComplete="off"
                         {...field}
                       />
                     </FormControl>
@@ -267,6 +271,7 @@ export default function CreataWarga({
                       <FormControl>
                         <Input
                           placeholder="Pelajar"
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>
@@ -287,6 +292,7 @@ export default function CreataWarga({
                     <FormControl>
                       <Input
                         placeholder="Pelapuan"
+                        autoComplete="off"
                         {...field}
                       />
                     </FormControl>
@@ -357,6 +363,7 @@ export default function CreataWarga({
                     <FormControl>
                       <Input
                         placeholder="Indonesia"
+                        autoComplete="off"
                         {...field}
                       />
                     </FormControl>

@@ -39,15 +39,25 @@ const KEPERLUAN = [
 
 export default function SktmForm() {
   const [pending, startTransition] = useTransition();
-  const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
+  const [isScrollbarVisible, setIsScrollbarVisible] = useState({
+    nama_usaha: false,
+    lokasi_usaha: false,
+  });
   const router = useRouter();
-  let example_nama = [
+
+  let example_nama_usaha = [
     "Warung Kelontong",
     "Dagang Gas Elpiji 3 Kg",
     "Jual Beli Hasil Bumi",
     "Ternak Ayam",
     "Dagang",
     "Toko Bangunan",
+  ];
+
+  let example_lokasi_usaha = [
+    "Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
+    "Banjar Dinas Bonagung, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
+    "Banjar Dinas Satria, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
   ];
 
   const form = useForm<z.infer<typeof createSkuSchema>>({
@@ -95,11 +105,15 @@ export default function SktmForm() {
   }
 
   const watchNamaUsaha = form.watch("nama_usaha");
+  const watchLokasiUsaha = form.watch("lokasi_usaha");
 
-  example_nama = example_nama.filter((nama) =>
+  example_nama_usaha = example_nama_usaha.filter((nama) =>
     nama.toLowerCase().includes(watchNamaUsaha.toLowerCase())
   );
 
+  example_lokasi_usaha = example_lokasi_usaha.filter((lokasi) =>
+    lokasi.toLowerCase().includes(watchLokasiUsaha.toLowerCase())
+  );
   return (
     <>
       <Form {...form}>
@@ -161,6 +175,7 @@ export default function SktmForm() {
                   <FormControl>
                     <Input
                       placeholder="Masukkan keperluan anda"
+                      autoComplete="off"
                       {...field}
                     />
                   </FormControl>
@@ -172,8 +187,7 @@ export default function SktmForm() {
               )}
             />
           </div>
-
-          <div className="space-y-4 max-w-sm">
+          <div className="space-y-4 w-full lg:max-w-xl">
             <div>
               <FormLabel className="text-base">Data Pendukung</FormLabel>
               <FormDescription>
@@ -191,35 +205,53 @@ export default function SktmForm() {
                       autoComplete="off"
                       placeholder="Warung Kelontong"
                       {...field}
-                      onFocus={() => setIsScrollbarVisible(true)}
+                      onFocus={() =>
+                        setIsScrollbarVisible((prev) => ({
+                          ...prev,
+                          nama_usaha: true,
+                        }))
+                      }
                       onBlur={() => {
-                        setTimeout(() => setIsScrollbarVisible(false), 200);
+                        setTimeout(
+                          () =>
+                            setIsScrollbarVisible((prev) => ({
+                              ...prev,
+                              nama_usaha: false,
+                            })),
+                          200
+                        );
                       }}
                     />
                   </FormControl>
-                  {isScrollbarVisible && example_nama.length > 0 && (
-                    <ScrollArea className="w-full max-h-40 overflow-auto rounded-md border">
-                      <div>
-                        {example_nama.map((tag) => (
-                          <div key={tag}>
-                            <div
-                              className="text-sm hover:bg-gray-100 cursor-pointer px-4 py-2"
-                              onClick={() => {
-                                form.setValue("nama_usaha", tag);
-                                setIsScrollbarVisible(false);
-                              }}
-                            >
-                              {tag}
+                  {isScrollbarVisible.nama_usaha &&
+                    example_nama_usaha.length > 0 && (
+                      <ScrollArea className="w-full max-h-40 overflow-auto rounded-md border">
+                        <div>
+                          {example_nama_usaha.map((tag) => (
+                            <div key={tag}>
+                              <div
+                                className="text-sm hover:bg-gray-100 cursor-pointer px-4 py-2"
+                                onClick={() => {
+                                  form.setValue("nama_usaha", tag);
+                                  setIsScrollbarVisible((prev) => {
+                                    return {
+                                      ...prev,
+                                      nama_usaha: false,
+                                    };
+                                  });
+                                }}
+                              >
+                                {tag}
+                              </div>
+                              <Separator />
                             </div>
-                            <Separator />
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  )}
+                          ))}
+                        </div>
+                      </ScrollArea>
+                    )}
                   <FormDescription>
-                    Masukkan jenis usaha anda, contohnya: Warung Kelontong, Jual
-                    Beli Hasil Bumi, Ternak Ayam, dll.
+                    Masukkan jenis usaha anda, ketik apabila tidak ada pada
+                    pilihan.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -234,12 +266,55 @@ export default function SktmForm() {
                   <FormControl>
                     <Input
                       placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
+                      autoComplete="off"
                       {...field}
+                      onFocus={() =>
+                        setIsScrollbarVisible((prev) => ({
+                          ...prev,
+                          lokasi_usaha: true,
+                        }))
+                      }
+                      onBlur={() => {
+                        setTimeout(
+                          () =>
+                            setIsScrollbarVisible((prev) => ({
+                              ...prev,
+                              lokasi_usaha: false,
+                            })),
+                          200
+                        );
+                      }}
                     />
                   </FormControl>
+                  {isScrollbarVisible.lokasi_usaha &&
+                    example_lokasi_usaha.length > 0 && (
+                      <ScrollArea className="w-full max-h-40 overflow-auto rounded-md border">
+                        <div>
+                          {example_lokasi_usaha.map((tag) => (
+                            <div key={tag}>
+                              <div
+                                className="text-sm hover:bg-gray-100 cursor-pointer px-4 py-2"
+                                onClick={() => {
+                                  form.setValue("lokasi_usaha", tag);
+                                  setIsScrollbarVisible((prev) => {
+                                    return {
+                                      ...prev,
+                                      lokasi_usaha: false,
+                                    };
+                                  });
+                                }}
+                              >
+                                {tag}
+                              </div>
+                              <Separator />
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                    )}
                   <FormDescription>
-                    Masukkan lokasi usaha anda, contohnya: Banjar Dinas
-                    Bonagung, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng
+                    Masukkan lokasi usaha anda, ketik apabila tidak ada pada
+                    pilihan.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

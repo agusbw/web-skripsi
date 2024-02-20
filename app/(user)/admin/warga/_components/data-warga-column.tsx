@@ -13,12 +13,7 @@ import { User } from "lucide-react";
 export const listWargaColumns: ColumnDef<Warga>[] = [
   {
     accessorKey: "nik",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="NIK"
-      />
-    ),
+    header: "NIK",
     cell: ({ row }) => {
       return <span className="font-semibold">{row.original.nik}</span>;
     },

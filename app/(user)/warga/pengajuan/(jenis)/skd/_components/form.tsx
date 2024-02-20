@@ -20,8 +20,10 @@ import { createSkdSchema } from "@/types/schema";
 import { createSkd } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 const KEPERLUAN = [
   {
@@ -36,8 +38,15 @@ const KEPERLUAN = [
 ] as const;
 
 export default function SkdForm() {
+  const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+
+  let example_domisili = [
+    "Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
+    "Banjar Dinas Bonagung, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
+    "Banjar Dinas Satria, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng",
+  ];
 
   const form = useForm<z.infer<typeof createSkdSchema>>({
     resolver: zodResolver(createSkdSchema),
@@ -65,6 +74,12 @@ export default function SkdForm() {
       }
     });
   }
+
+  const watchDomisili = form.watch("domisili");
+
+  example_domisili = example_domisili.filter((nama) =>
+    nama.toLowerCase().includes(watchDomisili.toLowerCase())
+  );
 
   return (
     <>
@@ -126,6 +141,7 @@ export default function SkdForm() {
                   <FormControl>
                     <Input
                       placeholder="Masukkan keperluan anda"
+                      autoComplete="off"
                       {...field}
                     />
                   </FormControl>
@@ -138,7 +154,7 @@ export default function SkdForm() {
             />
           </div>
 
-          <div className="space-y-4 max-w-sm">
+          <div className="space-y-4 w-full lg:max-w-xl">
             <div>
               <FormLabel className="text-base">Data Pendukung</FormLabel>
               <FormDescription>
@@ -154,12 +170,37 @@ export default function SkdForm() {
                   <FormControl>
                     <Input
                       placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
+                      autoComplete="off"
                       {...field}
+                      onFocus={() => setIsScrollbarVisible(true)}
+                      onBlur={() => {
+                        setTimeout(() => setIsScrollbarVisible(false), 200);
+                      }}
                     />
                   </FormControl>
+                  {isScrollbarVisible && example_domisili.length > 0 && (
+                    <ScrollArea className="w-full max-h-40 overflow-auto rounded-md border">
+                      <div>
+                        {example_domisili.map((tag) => (
+                          <div key={tag}>
+                            <div
+                              className="text-sm hover:bg-gray-100 cursor-pointer px-4 py-2"
+                              onClick={() => {
+                                form.setValue("domisili", tag);
+                                setIsScrollbarVisible(false);
+                              }}
+                            >
+                              {tag}
+                            </div>
+                            <Separator />
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  )}
                   <FormDescription>
-                    Masukkan domisili anda, contoh: Banjar Dinas Pelapuan, Desa
-                    Pelapuan, Kec. Busungbiu, Kab. Buleleng
+                    Masukkan domisili anda, ketik apabila tidak ada pada
+                    pilihan.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
