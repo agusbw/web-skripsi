@@ -12,6 +12,7 @@ import {
   MailCheck,
   MailQuestion,
   CheckCheck,
+  Loader,
 } from "lucide-react";
 import SuratCountCard from "@/components/dashboard/surat-count-card";
 
@@ -60,13 +61,18 @@ export default async function Page({
             <SuratCountCard
               title="Pending"
               count={surat.filter((s) => s.status === "PENDING").length}
-              Icon={MailQuestion}
+              Icon={Loader}
               className="bg-yellow-500 text-white"
             />
-
             <SuratCountCard
               title="Selesai"
-              count={surat.filter((s) => s.status === "SELESAI").length}
+              count={surat.filter((s) => s.status === "DIPROSES").length}
+              Icon={MailQuestion}
+              className="bg-green-500 text-white"
+            />
+            <SuratCountCard
+              title="Selesai"
+              count={surat.filter((s) => s.status === "DITERIMA").length}
               Icon={MailCheck}
               className="bg-green-500 text-white"
             />
