@@ -31,7 +31,13 @@ export default async function PengajuanPage() {
   const suratDiterima = surat.filter((item) => item.status === "DITERIMA");
 
   return (
-    <DashboardContainer title="Data Pengajuan Surat">
+    <DashboardContainer
+      title={
+        session?.user.role === "ADMIN"
+          ? "Data Pengajuan Surat"
+          : "Terima Pengajuan Surat"
+      }
+    >
       <div className="flex justify-end mb-4">
         <ExportPDF data={surat} />
       </div>

@@ -1,5 +1,6 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getCurrentSession } from "@/lib/server/auth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function SkeletonTable() {
@@ -30,9 +31,17 @@ function SkeletonTable() {
   );
 }
 
-export default function Loading() {
+export default async function Loading() {
+  const session = await getCurrentSession();
+
   return (
-    <DashboardContainer title="Data Pengajuan Surat">
+    <DashboardContainer
+      title={
+        session?.user.role === "ADMIN"
+          ? "Data Pengajuan Surat"
+          : "Terima Pengajuan Surat"
+      }
+    >
       <div className="flex justify-end mb-4">
         <Skeleton className="w-44 h-8" />
       </div>
