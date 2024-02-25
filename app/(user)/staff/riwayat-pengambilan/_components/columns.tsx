@@ -2,6 +2,7 @@
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
   type ColumnDefProps,
@@ -75,6 +76,8 @@ export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
     id: "actions",
     header: "Aksi",
     cell: ({ row }) => {
+      const session = useSession();
+
       return (
         <div className="flex gap-3">
           <Button
@@ -82,12 +85,14 @@ export const riwayatPengambilanColumns: ColumnDef<ColumnDefProps>[] = [
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <DeleteSuratButton
-            size={"sm"}
-            suratId={row.original.id}
-          />
+          {session.data?.user.role === "ADMIN" && (
+            <DeleteSuratButton
+              size={"sm"}
+              suratId={row.original.id}
+            />
+          )}
         </div>
       );
     },

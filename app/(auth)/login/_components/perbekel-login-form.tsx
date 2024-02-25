@@ -20,7 +20,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AdminLoginForm() {
+export default function PerbekelLoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof adminLoginSchema>>({
     resolver: zodResolver(adminLoginSchema),
@@ -37,7 +37,7 @@ export default function AdminLoginForm() {
       const res = await signIn("credentials", {
         username: values.username,
         password: values.password,
-        role: "ADMIN",
+        role: "PERBEKEL",
         redirect: false,
       });
 
@@ -109,7 +109,7 @@ export default function AdminLoginForm() {
         </Button>
         <p className="px-8 text-sm text-center text-muted-foreground">
           Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
-          Dashboard Admin
+          Dashboard Perbekel
         </p>
       </form>
     </Form>

@@ -23,16 +23,29 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.username || !credentials.password) return null;
 
         let user;
+        const includeStatement = {
+          warga: {
+            select: {
+              id: true,
+            },
+          },
+        };
 
-        if (credentials.role === "ADMIN") {
+        if (credentials.role === "PERBEKEL") {
+          user = await prisma.user.findUnique({
+            where: {
+              username: credentials.username,
+              role: "PERBEKEL",
+            },
+            include: includeStatement,
+          });
+        } else if (credentials.role === "ADMIN") {
           user = await prisma.user.findUnique({
             where: {
               username: credentials.username,
               role: "ADMIN",
             },
-            include: {
-              warga: true,
-            },
+            include: includeStatement,
           });
         } else {
           user = await prisma.user.findUnique({
@@ -40,9 +53,7 @@ export const authOptions: NextAuthOptions = {
               username: credentials.username,
               role: "WARGA",
             },
-            include: {
-              warga: true,
-            },
+            include: includeStatement,
           });
         }
 
@@ -53,7 +64,6 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           username: user.username,
           role: user.role,
-          display_name: user.warga ? user.warga.nama : "Admin",
           id_warga: user.warga?.id,
         };
       },
@@ -70,7 +80,6 @@ export const authOptions: NextAuthOptions = {
           id: token.id,
           username: token.username,
           role: token.role,
-          display_name: token.display_name,
           id_warga: token.id_warga,
         },
       };
@@ -83,7 +92,6 @@ export const authOptions: NextAuthOptions = {
           id: u.id,
           username: u.username,
           role: u.role,
-          display_name: u.display_name,
           id_warga: u.id_warga,
         };
       }

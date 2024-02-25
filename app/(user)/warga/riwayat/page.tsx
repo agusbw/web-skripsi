@@ -24,7 +24,8 @@ export default async function BiodataPage() {
   const surat = await fetchALlUserSurat();
 
   const suratPending = surat.filter((item) => item.status === "PENDING");
-  const suratSelesai = surat.filter((item) => item.status === "SELESAI");
+  const suratDiproses = surat.filter((item) => item.status === "DIPROSES");
+  const suratDiterima = surat.filter((item) => item.status === "DITERIMA");
   const suratDiambil = surat.filter((item) => item.status === "DIAMBIL");
   const suratDitolak = surat.filter((item) => item.status === "DITOLAK");
 
@@ -33,7 +34,8 @@ export default async function BiodataPage() {
       <Tabs defaultValue="pending">
         <TabsList>
           <TabsTrigger value="pending">Pending</TabsTrigger>
-          <TabsTrigger value="selesai">Selesai</TabsTrigger>
+          <TabsTrigger value="diproses">Diproses</TabsTrigger>
+          <TabsTrigger value="diterima">Diterima</TabsTrigger>
           <TabsTrigger value="diambil">Diambil</TabsTrigger>
           <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
         </TabsList>
@@ -43,8 +45,8 @@ export default async function BiodataPage() {
             <AlertTitle>Informasi!</AlertTitle>
             <AlertDescription>
               Pengajuan surat yang{" "}
-              <span className="font-bold">belum selesai</span> diproses akan
-              ditampilkan di sini.
+              <span className="font-bold">belum diproses/dilihat admin</span>{" "}
+              akan ditampilkan di sini.
             </AlertDescription>
           </Alert>
           <DataTable
@@ -52,19 +54,37 @@ export default async function BiodataPage() {
             data={suratPending}
           />
         </TabsContent>
-        <TabsContent value="selesai">
+        <TabsContent value="diproses">
           <Alert>
             <Terminal className="h-4 w-4" />
             <AlertTitle>Informasi!</AlertTitle>
             <AlertDescription>
-              Pengajuan surat yang telah
-              <span className="font-bold"> selesai</span> diproses akan
-              ditampilkan di sini, surat sudah dapat diambil di kantor desa.
+              Pengajuan surat yang
+              <span className="font-bold">
+                {" "}
+                masih diverifikasi/ditandatangani
+              </span>{" "}
+              perbekel akan tampil di sini.
+            </AlertDescription>
+          </Alert>
+          <DataTable
+            columns={pendingColumns}
+            data={suratDiproses}
+          />
+        </TabsContent>
+        <TabsContent value="diterima">
+          <Alert>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Informasi!</AlertTitle>
+            <AlertDescription>
+              Pengajuan surat yang
+              <span className="font-bold"> sudah selesai/diterima</span> akan
+              tampil di sini. Surat sudah bisa diambil di kantor perbekel.
             </AlertDescription>
           </Alert>
           <DataTable
             columns={selesaiColumns}
-            data={suratSelesai}
+            data={suratDiterima}
           />
         </TabsContent>
         <TabsContent value="diambil">

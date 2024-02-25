@@ -15,6 +15,7 @@ import {
   MailX,
   MailCheck,
   MailQuestion,
+  Loader,
   CheckCheck,
   HelpCircle,
 } from "lucide-react";
@@ -34,6 +35,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { getCurrentSession } from "@/lib/server/auth";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -69,11 +71,18 @@ function StatusHelpDialog() {
                   proses dan belum selesai.
                 </AlertDescription>
               </Alert>
-              <Alert className="bg-green-500/10 text-green-600">
-                <AlertTitle className="text-left">Selesai</AlertTitle>
+              <Alert className="bg-teal-500/10 text-teal-600">
+                <AlertTitle className="text-left">Diproses</AlertTitle>
                 <AlertDescription className="text-left">
-                  Berikan status selesai jika pengajuan telah selesai dan surat
-                  bisa diambil oleh warga.
+                  Berikan status diproses jika pengajuan surat sedang dalam
+                  proses verifikasi dan penandatanganan oleh perbekel.
+                </AlertDescription>
+              </Alert>
+              <Alert className="bg-green-500/10 text-green-600">
+                <AlertTitle className="text-left">Diterima</AlertTitle>
+                <AlertDescription className="text-left">
+                  Berikan status diterima jika pengajuan telah selesai
+                  ditandatangani dan surat bisa diambil oleh warga.
                 </AlertDescription>
               </Alert>
               <Alert className="bg-blue-500/10 text-blue-600">
@@ -102,6 +111,7 @@ export default async function AdminDashboardPage() {
   const suratByKategoriPromise = fetchTotalSuratByKategori();
   const suratByMonthPromise = fetchBarChartData();
   const latestSuratPromise = fetchLatestSurat();
+  const session = await getCurrentSession();
 
   const [surat, suratByKategori, suratByMonth, latestSurat] = await Promise.all(
     [
@@ -114,11 +124,17 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="relative">
-      <DashboardContainer title="Dashboard Admin">
+      <DashboardContainer
+        title={
+          session?.user.role === "ADMIN"
+            ? "Dashboard Admin"
+            : "Dashboard Perbekel"
+        }
+      >
         <StatusHelpDialog />
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-6">
               <SuratCountCard
                 count={surat?.total}
                 title="Total Surat"
@@ -128,12 +144,18 @@ export default async function AdminDashboardPage() {
               <SuratCountCard
                 count={surat?.pending}
                 title="Surat Pending"
-                Icon={MailQuestion}
+                Icon={Loader}
                 className="bg-yellow-500 text-white"
               />
               <SuratCountCard
-                count={surat?.selesai}
-                title="Surat Selesai"
+                count={surat?.diproses}
+                title="Surat Diproses"
+                Icon={MailQuestion}
+                className="bg-teal-500 text-white"
+              />
+              <SuratCountCard
+                count={surat?.diterima}
+                title="Surat Diterima"
                 Icon={MailCheck}
                 className="bg-green-500 text-white"
               />

@@ -17,6 +17,7 @@ export default function RootLayout({
       style={{
         colorScheme: "light",
       }}
+      suppressHydrationWarning={true}
     >
       <body>
         <Providers>

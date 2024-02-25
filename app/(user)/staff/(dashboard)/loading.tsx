@@ -6,22 +6,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
- import {
+import {
   Mails,
   MailX,
   MailCheck,
   MailQuestion,
+  Loader,
   CheckCheck,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getCurrentSession } from "@/lib/server/auth";
 import { SuratCountCardSkeleton } from "@/components/dashboard/surat-count-card";
 
 export default async function Loading() {
+  const session = await getCurrentSession();
+
   return (
-    <DashboardContainer title="Dashboard Admin">
+    <DashboardContainer
+      title={
+        session?.user?.role === "ADMIN"
+          ? "Dashboard Admin"
+          : "Dashboard Perbekel"
+      }
+    >
       <div className="flex-col md:flex">
         <div className="flex-1 space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
             <SuratCountCardSkeleton
               title="Total Surat"
               className="bg-primary col-span-2 lg:col-span-1"
@@ -30,11 +40,16 @@ export default async function Loading() {
             <SuratCountCardSkeleton
               title="Surat Pending"
               className="bg-yellow-500"
+              Icon={Loader}
+            />
+            <SuratCountCardSkeleton
+              title="Surat Diproses"
+              className="bg-teal-500"
               Icon={MailQuestion}
             />
             <SuratCountCardSkeleton
               className="bg-green-500"
-              title="Surat Selesai"
+              title="Surat Diterima"
               Icon={MailCheck}
             />
             <SuratCountCardSkeleton

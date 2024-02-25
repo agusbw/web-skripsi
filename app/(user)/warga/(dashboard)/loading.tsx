@@ -13,6 +13,7 @@ import {
   MailCheck,
   MailQuestion,
   CheckCheck,
+  Loader,
 } from "lucide-react";
 import { SuratCountCardSkeleton } from "@/components/dashboard/surat-count-card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,20 +36,25 @@ export default async function Loading() {
       </div>
       <div className="flex-col md:flex">
         <div className="flex-1 space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
             <SuratCountCardSkeleton
               title="Total Surat"
-              className="bg-primary"
+              className="bg-primary col-span-2 lg:col-span-1"
               Icon={Mails}
             />
             <SuratCountCardSkeleton
               title="Surat Pending"
               className="bg-yellow-500"
+              Icon={Loader}
+            />
+            <SuratCountCardSkeleton
+              title="Surat Diproses"
+              className="bg-teal-500"
               Icon={MailQuestion}
             />
             <SuratCountCardSkeleton
               className="bg-green-500"
-              title="Surat Selesai"
+              title="Surat Diterima"
               Icon={MailCheck}
             />
             <SuratCountCardSkeleton
@@ -108,10 +114,17 @@ export default async function Loading() {
                     proses verifikasi oleh admin
                   </AlertDescription>
                 </Alert>
-                <Alert className="bg-green-500/10 text-green-600">
-                  <AlertTitle>Selesai</AlertTitle>
+                <Alert className="bg-teal-500/10 text-teal-600">
+                  <AlertTitle>Diterima</AlertTitle>
                   <AlertDescription>
-                    Status selesai menandakan bahwa surat anda telah selesai
+                    Status diterima menandakan bahwa surat anda sedang dalam
+                    proses verifikasi dan penandatanganan oleh perbekel.
+                  </AlertDescription>
+                </Alert>
+                <Alert className="bg-green-500/10 text-green-600">
+                  <AlertTitle>Diterima</AlertTitle>
+                  <AlertDescription>
+                    Status diterima menandakan bahwa surat anda telah selesai
                     diproses dan siap diambil di kantor desa.
                   </AlertDescription>
                 </Alert>

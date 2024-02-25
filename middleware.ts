@@ -6,8 +6,8 @@ export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
   function middleware(request: NextRequestWithAuth) {
     if (
-      request.nextUrl.pathname.startsWith("/admin") &&
-      request.nextauth.token?.role !== "ADMIN"
+      request.nextUrl.pathname.startsWith("/staff") &&
+      request.nextauth.token?.role === "WARGA"
     ) {
       return NextResponse.rewrite(new URL("/denied", request.url));
     }
@@ -15,7 +15,7 @@ export default withAuth(
       request.nextUrl.pathname.startsWith("/warga") &&
       request.nextauth.token?.role !== "WARGA"
     ) {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.rewrite(new URL("/denied", request.url));
     }
   },
   {
@@ -28,5 +28,5 @@ export default withAuth(
 // Applies next-auth only to matching routes - can be regex
 // Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-  matcher: ["/admin", "/admin/:path*", "/warga", "/warga/:path*"],
+  matcher: ["/staff", "/staff/:path*", "/warga", "/warga/:path*"],
 };

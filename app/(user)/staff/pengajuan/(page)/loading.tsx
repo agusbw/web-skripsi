@@ -38,14 +38,23 @@ export default function Loading() {
       </div>
       <Tabs defaultValue="pending">
         <TabsList>
-          <TabsTrigger value="pending">Pending</TabsTrigger>
-          <TabsTrigger value="selesai">Selesai</TabsTrigger>
-          <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
+          <TabsTrigger value="pending">
+            <Skeleton className="w-16 h-4" />
+          </TabsTrigger>
+          <TabsTrigger value="diproses">
+            <Skeleton className="w-16 h-4" />
+          </TabsTrigger>
+          <TabsTrigger value="diproses">
+            <Skeleton className="w-16 h-4" />
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="pending">
           <SkeletonTable />
         </TabsContent>
-        <TabsContent value="diambil">
+        <TabsContent value="diproses">
+          <SkeletonTable />
+        </TabsContent>
+        <TabsContent value="diterima">
           <SkeletonTable />
         </TabsContent>
         <TabsContent value="ditolak">

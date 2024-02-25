@@ -71,7 +71,7 @@ export const columns: ColumnDef<
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
           <DeleteSuratButton
             size={"sm"}

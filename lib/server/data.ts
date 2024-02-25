@@ -231,7 +231,8 @@ export async function fetchUserTotalSurat() {
     return {
       total: count.total,
       pending: count.pending,
-      selesai: count.selesai,
+      diproses: count.diproses,
+      diterima: count.diterima,
       ditolak: count.ditolak,
       diambil: count.diambil,
     };
@@ -266,7 +267,7 @@ export async function fetchUserLatestSurat() {
       orderBy: {
         createdAt: "desc",
       },
-      take: 4,
+      take: 6,
     });
     return data;
   } catch (error) {
@@ -434,7 +435,7 @@ export async function fetchUserBarChartData() {
 
 export async function fetchTotalSurat() {
   const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role === "WARGA") {
     throw new Error("Failed to fetch total surat.");
   }
 
@@ -449,7 +450,8 @@ export async function fetchTotalSurat() {
     return {
       total: count.total,
       pending: count.pending,
-      selesai: count.selesai,
+      diproses: count.diproses,
+      diterima: count.diterima,
       ditolak: count.ditolak,
       diambil: count.diambil,
     };
@@ -462,7 +464,7 @@ export async function fetchTotalSurat() {
 export async function fetchLatestSurat() {
   noStore();
   const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role === "WARGA") {
     throw new Error("Failed to fetch latest surat.");
   }
 
@@ -497,7 +499,7 @@ export async function fetchLatestSurat() {
 export async function fetchTotalSuratByKategori() {
   noStore();
   const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role === "WARGA") {
     throw new Error("Failed to fetch total surat by kategori.");
   }
 
@@ -643,7 +645,7 @@ export async function fetchBarChartData() {
 export async function fetchSuratDiambil() {
   noStore();
   const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role === "WARGA") {
     throw new Error("Failed to fetch surat diambil.");
   }
 
@@ -680,7 +682,7 @@ export async function fetchSuratDiambil() {
 export async function fetchAllSurat() {
   noStore();
   const session = await getCurrentSession();
-  if (session?.user.role !== "ADMIN") {
+  if (session?.user.role === "WARGA") {
     throw new Error("Failed to fetch surat pending.");
   }
 

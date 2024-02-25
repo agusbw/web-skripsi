@@ -10,23 +10,27 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import * as React from "react";
-import { selesaikanSurat } from "@/lib/server/actions";
+import { terimaSurat } from "@/lib/server/actions";
 import { CheckCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-export default function SelesaiButton({
+export default function TerimaButton({
   suratId,
   noSurat,
+  children,
+  size = "default",
 }: {
   suratId: string;
   noSurat: string | null;
+  children?: React.ReactNode;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
 }) {
   const [alertOpen, setAlertOpen] = React.useState<boolean | undefined>(false);
   const [pending, startTransition] = React.useTransition();
 
   async function handleDeleteWarga(id: string) {
     startTransition(async () => {
-      const result = await selesaikanSurat(id);
+      const result = await terimaSurat(id);
       if (result.success) {
         toast.success("Sukses", {
           description: result.message,
@@ -50,15 +54,23 @@ export default function SelesaiButton({
             setAlertOpen(true);
           }
         }}
+        size={size}
       >
-        <CheckCheck className="w-4 h-4 mr-1" /> | Selesai
+        {children ? (
+          children
+        ) : (
+          <>
+            <CheckCheck className={"mr-1"} />
+            Terima
+          </>
+        )}
       </Button>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Selesaikan Pengajuan Surat?</AlertDialogTitle>
+          <AlertDialogTitle>Terima Pengajuan Surat?</AlertDialogTitle>
           <AlertDialogDescription>
-            Pengajuan surat akan ditandai sebagai selesai dan surat dapat
-            diambil oleh warga.
+            Pengajuan surat akan ditandai sebagai diterima, berarti surat sudah
+            ditandatangani dan dapat diambil oleh warga di kantor desa.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -76,7 +88,7 @@ export default function SelesaiButton({
             className="mb-2 sm:mb-0"
           >
             {pending ? <Loader2 className={"animate-spin mr-1"} /> : null}
-            Selesaikan
+            Terima
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

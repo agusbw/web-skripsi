@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminLoginForm from "@/app/(auth)/login/_components/admin-login-form";
+import PerbekelLoginForm from "./_components/perbekel-login-form";
 import WargaLoginForm from "@/app/(auth)/login/_components/warga-login-form";
 import { getCurrentSession } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
@@ -13,7 +14,7 @@ export default async function LoginPage() {
   const session = await getCurrentSession();
 
   if (session) {
-    session.user.role === "WARGA" ? redirect("/warga") : redirect("/admin");
+    session.user.role === "WARGA" ? redirect("/warga") : redirect("/staff");
   }
 
   return (
@@ -22,9 +23,10 @@ export default async function LoginPage() {
         defaultValue="warga"
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="warga">Warga</TabsTrigger>
-          <TabsTrigger value="admin">Staff</TabsTrigger>
+          <TabsTrigger value="admin">Admin</TabsTrigger>
+          <TabsTrigger value="perbekel">Perbekel</TabsTrigger>
         </TabsList>
         <TabsContent value="warga">
           <h1 className="my-3 text-2xl font-semibold tracking-tight">
@@ -34,9 +36,15 @@ export default async function LoginPage() {
         </TabsContent>
         <TabsContent value="admin">
           <h1 className="my-3 text-2xl font-semibold tracking-tight">
-            Masuk ke akun Staff
+            Masuk ke akun Admin
           </h1>
           <AdminLoginForm />
+        </TabsContent>
+        <TabsContent value="perbekel">
+          <h1 className="my-3 text-2xl font-semibold tracking-tight">
+            Masuk ke akun Perbekel
+          </h1>
+          <PerbekelLoginForm />
         </TabsContent>
       </Tabs>
     </div>

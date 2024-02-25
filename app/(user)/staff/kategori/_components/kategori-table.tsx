@@ -57,7 +57,8 @@ export async function KategoriTable({
             <TableHead>Jenis Surat</TableHead>
             <TableHead>Jumlah Pengajuan</TableHead>
             <TableHead>Pending</TableHead>
-            <TableHead>Selesai</TableHead>
+            <TableHead>Diproses</TableHead>
+            <TableHead>Diterima</TableHead>
             <TableHead>Diambil</TableHead>
             <TableHead>Ditolak</TableHead>
           </TableRow>
@@ -69,7 +70,8 @@ export async function KategoriTable({
             </TableCell>
             <TableCell>{SKTM.total}</TableCell>
             <TableCell>{SKTM.pending}</TableCell>
-            <TableCell>{SKTM.selesai}</TableCell>
+            <TableCell>{SKTM.diproses}</TableCell>
+            <TableCell>{SKTM.diterima}</TableCell>
             <TableCell>{SKTM.diambil}</TableCell>
             <TableCell>{SKTM.ditolak}</TableCell>
           </TableRow>
@@ -79,7 +81,8 @@ export async function KategoriTable({
             </TableCell>
             <TableCell>{SKU.total}</TableCell>
             <TableCell>{SKU.pending}</TableCell>
-            <TableCell>{SKU.selesai}</TableCell>
+            <TableCell>{SKU.diproses}</TableCell>
+            <TableCell>{SKU.diterima}</TableCell>
             <TableCell>{SKU.diambil}</TableCell>
             <TableCell>{SKU.ditolak}</TableCell>
           </TableRow>
@@ -89,7 +92,8 @@ export async function KategoriTable({
             </TableCell>
             <TableCell>{SKD.total}</TableCell>
             <TableCell>{SKD.pending}</TableCell>
-            <TableCell>{SKD.selesai}</TableCell>
+            <TableCell>{SKD.diproses}</TableCell>
+            <TableCell>{SKD.diterima}</TableCell>
             <TableCell>{SKD.diambil}</TableCell>
             <TableCell>{SKD.ditolak}</TableCell>
           </TableRow>
@@ -99,7 +103,8 @@ export async function KategoriTable({
             </TableCell>
             <TableCell>{SKBPK.total}</TableCell>
             <TableCell>{SKBPK.pending}</TableCell>
-            <TableCell>{SKBPK.selesai}</TableCell>
+            <TableCell>{SKBPK.diproses}</TableCell>
+            <TableCell>{SKBPK.diterima}</TableCell>
             <TableCell>{SKBPK.diambil}</TableCell>
             <TableCell>{SKBPK.ditolak}</TableCell>
           </TableRow>
@@ -114,7 +119,10 @@ export async function KategoriTable({
               {SKTM.pending + SKU.pending + SKD.pending + SKBPK.pending}
             </TableCell>
             <TableCell>
-              {SKTM.selesai + SKU.selesai + SKD.selesai + SKBPK.selesai}
+              {SKTM.diproses + SKU.diproses + SKD.diproses + SKBPK.diproses}
+            </TableCell>
+            <TableCell>
+              {SKTM.diterima + SKU.diterima + SKD.diterima + SKBPK.diterima}
             </TableCell>
             <TableCell>
               {SKTM.diambil + SKU.diambil + SKD.diambil + SKBPK.diambil}
@@ -134,7 +142,6 @@ export async function KategoriTableSkeleton() {
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
         <DateFilter />
-        <Skeleton className="h-8 w-32" />
       </div>
       <p className="my-2 text-sm">Sedang memuat data...</p>
       <Table className="border">
@@ -143,7 +150,8 @@ export async function KategoriTableSkeleton() {
             <TableHead>Jenis Surat</TableHead>
             <TableHead>Jumlah Pengajuan</TableHead>
             <TableHead>Pending</TableHead>
-            <TableHead>Selesai</TableHead>
+            <TableHead>Diproses</TableHead>
+            <TableHead>Diterima</TableHead>
             <TableHead>Diambil</TableHead>
             <TableHead>Ditolak</TableHead>
           </TableRow>
@@ -152,6 +160,9 @@ export async function KategoriTableSkeleton() {
           <TableRow>
             <TableCell className="font-medium py-2">
               Surat Keterangan Tidak Mampu
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
@@ -188,10 +199,16 @@ export async function KategoriTableSkeleton() {
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="font-medium py-2">
               Surat Keterangan Domisili
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
@@ -228,11 +245,17 @@ export async function KategoriTableSkeleton() {
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
           </TableRow>
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell>Total</TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-6" />
+            </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-6" />
             </TableCell>

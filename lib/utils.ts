@@ -7,7 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isLinkActive(currentPath: string, itemPath: string) {
-  if (currentPath === "/warga" || currentPath === "/admin") {
+  if (
+    currentPath === "/warga" ||
+    currentPath === "/staff" ||
+    currentPath === "/perbekel"
+  ) {
     return currentPath === itemPath;
   }
 
@@ -41,7 +45,7 @@ export function getBadgeVariant(status: Status) {
       return "destructive";
     case "PENDING":
       return "outline";
-    case "SELESAI":
+    case "DITERIMA":
       return "default";
   }
 }
@@ -59,12 +63,16 @@ export function generateTotalFromSuratStatusGroup(
     return curr.status === "PENDING" ? acc + curr._count : acc;
   }, 0);
 
-  const selesai = data.reduce((acc, curr) => {
-    return curr.status === "SELESAI" ? acc + curr._count : acc;
+  const diproses = data.reduce((acc, curr) => {
+    return curr.status === "DIPROSES" ? acc + curr._count : acc;
   }, 0);
 
   const ditolak = data.reduce((acc, curr) => {
     return curr.status === "DITOLAK" ? acc + curr._count : acc;
+  }, 0);
+
+  const diterima = data.reduce((acc, curr) => {
+    return curr.status === "DITERIMA" ? acc + curr._count : acc;
   }, 0);
 
   const diambil = data.reduce((acc, curr) => {
@@ -74,7 +82,8 @@ export function generateTotalFromSuratStatusGroup(
   return {
     total,
     pending,
-    selesai,
+    diproses,
+    diterima,
     ditolak,
     diambil,
   };

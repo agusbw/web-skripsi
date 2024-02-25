@@ -1,6 +1,5 @@
 import { type Role } from "@prisma/client";
-import NextAuth from "next-auth";
-import { Session } from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
@@ -11,7 +10,6 @@ declare module "next-auth" {
       username: string;
       role: Role;
       id_warga?: string;
-      display_name: string;
     };
   }
 
@@ -20,7 +18,6 @@ declare module "next-auth" {
     username: string;
     role: Role;
     id_warga?: string;
-    display_name: string;
   }
 }
 
@@ -30,6 +27,5 @@ declare module "next-auth/jwt" {
     username: string;
     role: Role;
     id_warga?: string;
-    display_name: string;
   }
 }

@@ -15,7 +15,9 @@ export default function SuratStatusBadge({
         return "bg-blue-500 hover:bg-blue-500";
       case "PENDING":
         return "bg-yellow-500 hover:bg-yellow-500";
-      case "SELESAI":
+      case "DIPROSES":
+        return "bg-teal-500 hover:bg-teal-500";
+      case "DITERIMA":
         return "bg-green-500 hover:bg-green-500";
       case "DITOLAK":
         return "bg-red-500 hover:bg-red-500";

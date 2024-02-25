@@ -1,6 +1,10 @@
 "use client";
 
-import { adminSidebar, wargaSidebar } from "@/config/site-config";
+import {
+  adminSidebar,
+  wargaSidebar,
+  perbekelSidebar,
+} from "@/config/site-config";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import type { Session } from "next-auth";
 import Link from "next/link";
@@ -10,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
+import type { Role } from "@prisma/client";
 
 function SidebarList({
   session,
@@ -20,10 +25,10 @@ function SidebarList({
 }) {
   const pathname = usePathname();
   const user = session.user;
-  const getConfig = (role: string) => {
+  const getConfig = (role: Role) => {
     if (role === "ADMIN") return adminSidebar;
     if (role === "WARGA") return wargaSidebar;
-
+    if (role === "PERBEKEL") return perbekelSidebar;
     return [];
   };
 
@@ -42,12 +47,13 @@ function SidebarList({
     <>
       <div className="flex items-center gap-2 p-3 my-6 rounded-md bg-primary text-primary-foreground lg:mx-5">
         <Avatar className="w-12 h-12 border shadow-sm border-primary">
-          {user.role === "WARGA" && (
+          {user.role === "WARGA" ? (
             <AvatarFallback className="text-primary bg-primary-foreground">
               {generateAvatar(displayName)}
             </AvatarFallback>
+          ) : (
+            <AvatarImage src="/user.webp" />
           )}
-          {user.role === "ADMIN" && <AvatarImage src="/user.webp" />}
         </Avatar>
         <div className="flex flex-col items-start">
           <div className="">
@@ -56,7 +62,11 @@ function SidebarList({
           </div>
           <div>
             <p className="line-clamp-1 text-sm font-medium text-left  ">
-              {user.role === "WARGA" ? displayName : "Admin Desa Pelapuan"}
+              {user.role === "WARGA"
+                ? displayName
+                : user.role === "ADMIN"
+                ? "Admin Desa Pelapuan"
+                : "Perbekel Desa Pelapuan"}
             </p>
           </div>
         </div>

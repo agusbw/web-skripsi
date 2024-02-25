@@ -16,6 +16,7 @@ import {
   MailX,
   MailCheck,
   MailQuestion,
+  Loader,
   CheckCheck,
 } from "lucide-react";
 import { fetchUserTotalSurat, fetchUserLatestSurat } from "@/lib/server/data";
@@ -54,7 +55,7 @@ export default async function WargaDashboardPage() {
         </div>
         <div className="flex-col md:flex">
           <div className="flex-1 space-y-4">
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-6">
               <SuratCountCard
                 count={surat?.total}
                 title="Total Surat"
@@ -64,17 +65,23 @@ export default async function WargaDashboardPage() {
               <SuratCountCard
                 count={surat?.pending}
                 title="Surat Pending"
-                Icon={MailQuestion}
+                Icon={Loader}
                 className="bg-yellow-500 text-white"
               />
               <SuratCountCard
-                count={surat?.selesai}
-                title="Surat Selesai"
+                count={surat?.diproses}
+                title="Surat Diproses"
+                Icon={MailQuestion}
+                className="bg-teal-500 text-white"
+              />
+              <SuratCountCard
+                count={surat?.diterima}
+                title="Surat Diterima"
                 Icon={MailCheck}
                 className="bg-green-500 text-white"
               />
               <SuratCountCard
-                count={surat?.ditolak}
+                count={surat?.diambil}
                 title="Surat Diambil"
                 Icon={CheckCheck}
                 className="bg-blue-500 text-white"
@@ -105,18 +112,25 @@ export default async function WargaDashboardPage() {
                     Penjelasan mengenai status surat yang anda ajukan.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-y-2">
+                <CardContent className="grid gap-y-2">
                   <Alert className="bg-yellow-500/10 text-yellow-600">
                     <AlertTitle>Pending</AlertTitle>
                     <AlertDescription>
-                      Status pending menandakan bahwa surat anda sedang dalam
-                      proses verifikasi oleh admin
+                      Status pending menandakan bahwa surat anda belum dilihat
+                      atau diproses admin.
+                    </AlertDescription>
+                  </Alert>
+                  <Alert className="bg-teal-500/10 text-teal-600">
+                    <AlertTitle>Diterima</AlertTitle>
+                    <AlertDescription>
+                      Status diterima menandakan bahwa surat anda sedang dalam
+                      proses verifikasi dan penandatanganan oleh perbekel.
                     </AlertDescription>
                   </Alert>
                   <Alert className="bg-green-500/10 text-green-600">
-                    <AlertTitle>Selesai</AlertTitle>
+                    <AlertTitle>Diterima</AlertTitle>
                     <AlertDescription>
-                      Status selesai menandakan bahwa surat anda telah selesai
+                      Status diterima menandakan bahwa surat anda telah selesai
                       diproses dan siap diambil di kantor desa.
                     </AlertDescription>
                   </Alert>

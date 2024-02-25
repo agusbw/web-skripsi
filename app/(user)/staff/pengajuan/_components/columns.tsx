@@ -2,6 +2,7 @@
 
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import type { Surat, KategoriSurat } from "@prisma/client";
 import { useTransition, useState, type ReactNode } from "react";
@@ -10,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { deleteSurat } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Trash2, Loader2, UserCheck } from "lucide-react";
+import { Trash2, Loader2 } from "lucide-react";
 import DiambilButton from "../[suratId]/_components/diambil-button";
 import {
   AlertDialog,
@@ -23,6 +24,8 @@ import {
 import { cn } from "@/lib/utils";
 import format from "date-fns/format";
 import { id } from "date-fns/locale";
+import TerimaButton from "../[suratId]/_components/diterima-button";
+import TolakButton from "../[suratId]/_components/tolak-button";
 
 export type ColumnDefProps = {
   warga: {
@@ -166,6 +169,7 @@ export const pendingColumns: ColumnDef<ColumnDefProps>[] = [
     id: "actions",
     header: "Aksi",
     cell: ({ row }) => {
+      const session = useSession();
       return (
         <div className="flex gap-3">
           <Button
@@ -173,19 +177,21 @@ export const pendingColumns: ColumnDef<ColumnDefProps>[] = [
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <DeleteSuratButton
-            size={"sm"}
-            suratId={row.original.id}
-          />
+          {session.data?.user.role === "ADMIN" && (
+            <DeleteSuratButton
+              size={"sm"}
+              suratId={row.original.id}
+            />
+          )}
         </div>
       );
     },
   },
 ];
 
-export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
+export const diprosesColumns: ColumnDef<ColumnDefProps>[] = [
   {
     header: "Tanggal Pengajuan",
     accessorKey: "Tanggal Pengajuan",
@@ -244,6 +250,8 @@ export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
     id: "actions",
     header: "Aksi",
     cell: ({ row }) => {
+      const session = useSession();
+
       return (
         <div className="flex gap-3">
           <Button
@@ -251,19 +259,124 @@ export const selesaiColumns: ColumnDef<ColumnDefProps>[] = [
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <DiambilButton
-            noSurat={row.original.no_surat}
-            suratId={row.original.id}
+          {session.data?.user?.role === "PERBEKEL" ? (
+            <>
+              <TerimaButton
+                noSurat={row.original.no_surat}
+                suratId={row.original.id}
+                size={"sm"}
+              >
+                Terima
+              </TerimaButton>
+              <TolakButton
+                size={"sm"}
+                suratId={row.original.id}
+              >
+                Tolak
+              </TolakButton>
+            </>
+          ) : null}
+
+          {session.data?.user?.role === "ADMIN" ? (
+            <DeleteSuratButton
+              size={"sm"}
+              suratId={row.original.id}
+            />
+          ) : null}
+        </div>
+      );
+    },
+  },
+];
+
+export const diterimaColumns: ColumnDef<ColumnDefProps>[] = [
+  {
+    header: "Tanggal Pengajuan",
+    accessorKey: "Tanggal Pengajuan",
+    accessorFn: (row) => {
+      return format(row.createdAt, "dd MMMM yyyy", {
+        locale: id,
+      });
+    },
+  },
+  {
+    header: "NIK Pengaju",
+    accessorKey: "NIK Pengaju",
+    accessorFn: (row) => {
+      return row.warga.nik;
+    },
+  },
+  {
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Nama Pengaju"
+      />
+    ),
+    accessorKey: "Nama Pengaju",
+    accessorFn: (row) => {
+      return row.warga.nama;
+    },
+  },
+  {
+    header: "Nomor Surat",
+    accessorKey: "Nomor Surat",
+    accessorFn: (row) => {
+      return row.no_surat ? row.no_surat : "-";
+    },
+  },
+  {
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Jenis Surat"
+      />
+    ),
+    accessorKey: "Jenis Surat",
+    accessorFn: (row) => {
+      return row.kategori_surat.nama;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      return <SuratStatusBadge status={row.original.status} />;
+    },
+  },
+  {
+    id: "actions",
+    header: "Aksi",
+    cell: ({ row }) => {
+      const session = useSession();
+
+      return (
+        <div className="flex gap-3">
+          <Button
+            variant={"secondary"}
             size={"sm"}
+            asChild
           >
-            <UserCheck className="w-4 h-4" />
-          </DiambilButton>
-          <DeleteSuratButton
-            size={"sm"}
-            suratId={row.original.id}
-          />
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
+          </Button>
+          {session.data?.user?.role === "ADMIN" ? (
+            <>
+              <DiambilButton
+                noSurat={row.original.no_surat}
+                suratId={row.original.id}
+                size={"sm"}
+              >
+                Diambil
+              </DiambilButton>
+
+              <DeleteSuratButton
+                size={"sm"}
+                suratId={row.original.id}
+              />
+            </>
+          ) : null}
         </div>
       );
     },
@@ -322,6 +435,7 @@ export const ditolakColumns: ColumnDef<ColumnDefProps>[] = [
     id: "actions",
     header: "Aksi",
     cell: ({ row }) => {
+      const session = useSession();
       return (
         <div className="flex gap-3">
           <Button
@@ -329,12 +443,14 @@ export const ditolakColumns: ColumnDef<ColumnDefProps>[] = [
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/pengajuan/${row.original.id}`}>Detail</Link>
+            <Link href={`/staff/pengajuan/${row.original.id}`}>Detail</Link>
           </Button>
-          <DeleteSuratButton
-            size={"sm"}
-            suratId={row.original.id}
-          />
+          {session.data?.user.role === "ADMIN" && (
+            <DeleteSuratButton
+              size={"sm"}
+              suratId={row.original.id}
+            />
+          )}
         </div>
       );
     },

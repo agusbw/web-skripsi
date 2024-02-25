@@ -28,7 +28,15 @@ import {
 import * as React from "react";
 import { tolakSurat } from "@/lib/server/actions";
 
-export default function TolakButton({ suratId }: { suratId: string }) {
+export default function TolakButton({
+  suratId,
+  children,
+  size = "default",
+}: {
+  suratId: string;
+  children?: React.ReactNode;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+}) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [pending, startTransition] = useTransition();
 
@@ -65,8 +73,15 @@ export default function TolakButton({ suratId }: { suratId: string }) {
         <Button
           onClick={() => setDialogOpen(true)}
           variant={"destructive"}
+          size={size}
         >
-          <CircleOff className="w-4 h-4 mr-1" /> | Tolak
+          {children ? (
+            children
+          ) : (
+            <>
+              <CircleOff className="w-4 h-4 mr-1" /> | Tolak
+            </>
+          )}
         </Button>
 
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>

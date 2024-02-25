@@ -11,9 +11,11 @@ import Link from "next/link";
 import type { KategoriSurat, Surat } from "@prisma/client";
 import { formatEnumValue } from "@/lib/utils";
 import TolakButton from "./_components/tolak-button";
-import SelesaiButton from "./_components/selesai-button";
+import ProsesButton from "./_components/diproses-button";
+import TerimaButton from "./_components/diterima-button";
+import { getCurrentSession } from "@/lib/server/auth";
 import NomorSuratButton from "./_components/nomor-surat-button";
-import DiambilButton from "./_components/diambil-button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DeleteSuratButton } from "../_components/columns";
 import CreateTemplateButton from "./_components/create-template-button";
 import { Trash2 } from "lucide-react";
@@ -50,7 +52,7 @@ function DataSuratByKode({ surat }: DataSuratByKodeProps) {
           value={surat.nama_usaha}
         />
         <DataItem
-          label="Jenis Usaha"
+          label="Lokasi Usaha"
           value={surat.lokasi_usaha}
         />
         <div>
@@ -108,6 +110,8 @@ export default async function DetailSurat({
   if (!surat) {
     notFound();
   }
+
+  const session = await getCurrentSession();
 
   let pdf = await getPDFData(`${surat.kategori_surat.kode}.pdf`);
   pdf = JSON.parse(JSON.stringify(pdf));
@@ -237,14 +241,16 @@ export default async function DetailSurat({
               pdf={pdf}
             />
           )}
-          <DeleteSuratButton
-            suratId={surat.id}
-            size={"sm"}
-            pushUrl="/admin/pengajuan"
-            className="w-fit"
-          >
-            <Trash2 size={17} /> | Hapus Surat
-          </DeleteSuratButton>
+          {session?.user.role === "ADMIN" && (
+            <DeleteSuratButton
+              suratId={surat.id}
+              size={"sm"}
+              pushUrl="/staff/pengajuan"
+              className="w-fit"
+            >
+              <Trash2 size={17} /> | Hapus Surat
+            </DeleteSuratButton>
+          )}
         </div>
       </div>
       <div className="flex justify-end mt-8">
@@ -253,21 +259,43 @@ export default async function DetailSurat({
             {surat.status === "PENDING" && (
               <>
                 <TolakButton suratId={surat.id} />
-                <SelesaiButton
+                <ProsesButton
                   suratId={surat.id}
                   noSurat={surat.no_surat}
                 />
               </>
             )}
-            {surat.status === "SELESAI" && (
-              <DiambilButton
-                suratId={surat.id}
-                noSurat={surat.no_surat}
-              />
-            )}
           </div>
         )}
       </div>
+      {surat.status === "DIPROSES" && session?.user.role === "PERBEKEL" && (
+        <div className="flex justify-end mt-8">
+          <div className="flex gap-3">
+            <TolakButton suratId={surat.id} />
+            <TerimaButton
+              suratId={surat.id}
+              noSurat={surat.no_surat}
+            />
+          </div>
+        </div>
+      )}
+      {surat.status === "DIPROSES" && session?.user.role === "ADMIN" ? (
+        <Alert className="bg-blue-500/10 text-blue-600">
+          <AlertTitle>Informasi</AlertTitle>
+          <AlertDescription>
+            Surat ini sedang dalam proses verifikasi dan proses tanda tangan
+            oleh perbekel.
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {surat.status === "DITERIMA" && session?.user.role === "PERBEKEL" ? (
+        <Alert className="bg-blue-500/10 text-blue-600">
+          <AlertTitle>Informasi</AlertTitle>
+          <AlertDescription>
+            Surat ini menunggu pengambilan oleh pemohon.
+          </AlertDescription>
+        </Alert>
+      ) : null}
     </DashboardContainer>
   );
 }

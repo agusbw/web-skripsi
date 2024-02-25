@@ -15,7 +15,7 @@ import {
   Layers,
 } from "lucide-react";
 
-export const ComplaintSteps: ComplaintStep[] = [
+const ComplaintSteps: ComplaintStep[] = [
   {
     title: "Login",
     description: "Login terlebih dahulu dengan akun yang telah terdaftar.",
@@ -49,28 +49,50 @@ export const ComplaintSteps: ComplaintStep[] = [
 const adminSidebar = [
   {
     title: "Dashboard",
-    path: "/admin",
+    path: "/staff",
     icon: <BarChart2 size={18} />,
   },
   {
     title: "Data Warga",
-    path: "/admin/warga",
+    path: "/staff/warga",
     icon: <Users size={18} />,
   },
   {
     title: "Data Pengajuan Surat",
-    path: "/admin/pengajuan",
+    path: "/staff/pengajuan",
     icon: <LayoutList size={18} />,
   },
   {
     title: "Data Pengambilan Surat",
-    path: "/admin/riwayat-pengambilan",
+    path: "/staff/riwayat-pengambilan",
     icon: <FileCheck size={18} />,
   },
-
   {
     title: "Kategori Surat",
-    path: "/admin/kategori",
+    path: "/staff/kategori",
+    icon: <Layers size={18} />,
+  },
+];
+
+const perbekelSidebar = [
+  {
+    title: "Dashboard",
+    path: "/staff",
+    icon: <BarChart2 size={18} />,
+  },
+  {
+    title: "Terima Pengajuan Surat",
+    path: "/staff/pengajuan",
+    icon: <LayoutList size={18} />,
+  },
+  {
+    title: "Data Pengambilan Surat",
+    path: "/staff/riwayat-pengambilan",
+    icon: <FileCheck size={18} />,
+  },
+  {
+    title: "Kategori Surat",
+    path: "/staff/kategori",
     icon: <Layers size={18} />,
   },
 ];
@@ -98,4 +120,4 @@ const wargaSidebar = [
   },
 ];
 
-export { adminSidebar, wargaSidebar };
+export { adminSidebar, wargaSidebar, ComplaintSteps, perbekelSidebar };

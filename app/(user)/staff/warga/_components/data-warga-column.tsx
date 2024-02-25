@@ -80,7 +80,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
             size={"sm"}
             asChild
           >
-            <Link href={`/admin/warga/${row.original.id_user}`}>
+            <Link href={`/staff/warga/${row.original.id_user}`}>
               <User className="w-3 h-3" />
             </Link>
           </Button>

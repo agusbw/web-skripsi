@@ -626,7 +626,7 @@ export async function tolakSurat(
   formData: TolakSurat
 ): Promise<ActionsResponse> {
   const session = await getCurrentSession();
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.role === "WARGA") {
     return {
       success: false,
       message: "Anda tidak memiliki akses",
@@ -678,7 +678,7 @@ export async function tolakSurat(
   }
 }
 
-export async function selesaikanSurat(id: string) {
+export async function prosesSurat(id: string) {
   const session = await getCurrentSession();
   if (!session || session.user.role !== "ADMIN") {
     return {
@@ -702,7 +702,7 @@ export async function selesaikanSurat(id: string) {
         id: surat.id,
       },
       data: {
-        status: "SELESAI",
+        status: "DIPROSES",
       },
     });
 
@@ -710,7 +710,50 @@ export async function selesaikanSurat(id: string) {
 
     return {
       success: true,
-      message: "Pengajuan berhasil diselesaikan",
+      message: "Status surat berhasil diubah menjadi diproses",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function terimaSurat(id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "PERBEKEL") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const surat = await prisma.surat.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!surat)
+      return { success: false, message: "Data surat tidak ditemukan" };
+
+    await prisma.surat.update({
+      where: {
+        id: surat.id,
+      },
+      data: {
+        status: "DITERIMA",
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Status surat berhasil diubah menjadi diterima",
     };
   } catch (err) {
     console.log(err);
