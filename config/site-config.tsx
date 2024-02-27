@@ -36,12 +36,12 @@ const ComplaintSteps: ComplaintStep[] = [
   {
     title: "Pantau Status Pengajuan",
     description:
-      "Pantau status pengajuan surat melalui halaman riwayat pengajuan. Surat yang sudah selesai akan memiliki status 'selesai'.",
+      "Pantau status pengajuan surat melalui halaman riwayat pengajuan. Surat yang sudah dapat diambil akan memiliki status 'diterima'.",
     icon: <MailCheck />,
   },
   {
     title: "Ambil Surat",
-    description: "Ambil surat yang telah selesai dibuat di kantor desa.",
+    description: "Ambil surat yang telah diterima di kantor perbekel.",
     icon: <CheckCircle2 />,
   },
 ];

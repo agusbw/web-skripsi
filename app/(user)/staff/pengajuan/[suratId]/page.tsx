@@ -78,23 +78,19 @@ function DataSuratByKode({ surat }: DataSuratByKodeProps) {
 
   if (surat.kategori_surat.kode === "SKD") {
     return (
-      <>
-        <DataItem
-          label="Domisili / Tempat Tinggal Sementara"
-          value={surat.domisili}
-        />
-      </>
+      <DataItem
+        label="Domisili / Tempat Tinggal Sementara"
+        value={surat.domisili}
+      />
     );
   }
 
   if (surat.kategori_surat.kode === "SKTM") {
     return (
-      <>
-        <DataItem
-          label="Status DTKS"
-          value={surat.dtks ? "Terdaftar" : "Tidak Terdaftar"}
-        />
-      </>
+      <DataItem
+        label="Status DTKS"
+        value={surat.dtks ? "Terdaftar" : "Tidak Terdaftar"}
+      />
     );
   }
 }
@@ -197,22 +193,7 @@ export default async function DetailSurat({
               className="ml-2"
             />
           </div>
-          {surat.status === "DIAMBIL" && surat.tanggal_pengambilan && (
-            <DataItem
-              className="w-full max-w-sm"
-              label="Tanggal Pengambilan Surat"
-              value={format(surat.tanggal_pengambilan, "dd MMMM yyyy", {
-                locale: id,
-              })}
-            />
-          )}
-          {surat.status === "DITOLAK" && (
-            <DataItem
-              className="w-full max-w-sm"
-              label="Pesan Penolakan"
-              value={surat.pesan_penolakan ? surat.pesan_penolakan : "-"}
-            />
-          )}
+
           <div className="grid lg:grid-cols-2 lg:gap-x-4 gap-y-2">
             <DataItem
               label="Jenis Surat"
@@ -233,7 +214,7 @@ export default async function DetailSurat({
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="my-4">
         <div className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0 sm:gap-x-3">
           {surat.status !== "DITOLAK" && pdf !== null && (
             <CreateTemplateButton
@@ -253,21 +234,21 @@ export default async function DetailSurat({
           )}
         </div>
       </div>
-      <div className="flex justify-end mt-8">
-        {surat.status !== "DITOLAK" && (
+
+      {/* only admin can change to diproses (first step letter verification) */}
+      {surat.status === "PENDING" && session?.user.role === "ADMIN" && (
+        <div className="flex justify-end mt-8">
           <div className="flex gap-3">
-            {surat.status === "PENDING" && (
-              <>
-                <TolakButton suratId={surat.id} />
-                <ProsesButton
-                  suratId={surat.id}
-                  noSurat={surat.no_surat}
-                />
-              </>
-            )}
+            <TolakButton suratId={surat.id} />
+            <ProsesButton
+              suratId={surat.id}
+              noSurat={surat.no_surat}
+            />
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* only perbekel can change to diterima (last step letter verification) */}
       {surat.status === "DIPROSES" && session?.user.role === "PERBEKEL" && (
         <div className="flex justify-end mt-8">
           <div className="flex gap-3">
@@ -279,8 +260,9 @@ export default async function DetailSurat({
           </div>
         </div>
       )}
+
       {surat.status === "DIPROSES" && session?.user.role === "ADMIN" ? (
-        <Alert className="bg-blue-500/10 text-blue-600">
+        <Alert className="bg-teal-500/10 text-teal-600">
           <AlertTitle>Informasi</AlertTitle>
           <AlertDescription>
             Surat ini sedang dalam proses verifikasi dan proses tanda tangan
@@ -289,13 +271,32 @@ export default async function DetailSurat({
         </Alert>
       ) : null}
       {surat.status === "DITERIMA" && session?.user.role === "PERBEKEL" ? (
-        <Alert className="bg-blue-500/10 text-blue-600">
+        <Alert className="bg-green-500/10 text-green-600">
           <AlertTitle>Informasi</AlertTitle>
           <AlertDescription>
             Surat ini menunggu pengambilan oleh pemohon.
           </AlertDescription>
         </Alert>
       ) : null}
+      {surat.status === "DITOLAK" ? (
+        <Alert className="bg-red-500/10 text-red-600">
+          <AlertTitle>Informasi</AlertTitle>
+          <AlertDescription>
+            Surat ditolak dengan alasan: {surat.pesan_penolakan}
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {surat.status === "DIAMBIL" && surat.tanggal_pengambilan && (
+        <Alert className="bg-blue-500/10 text-blue-600">
+          <AlertTitle>Informasi</AlertTitle>
+          <AlertDescription>
+            Surat telah diambil warga pada tanggal:{" "}
+            {format(new Date(surat.tanggal_pengambilan), "dd MMMM yyyy", {
+              locale: id,
+            })}
+          </AlertDescription>
+        </Alert>
+      )}
     </DashboardContainer>
   );
 }

@@ -24,13 +24,19 @@ function DashboardContainer({
   return (
     <div className={"pt-4 pb-4 lg:pt-16 px-4 lg:px-10"}>
       <div className={"flex gap-3 mb-4"}>
-        <span className={"flex items-center gap-1"}>
+        <span
+          suppressHydrationWarning={true}
+          className={"flex items-center gap-1"}
+        >
           <CalendarDays className={"w-4 text-primary"} />{" "}
           {format(date, "d MMMM yyyy", {
             locale: id,
           })}
         </span>
-        <span className={"flex items-center gap-1"}>
+        <span
+          className={"flex items-center gap-1"}
+          suppressHydrationWarning={true}
+        >
           <Clock3 className={"w-4 text-primary"} /> {format(date, "HH:mm")}
         </span>
       </div>
