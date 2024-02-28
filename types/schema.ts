@@ -65,10 +65,9 @@ export const adminLoginSchema = z.object({
 export const wargaLoginSchema = z.object({
   nik: z
     .string({
-      required_error: "NIK tidak boleh kosong",
+      required_error: "Username tidak boleh kosong",
     })
-    .min(1, "NIK tidak boleh kosong")
-    .max(16, "NIK maksimal 16 karakter"),
+    .min(1, "Username tidak boleh kosong"),
   password: z
     .string({
       required_error: "Password tidak boleh kosong",
@@ -92,6 +91,13 @@ export const changePasswordSchema = z
     message: "Password baru dan konfirmasi password tidak sama",
     path: ["confirm_new_password"],
   });
+
+export const changeUsernameSchema = z.object({
+  username: z
+    .string()
+    .min(1, "Username tidak boleh kosong")
+    .max(25, "Username maksimal 25 karakter"),
+});
 
 export const createSktmSchema = z.object({
   keperluan: z

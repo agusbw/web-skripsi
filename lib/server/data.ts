@@ -167,7 +167,7 @@ export async function fetchCountSuratByKategoriFiltered(
   }
 }
 
-export async function getUserBiodata() {
+export async function fetchUserBiodata() {
   noStore();
   const session = await getCurrentSession();
   const currentUserId = session?.user.id;
@@ -177,11 +177,39 @@ export async function getUserBiodata() {
       where: {
         id_user: currentUserId,
       },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
     return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch current biodata.");
+  }
+}
+
+export async function fetchUserUsername() {
+  noStore();
+  const session = await getCurrentSession();
+  const currentUserId = session?.user.id;
+
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: currentUserId,
+      },
+      select: {
+        username: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user username.");
   }
 }
 
@@ -267,7 +295,7 @@ export async function fetchUserLatestSurat() {
       orderBy: {
         createdAt: "desc",
       },
-      take: 6,
+      take: 4,
     });
     return data;
   } catch (error) {

@@ -50,12 +50,13 @@ import type { Warga } from "@prisma/client";
 type CreateWargaForm = Omit<Warga, "createdAt" | "updatedAt" | "id_user">;
 
 export default function CreataWarga({
-  buttonText,
+  children,
   warga = null,
   variant = "default",
+  size = "sm",
 }: {
   warga?: CreateWargaForm | null;
-  buttonText?: string | React.ReactNode;
+  children?: React.ReactNode;
   variant:
     | "outline"
     | "default"
@@ -63,6 +64,7 @@ export default function CreataWarga({
     | "secondary"
     | "link"
     | "ghost";
+  size?: "sm" | "lg" | "icon" | "default" | null | undefined;
 }) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [pending, startTransition] = useTransition();
@@ -121,20 +123,19 @@ export default function CreataWarga({
           <Button
             onClick={() => setDialogOpen(true)}
             variant={variant}
-            size={"sm"}
+            size={size}
           >
-            {buttonText ? buttonText : <FileEdit className="w-4 h-4" />}
+            {children ? children : <FileEdit className="w-4 h-4" />}
           </Button>
         ) : (
           <Button
             onClick={() => setDialogOpen(true)}
             variant={variant}
           >
-            {buttonText ? buttonText : "Tambah Warga"}
+            {children ? children : "Tambah Warga"}
           </Button>
         )}
-
-        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
           <form
             encType={"multipart/form-data"}
             onSubmit={form.handleSubmit(onSubmit)}

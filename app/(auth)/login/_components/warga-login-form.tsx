@@ -41,7 +41,7 @@ import Link from "next/link";
 import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
 import { useRouter } from "next/navigation";
 
-export function RenderPasswordInfoDrawerDialog() {
+function RenderPasswordInfoDrawerDialog() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -126,7 +126,7 @@ export default function WargaLoginForm() {
     const checkuser = await fetch(`/api/check-user/${values.nik}`);
 
     if (!checkuser.ok) {
-      setLoginError("NIK belum terdaftar!");
+      setLoginError("Username tidak terdaftar.");
       return;
     }
 
@@ -167,7 +167,7 @@ export default function WargaLoginForm() {
           name="nik"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>NIK</FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
                   autoComplete={"off"}
@@ -175,7 +175,10 @@ export default function WargaLoginForm() {
                 />
               </FormControl>
               <FormMessage />
-              <FormDescription>NIK anda</FormDescription>
+              <FormDescription className="text-xs">
+                Masukkan NIK sebagai username bawaan apabila anda belum pernah
+                mengubah username.
+              </FormDescription>
             </FormItem>
           )}
         />
@@ -195,7 +198,9 @@ export default function WargaLoginForm() {
                   <RenderPasswordInfoDrawerDialog />
                 </div>
               </FormControl>
-              <FormDescription>Password anda</FormDescription>
+              <FormDescription className="text-xs">
+                Klik tanda [?] untuk informasi tentang password.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -231,6 +236,13 @@ export default function WargaLoginForm() {
             rel="noreferrer noopener"
           >
             NIK belum terdaftar?
+          </Link>
+          <Link
+            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.lupaUsername}`}
+            className="hover:underline text-primary text-sm inline-block"
+            rel="noreferrer noopener"
+          >
+            Lupa username?
           </Link>
         </div>
       </form>

@@ -121,7 +121,7 @@ export default async function WargaDashboardPage() {
                     </AlertDescription>
                   </Alert>
                   <Alert className="bg-teal-500/10 text-teal-600">
-                    <AlertTitle>Diterima</AlertTitle>
+                    <AlertTitle>Diproses</AlertTitle>
                     <AlertDescription>
                       Status diterima menandakan bahwa surat anda sedang dalam
                       proses verifikasi dan penandatanganan oleh perbekel.

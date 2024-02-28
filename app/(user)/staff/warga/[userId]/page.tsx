@@ -1,7 +1,8 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { fetchWargaByUserId, fetchSuratByUserId } from "@/lib/server/data";
 import { notFound } from "next/navigation";
-import CreateWarga from "../_components/create-warga-button";
+import UpdateWarga from "../_components/create-warga-button";
+import { DeleteWarga } from "../_components/delete-warga-button";
 import WargaBiodata from "./_components/warga-biodata";
 import DataTableWrapper from "./_components/table-wrapper";
 import ResetPasswordButton from "./_components/reset-password";
@@ -13,8 +14,11 @@ import {
   MailQuestion,
   CheckCheck,
   Loader,
+  FileEdit,
+  Trash2Icon,
 } from "lucide-react";
 import SuratCountCard from "@/components/dashboard/surat-count-card";
+import ResetUsernameButton from "./_components/reset-username";
 
 export const metadata: Metadata = {
   title: "Informasi Warga",
@@ -41,13 +45,34 @@ export default async function Page({
         <div>
           <h3 className="mb-4 text-2xl font-medium">Detail Data Warga</h3>
           <WargaBiodata warga={warga} />
-          <div className="mt-5 ml-auto w-fit flex gap-3">
-            <ResetPasswordButton userId={warga.id_user} />
-            <CreateWarga
-              variant="default"
-              warga={warga}
-              buttonText="Ubah Data Warga"
-            />
+          <div className="mt-5 ml-auto  flex justify-between">
+            <div className="flex gap-x-3">
+              <ResetPasswordButton userId={warga.id_user} />
+              <ResetUsernameButton userId={warga.id_user} />
+            </div>
+            <div className="flex gap-x-3">
+              <UpdateWarga
+                variant="default"
+                warga={warga}
+                size={"default"}
+              >
+                <FileEdit
+                  size={18}
+                  className="mr-1"
+                />{" "}
+                | Edit Data
+              </UpdateWarga>
+              <DeleteWarga
+                size={"default"}
+                userId={warga.id_user}
+              >
+                <Trash2Icon
+                  size={18}
+                  className="mr-1"
+                />{" "}
+                | Hapus Data
+              </DeleteWarga>
+            </div>
           </div>
         </div>
         <div className="my-10">
@@ -65,13 +90,13 @@ export default async function Page({
               className="bg-yellow-500 text-white"
             />
             <SuratCountCard
-              title="Selesai"
+              title="Diproses"
               count={surat.filter((s) => s.status === "DIPROSES").length}
               Icon={MailQuestion}
-              className="bg-green-500 text-white"
+              className="bg-teal-500 text-white"
             />
             <SuratCountCard
-              title="Selesai"
+              title="Diterima"
               count={surat.filter((s) => s.status === "DITERIMA").length}
               Icon={MailCheck}
               className="bg-green-500 text-white"

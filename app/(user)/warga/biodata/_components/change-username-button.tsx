@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,29 +20,27 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { changePasswordSchema } from "@/types/schema";
+import { changeUsernameSchema } from "@/types/schema";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
-import { changePassword } from "@/lib/server/actions";
+import { changeUsername } from "@/lib/server/actions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-export default function ChangePasswordButton() {
+export default function ChangeUsernameButton() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof changePasswordSchema>>({
-    resolver: zodResolver(changePasswordSchema),
+  const form = useForm<z.infer<typeof changeUsernameSchema>>({
+    resolver: zodResolver(changeUsernameSchema),
     defaultValues: {
-      old_password: "",
-      new_password: "",
-      confirm_new_password: "",
+      username: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof changePasswordSchema>) {
+  function onSubmit(values: z.infer<typeof changeUsernameSchema>) {
     startTransition(async () => {
-      const result = await changePassword(values);
+      const result = await changeUsername(values);
 
       if (result.success) {
         toast.success("Sukses", {
@@ -68,74 +65,28 @@ export default function ChangePasswordButton() {
           form.reset();
         }}
       >
-        <Button
-          variant={"destructive"}
-          asChild
-        >
-          <DialogTrigger>Ganti Password</DialogTrigger>
+        <Button asChild>
+          <DialogTrigger>Ganti Username</DialogTrigger>
         </Button>
         <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Form Ganti Password</DialogTitle>
-              <DialogDescription>Lengkapi form dibawah ini!</DialogDescription>
+              <DialogTitle>Form Ganti Username</DialogTitle>
             </DialogHeader>
-            <div
-              className={
-                "flex flex-col gap-y-3 mt-4 max-h-[500px] overflow-auto px-2 py-2"
-              }
-            >
+            <div className={"mt-4 max-h-[500px] overflow-auto px-2 py-2"}>
               <FormField
                 control={form.control}
-                name="old_password"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Password Lama{" "}
+                      Username baru
                       <span className={"text-destructive"}>*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        type="password"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="new_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Password Baru{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="password"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirm_new_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Konfirmasi Password Baru{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="password"
+                        type="text"
                       />
                     </FormControl>
                     <FormMessage />
@@ -151,12 +102,11 @@ export default function ChangePasswordButton() {
                 disabled={pending || form.formState.isSubmitting}
                 type="submit"
                 className="w-full"
-                variant={"destructive"}
               >
                 {form.formState.isSubmitting || pending ? (
                   <Loader2 className={"animate-spin mr-1"} />
                 ) : (
-                  "Ganti Password"
+                  "Ganti Username"
                 )}
               </Button>
             </DialogFooter>

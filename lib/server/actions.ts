@@ -11,6 +11,7 @@ import {
   createSkdSchema,
   tolakSuratSchema,
   createNomorSuratSchema,
+  changeUsernameSchema,
 } from "@/types/schema";
 import { format } from "date-fns";
 import { hash, compare } from "bcryptjs";
@@ -27,6 +28,7 @@ type CreateSku = z.infer<typeof insertSkuSchema>;
 type CreateSkd = z.infer<typeof createSkdSchema>;
 type TolakSurat = z.infer<typeof tolakSuratSchema>;
 type CreateNomorSurat = z.infer<typeof createNomorSuratSchema>;
+type ChangeUsername = z.infer<typeof changeUsernameSchema>;
 
 export async function createWarga(
   formData: CreateWarga
@@ -48,28 +50,25 @@ export async function createWarga(
   }
 
   try {
-    const isExist = await prisma.warga.findFirst({
+    const isExist = await prisma.warga.count({
       where: {
         nik: validatedData.data.nik,
       },
     });
 
-    if (isExist) {
+    if (isExist > 0) {
       return {
         success: false,
         message: "NIK sudah terdaftar",
       };
     }
 
-    const tanggalLahirZoned = utcToZonedTime(
+    const newTanggalLahir = utcToZonedTime(
       new Date(validatedData.data.tanggal_lahir),
       "Asia/Singapore"
     );
 
-    const hashedPassword = await hash(
-      format(tanggalLahirZoned, "ddMMyyyy"),
-      10
-    );
+    const hashedPassword = await hash(format(newTanggalLahir, "ddMMyyyy"), 10);
 
     const user = await prisma.user.create({
       data: {
@@ -131,6 +130,7 @@ export async function updateWarga(
         warga: {
           select: {
             tanggal_lahir: true,
+            nik: true,
           },
         },
       },
@@ -138,18 +138,18 @@ export async function updateWarga(
 
     if (!user) return { success: false, message: "Data warga tidak ditemukan" };
 
-    const isExist = await prisma.warga.findFirst({
+    const isExist = await prisma.warga.count({
       where: {
         nik: {
           equals: validatedData.data.nik,
         },
         NOT: {
-          nik: user.username,
+          nik: user.warga?.nik,
         },
       },
     });
 
-    if (isExist) {
+    if (isExist > 0) {
       return {
         success: false,
         message: "NIK sudah terdaftar",
@@ -157,30 +157,33 @@ export async function updateWarga(
     }
 
     //check if user change his password
-    let userFormattedTanggalLahir = "";
+    let formattedOldTanggalLahir = "";
 
     if (user.warga?.tanggal_lahir) {
-      const userTanggalLahirZoned = utcToZonedTime(
+      const oldTanggalLahir = utcToZonedTime(
         user.warga.tanggal_lahir,
         "Asia/Singapore"
       );
 
-      userFormattedTanggalLahir = format(userTanggalLahirZoned, "ddMMyyyy");
+      formattedOldTanggalLahir = format(oldTanggalLahir, "ddMMyyyy");
     }
 
     //compare user formatted tanggal lahir with password
-    const isSame = await compare(userFormattedTanggalLahir, user.password);
+    const isSame = await compare(formattedOldTanggalLahir, user.password);
 
     let hashedPassword = user.password;
 
     if (isSame) {
-      const tanggalLahirZoned = utcToZonedTime(
+      const newTanggalLahir = utcToZonedTime(
         new Date(validatedData.data.tanggal_lahir),
         "Asia/Singapore"
       );
 
-      hashedPassword = await hash(format(tanggalLahirZoned, "ddMMyyyy"), 10);
+      hashedPassword = await hash(format(newTanggalLahir, "ddMMyyyy"), 10);
     }
+
+    // check if user change his nik
+    const isUsernameEqualsToNik = user.username === user.warga?.nik;
 
     const updatedUser = await prisma.user.update({
       where: {
@@ -188,7 +191,9 @@ export async function updateWarga(
       },
       data: {
         password: hashedPassword,
-        username: validatedData.data.nik,
+        username: isUsernameEqualsToNik
+          ? validatedData.data.nik
+          : user.username,
         warga: {
           update: {
             ...validatedData.data,
@@ -224,19 +229,18 @@ export async function deleteWarga(id: string): Promise<ActionsResponse> {
   }
 
   try {
-    const user = await prisma.user.findFirst({
+    const userCount = await prisma.user.count({
       where: {
-        warga: {
-          id,
-        },
+        id,
       },
     });
 
-    if (!user) return { success: false, message: "Data warga tidak ditemukan" };
+    if (userCount <= 0)
+      return { success: false, message: "Data warga tidak ditemukan" };
 
     await prisma.user.delete({
       where: {
-        id: user.id,
+        id,
       },
     });
 
@@ -315,6 +319,84 @@ export async function changePassword(
     return {
       success: true,
       message: "Berhasil mengubah password",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function changeUsername(
+  values: ChangeUsername
+): Promise<ActionsResponse> {
+  try {
+    const session = await getCurrentSession();
+
+    if (!session) {
+      return {
+        success: false,
+        message: "Anda belum login",
+      };
+    }
+
+    const validatedData = changeUsernameSchema.safeParse(values);
+    if (!validatedData.success) {
+      return {
+        success: false,
+        message: "Data tidak valid",
+      };
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: session.user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!user) {
+      return {
+        success: false,
+        message: "Data user tidak ditemukan",
+      };
+    }
+
+    // check if username is already used
+    const isExist = await prisma.user.count({
+      where: {
+        username: validatedData.data.username,
+        NOT: {
+          id: user.id,
+        },
+      },
+    });
+
+    if (isExist > 0) {
+      return {
+        success: false,
+        message: "Username sudah terdaftar",
+      };
+    }
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        username: validatedData.data.username,
+      },
+    });
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+      message: "Berhasil mengubah username",
     };
   } catch (error) {
     console.log(error);
@@ -906,15 +988,12 @@ export async function resetPasswordWarga(user_id: string) {
     if (!user || !user.warga)
       return { success: false, message: "Data warga tidak ditemukan" };
 
-    const tanggalLahirZoned = utcToZonedTime(
+    const newTanggalLahir = utcToZonedTime(
       new Date(user.warga.tanggal_lahir),
       "Asia/Singapore"
     );
 
-    const hashedPassword = await hash(
-      format(tanggalLahirZoned, "ddMMyyyy"),
-      10
-    );
+    const hashedPassword = await hash(format(newTanggalLahir, "ddMMyyyy"), 10);
 
     await prisma.user.update({
       where: {
@@ -928,6 +1007,54 @@ export async function resetPasswordWarga(user_id: string) {
     return {
       success: true,
       message: "Password berhasil direset",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server",
+    };
+  }
+}
+
+export async function resetUsernameWarga(user_id: string) {
+  const session = await getCurrentSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Anda tidak memiliki akses",
+    };
+  }
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: user_id,
+      },
+      include: {
+        warga: {
+          select: {
+            nik: true,
+          },
+        },
+      },
+    });
+
+    if (!user || !user.warga)
+      return { success: false, message: "Data warga tidak ditemukan" };
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        username: user.warga.nik,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Username berhasil direset menjadi NIK",
     };
   } catch (error) {
     console.log(error);

@@ -84,7 +84,7 @@ export default function TolakButton({
           )}
         </Button>
 
-        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
               <DialogTitle>Tolak Pengajuan</DialogTitle>

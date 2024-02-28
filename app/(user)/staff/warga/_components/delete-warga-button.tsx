@@ -15,13 +15,21 @@ import { deleteWarga } from "@/lib/server/actions";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-export const DeleteWarga = ({ id }: { id: string }) => {
+export const DeleteWarga = ({
+  userId,
+  children,
+  size = "sm",
+}: {
+  userId: string;
+  children?: React.ReactNode;
+  size?: "sm" | "lg" | "icon" | "default" | null | undefined;
+}) => {
   const [alertOpen, setAlertOpen] = React.useState<boolean | undefined>(false);
   const [pending, startTransition] = React.useTransition();
 
-  async function handleDeleteWarga(id: string) {
+  async function handleDeleteWarga(userId: string) {
     startTransition(async () => {
-      const result = await deleteWarga(id);
+      const result = await deleteWarga(userId);
       if (result.success) {
         toast.success("Sukses", {
           description: result.message,
@@ -41,10 +49,10 @@ export const DeleteWarga = ({ id }: { id: string }) => {
     <AlertDialog open={alertOpen}>
       <Button
         onClick={() => setAlertOpen(true)}
-        size={"sm"}
+        size={size}
         variant={"destructive"}
       >
-        <Trash2Icon className="w-4 h-4" />
+        {children ? children : <Trash2Icon className="w-4 h-4" />}
       </Button>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -66,7 +74,7 @@ export const DeleteWarga = ({ id }: { id: string }) => {
             variant={"destructive"}
             type="submit"
             disabled={pending}
-            onClick={() => handleDeleteWarga(id)}
+            onClick={() => handleDeleteWarga(userId)}
             className="mb-2 sm:mb-0"
           >
             {pending ? <Loader2 className={"animate-spin mr-1"} /> : "Hapus"}

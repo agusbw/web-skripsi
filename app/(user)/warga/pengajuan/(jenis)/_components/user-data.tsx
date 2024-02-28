@@ -1,5 +1,5 @@
 import { Label } from "@/components/ui/label";
-import { getUserBiodata } from "@/lib/server/data";
+import { fetchUserBiodata } from "@/lib/server/data";
 import format from "date-fns/format";
 import { formatEnumValue } from "@/lib/utils";
 import { utcToZonedTime } from "date-fns-tz";
@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import DataItem from "@/components/data-item-field";
 
 export default async function UserData() {
-  const userBiodata = await getUserBiodata();
+  const userBiodata = await fetchUserBiodata();
 
   if (!userBiodata) return;
 

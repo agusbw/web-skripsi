@@ -1,4 +1,4 @@
-import { getUserBiodata } from "@/lib/server/data";
+import { Contact } from "lucide-react";
 import UserData, {
   UserDataSkeleton,
 } from "../../pengajuan/(jenis)/_components/user-data";
@@ -6,13 +6,12 @@ import UserData, {
 import { Suspense } from "react";
 
 export default async function Biodata() {
-  const biodata = await getUserBiodata();
-
-  if (!biodata) return;
-
   return (
     <div>
-      <h2 className="text-2xl font-medium mb-2">Biodata</h2>
+      <div className="flex gap-x-2 mb-2">
+        <Contact />
+        <p className="text-2xl font-medium ">Biodata</p>
+      </div>
       <Suspense fallback={<UserDataSkeleton />}>
         <UserData />
       </Suspense>

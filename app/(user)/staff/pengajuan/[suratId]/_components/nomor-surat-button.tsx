@@ -70,7 +70,7 @@ export default function NomorSuratButton({
           {noSurat ? "Ubah Nomor" : "Beri Nomor"}
         </Button>
 
-        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}

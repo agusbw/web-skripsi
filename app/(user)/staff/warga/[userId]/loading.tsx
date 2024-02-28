@@ -23,7 +23,7 @@ export default function Loading() {
         </div>
         <div className="my-10">
           <h3 className="mb-4 text-2xl font-medium">Jumlah Pengajuan Surat</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
             <SuratCountCardSkeleton
               title="Total"
               Icon={Mails}
@@ -32,6 +32,11 @@ export default function Loading() {
               title="Pending"
               Icon={MailQuestion}
               className="bg-yellow-500 text-white"
+            />
+            <SuratCountCardSkeleton
+              title="Diproses"
+              Icon={MailCheck}
+              className="bg-teal-500 text-white"
             />
 
             <SuratCountCardSkeleton

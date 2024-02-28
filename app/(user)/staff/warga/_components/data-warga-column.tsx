@@ -88,7 +88,7 @@ export const listWargaColumns: ColumnDef<Warga>[] = [
             variant="outline"
             warga={row.original}
           />
-          <DeleteWarga id={row.original.id} />
+          <DeleteWarga userId={row.original.id_user} />
         </div>
       );
     },
