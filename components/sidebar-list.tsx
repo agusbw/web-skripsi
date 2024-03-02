@@ -38,9 +38,9 @@ function SidebarList({
     const lastName = name[1];
 
     if (!firstName) return "WRG";
-    if (!lastName) return `${firstName[0]}`;
+    if (!lastName) return `${firstName[0]?.toUpperCase()}`;
 
-    return `${firstName[0]}${lastName[0]}`;
+    return `${firstName[0]}${lastName[0]}`.toUpperCase();
   };
 
   return (
