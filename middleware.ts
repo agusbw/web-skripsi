@@ -5,11 +5,15 @@ import { NextResponse } from "next/server";
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
   function middleware(request: NextRequestWithAuth) {
-    if (
-      request.nextUrl.pathname.startsWith("/staff") &&
-      request.nextauth.token?.role === "WARGA"
-    ) {
-      return NextResponse.rewrite(new URL("/denied", request.url));
+    if (request.nextUrl.pathname.startsWith("/staff")) {
+      if (request.nextauth.token?.role === "WARGA") {
+        return NextResponse.rewrite(new URL("/denied", request.url));
+      }
+      if (request.nextUrl.pathname.startsWith("/staff/warga")) {
+        if (request.nextauth.token?.role === "PERBEKEL") {
+          return NextResponse.rewrite(new URL("/denied", request.url));
+        }
+      }
     }
     if (
       request.nextUrl.pathname.startsWith("/warga") &&
