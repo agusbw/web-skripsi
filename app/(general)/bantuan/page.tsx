@@ -85,7 +85,7 @@ export default function HelpPage() {
             <AccordionContent>
               Anda dapat menuju halaman login, lalu klik{" "}
               <span className="text-primary">
-                &apos;NIK belum terdaftar&apos;
+                &apos;Belum punya akun?&apos;
               </span>
               , lalu anda akan diarahkan menuju kontak petugas untuk melakukan
               pendaftaran.

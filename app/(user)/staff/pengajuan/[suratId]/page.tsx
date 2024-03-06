@@ -218,6 +218,7 @@ export default async function DetailSurat({
         <div className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0 sm:gap-x-3">
           {surat.status !== "DITOLAK" && pdf !== null && (
             <CreateTemplateButton
+              className={session?.user.role === "PERBEKEL" ? "hidden" : ""}
               data={surat}
               pdf={pdf}
             />

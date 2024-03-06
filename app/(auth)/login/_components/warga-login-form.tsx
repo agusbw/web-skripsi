@@ -223,19 +223,11 @@ export default function WargaLoginForm() {
         </p>
         <div className="flex flex-col">
           <Link
-            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.lupaPassword}`}
-            className="hover:underline text-primary text-sm inline-block"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Lupa password?
-          </Link>
-          <Link
             href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.daftarAkun}`}
             className="hover:underline text-primary text-sm inline-block"
             rel="noreferrer noopener"
           >
-            NIK belum terdaftar?
+            Belum punya akun?
           </Link>
           <Link
             href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.lupaUsername}`}
@@ -243,6 +235,14 @@ export default function WargaLoginForm() {
             rel="noreferrer noopener"
           >
             Lupa username?
+          </Link>
+          <Link
+            href={`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT.lupaPassword}`}
+            className="hover:underline text-primary text-sm inline-block"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Lupa password?
           </Link>
         </div>
       </form>
