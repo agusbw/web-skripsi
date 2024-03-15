@@ -88,3 +88,7 @@ export function generateTotalFromSuratStatusGroup(
     diambil,
   };
 }
+
+export function removeExtraSpace(s: string) {
+  return s.trim().split(/ +/).join(" ");
+}
