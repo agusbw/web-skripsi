@@ -34,7 +34,6 @@ export default async function Loading() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
             <SuratCountCardSkeleton
               title="Total Surat"
-              className="bg-primary col-span-2 lg:col-span-1"
               Icon={Mails}
             />
             <SuratCountCardSkeleton

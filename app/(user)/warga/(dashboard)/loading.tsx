@@ -39,7 +39,7 @@ export default async function Loading() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
             <SuratCountCardSkeleton
               title="Total Surat"
-              className="bg-primary col-span-2 lg:col-span-1"
+              className="bg-primary"
               Icon={Mails}
             />
             <SuratCountCardSkeleton
@@ -115,9 +115,9 @@ export default async function Loading() {
                   </AlertDescription>
                 </Alert>
                 <Alert className="bg-teal-500/10 text-teal-600">
-                  <AlertTitle>Diterima</AlertTitle>
+                  <AlertTitle>Diproses</AlertTitle>
                   <AlertDescription>
-                    Status diterima menandakan bahwa surat anda sedang dalam
+                    Status diproses menandakan bahwa surat anda sedang dalam
                     proses verifikasi dan penandatanganan oleh perbekel.
                   </AlertDescription>
                 </Alert>

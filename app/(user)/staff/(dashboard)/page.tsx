@@ -139,7 +139,6 @@ export default async function AdminDashboardPage() {
                 count={surat?.total}
                 title="Total Surat"
                 Icon={Mails}
-                className="col-span-2 lg:col-span-1"
               />
               <SuratCountCard
                 count={surat?.pending}

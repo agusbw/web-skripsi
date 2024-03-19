@@ -7,6 +7,7 @@ import {
 import { DataTable } from "./_components/data-table";
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { fetchALlUserSurat } from "@/lib/server/data";
 import { Terminal } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -32,13 +33,19 @@ export default async function BiodataPage() {
   return (
     <DashboardContainer title="Riwayat Pengajuan Surat">
       <Tabs defaultValue="pending">
-        <TabsList>
-          <TabsTrigger value="pending">Pending</TabsTrigger>
-          <TabsTrigger value="diproses">Diproses</TabsTrigger>
-          <TabsTrigger value="diterima">Diterima</TabsTrigger>
-          <TabsTrigger value="diambil">Diambil</TabsTrigger>
-          <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
-        </TabsList>
+        <ScrollArea
+          className="w-full max-w-[100vh] my-2"
+          type="always"
+        >
+          <TabsList className="mb-3">
+            <TabsTrigger value="pending">Pending</TabsTrigger>
+            <TabsTrigger value="diproses">Diproses</TabsTrigger>
+            <TabsTrigger value="diterima">Diterima</TabsTrigger>
+            <TabsTrigger value="diambil">Diambil</TabsTrigger>
+            <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
+          </TabsList>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
         <TabsContent value="pending">
           <Alert>
             <Terminal className="h-4 w-4" />

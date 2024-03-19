@@ -60,7 +60,7 @@ export default async function WargaDashboardPage() {
                 count={surat?.total}
                 title="Total Surat"
                 Icon={Mails}
-                className="col-span-2 lg:col-span-1"
+                className=""
               />
               <SuratCountCard
                 count={surat?.pending}
@@ -123,7 +123,7 @@ export default async function WargaDashboardPage() {
                   <Alert className="bg-teal-500/10 text-teal-600">
                     <AlertTitle>Diproses</AlertTitle>
                     <AlertDescription>
-                      Status diterima menandakan bahwa surat anda sedang dalam
+                      Status diproses menandakan bahwa surat anda sedang dalam
                       proses verifikasi dan penandatanganan oleh perbekel.
                     </AlertDescription>
                   </Alert>

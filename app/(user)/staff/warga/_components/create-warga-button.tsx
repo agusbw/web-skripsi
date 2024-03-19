@@ -45,6 +45,7 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { createWarga, updateWarga } from "@/lib/server/actions";
+import { ScrollBar, ScrollArea } from "@/components/ui/scroll-area";
 import type { Warga } from "@prisma/client";
 
 type CreateWargaForm = Omit<Warga, "createdAt" | "updatedAt" | "id_user">;
@@ -146,132 +147,64 @@ export default function CreataWarga({
               </DialogTitle>
               <DialogDescription>Lengkapi form dibawah ini!</DialogDescription>
             </DialogHeader>
-            <div
-              className={
-                "flex flex-col gap-y-3 mt-4 mb-5 max-h-[500px] overflow-auto px-2 py-2"
-              }
+            <ScrollArea
+              className="h-[500px] my-5"
+              type="always"
             >
-              <FormField
-                control={form.control}
-                name="nik"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      NIK <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="5108030XXXXXXXXX"
-                        autoComplete="off"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="no_kk"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Nomor Kartu Keluarga{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="5108030XXXXXXXXX"
-                        autoComplete="off"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="nama"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Nama Lengkap <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Nyoman xxx"
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="alamat"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Alamat <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex w-full gap-3">
+              <div className={"flex flex-col gap-y-3 mr-4"}>
                 <FormField
                   control={form.control}
-                  name="agama"
+                  name="nik"
                   render={({ field }) => (
-                    <FormItem className="flex-1">
+                    <FormItem>
                       <FormLabel>
-                        Agama <span className={"text-destructive"}>*</span>
+                        NIK <span className={"text-destructive"}>*</span>
                       </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Pilih Agama" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {AgamaValues.map((agama) => (
-                            <SelectItem
-                              key={agama}
-                              value={agama}
-                            >
-                              {formatEnumValue(agama)}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <Input
+                          placeholder="5108030XXXXXXXXX"
+                          autoComplete="off"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="pekerjaan"
+                  name="no_kk"
                   render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Pekerjaan</FormLabel>
+                    <FormItem>
+                      <FormLabel>
+                        Nomor Kartu Keluarga{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Pelajar"
+                          placeholder="5108030XXXXXXXXX"
+                          autoComplete="off"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="nama"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Nama Lengkap{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Nyoman xxx"
                           autoComplete="off"
                           {...field}
                         />
@@ -280,170 +213,242 @@ export default function CreataWarga({
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="tempat_lahir"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Tempat Lahir <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Pelapuan"
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="tanggal_lahir"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>
-                      Tanggal Lahir{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              " pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pilih tanggal</span>
-                            )}
-                            <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        className="w-auto p-0"
-                        align="start"
-                      >
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          captionLayout="dropdown-buttons"
-                          fromYear={1900}
-                          toYear={new Date().getFullYear()}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="kewarganegaraan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Kewarganegaraan{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Indonesia"
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="jenis_kelamin"
-                render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel>
-                      Jenis Kelamin{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field?.value?.toString()}
-                        className="flex gap-3"
-                      >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="true" />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            Laki-Laki
-                          </FormLabel>
-                        </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="false" />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            Perempuan
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status_perkawinan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Status Perkawinan{" "}
-                      <span className={"text-destructive"}>*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                <FormField
+                  control={form.control}
+                  name="alamat"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Alamat <span className={"text-destructive"}>*</span>
+                      </FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pilih Status Perkawinan" />
-                        </SelectTrigger>
+                        <Input
+                          placeholder="Banjar Dinas Pelapuan, Desa Pelapuan, Kec. Busungbiu, Kab. Buleleng"
+                          autoComplete="off"
+                          {...field}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        {StatusKawinValues.map((status) => (
-                          <SelectItem
-                            key={status}
-                            value={status}
-                          >
-                            {formatEnumValue(status)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex w-full gap-3">
+                  <FormField
+                    control={form.control}
+                    name="agama"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>
+                          Agama <span className={"text-destructive"}>*</span>
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Pilih Agama" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {AgamaValues.map((agama) => (
+                              <SelectItem
+                                key={agama}
+                                value={agama}
+                              >
+                                {formatEnumValue(agama)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="pekerjaan"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Pekerjaan</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Pelajar"
+                            autoComplete="off"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="tempat_lahir"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Tempat Lahir{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Pelapuan"
+                          autoComplete="off"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="tanggal_lahir"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>
+                        Tanggal Lahir{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                " pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pilih tanggal</span>
+                              )}
+                              <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-0"
+                          align="start"
+                        >
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            captionLayout="dropdown-buttons"
+                            fromYear={1900}
+                            toYear={new Date().getFullYear()}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="kewarganegaraan"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Kewarganegaraan{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Indonesia"
+                          autoComplete="off"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="jenis_kelamin"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>
+                        Jenis Kelamin{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field?.value?.toString()}
+                          className="flex gap-3"
+                        >
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="true" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Laki-Laki
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="false" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Perempuan
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="status_perkawinan"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Status Perkawinan{" "}
+                        <span className={"text-destructive"}>*</span>
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Pilih Status Perkawinan" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {StatusKawinValues.map((status) => (
+                            <SelectItem
+                              key={status}
+                              value={status}
+                            >
+                              {formatEnumValue(status)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
             <p className={"text-sm text-muted-foreground"}>
               <span className={"text-destructive"}>*</span>: wajib diisi/dipilih
             </p>
