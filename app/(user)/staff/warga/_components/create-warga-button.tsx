@@ -151,7 +151,7 @@ export default function CreataWarga({
               className="h-[500px] my-5"
               type="always"
             >
-              <div className={"flex flex-col gap-y-3 mr-4"}>
+              <div className={"flex flex-col gap-y-3 mr-4 ml-1"}>
                 <FormField
                   control={form.control}
                   name="nik"

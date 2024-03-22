@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
 import format from "date-fns/format";
 
+// DEVELOPMENT ONLY SEEDER
+
 const prisma = new PrismaClient();
 async function main() {
   const admin = await prisma.user.findFirst({
@@ -10,13 +12,30 @@ async function main() {
     },
   });
   if (!admin) {
-    const password: string = process.env.ADMIN_PASSWORD ?? "password123";
+    const password: string = process.env.ADMIN_PASSWORD ?? "password";
     const hashedPassword = await hash(password, 10);
     await prisma.user.create({
       data: {
         username: "admin",
         password: hashedPassword,
         role: "ADMIN",
+      },
+    });
+  }
+
+  const perbekel = await prisma.user.findFirst({
+    where: {
+      username: process.env.ADMIN_USERNAME ?? "perbekel",
+    },
+  });
+  if (!perbekel) {
+    const password: string = process.env.ADMIN_PASSWORD ?? "password";
+    const hashedPassword = await hash(password, 10);
+    await prisma.user.create({
+      data: {
+        username: "perbekel",
+        password: hashedPassword,
+        role: "PERBEKEL",
       },
     });
   }
