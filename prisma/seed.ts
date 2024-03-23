@@ -8,11 +8,11 @@ const prisma = new PrismaClient();
 async function main() {
   const admin = await prisma.user.findFirst({
     where: {
-      username: process.env.ADMIN_USERNAME,
+      username: process.env.ADMIN_USERNAME ?? "admin",
     },
   });
   if (!admin) {
-    const password: string = process.env.ADMIN_PASSWORD;
+    const password: string = process.env.ADMIN_PASSWORD ?? "password";
     const hashedPassword = await hash(password, 10);
     await prisma.user.create({
       data: {
@@ -29,7 +29,7 @@ async function main() {
     },
   });
   if (!perbekel) {
-    const password: string = process.env.PERBEKEL_PASSWORD;
+    const password: string = process.env.PERBEKEL_PASSWORD ?? "password";
     const hashedPassword = await hash(password, 10);
     await prisma.user.create({
       data: {
