@@ -19,6 +19,7 @@ import { getCurrentSession } from "./auth";
 import { type ActionsResponse } from "@/types/types";
 import { utcToZonedTime } from "date-fns-tz";
 import { utapi } from "./uploathing";
+import { encryptData } from "./utils";
 import type * as z from "zod";
 type CreateWarga = z.infer<typeof createWargaSchema>;
 type ChangePassword = z.infer<typeof changePasswordSchema>;
@@ -52,7 +53,7 @@ export async function createWarga(
   try {
     const isExist = await prisma.warga.count({
       where: {
-        nik: validatedData.data.nik,
+        nik: encryptData(validatedData.data.nik, process.env.ENCRYPTION_KEY!),
       },
     });
 
@@ -77,6 +78,10 @@ export async function createWarga(
         warga: {
           create: {
             ...validatedData.data,
+            nik: encryptData(
+              validatedData.data.nik,
+              process.env.ENCRYPTION_KEY!
+            ),
             jenis_kelamin: validatedData.data.jenis_kelamin === "true",
           },
         },
@@ -141,7 +146,10 @@ export async function updateWarga(
     const isExist = await prisma.warga.count({
       where: {
         nik: {
-          equals: validatedData.data.nik,
+          equals: encryptData(
+            validatedData.data.nik,
+            process.env.ENCRYPTION_KEY!
+          ),
         },
         NOT: {
           nik: user.warga?.nik,
@@ -183,7 +191,9 @@ export async function updateWarga(
     }
 
     // check if user change his nik
-    const isUsernameEqualsToNik = user.username === user.warga?.nik;
+    const isUsernameEqualsToNik =
+      encryptData(user.username, process.env.ENCRYPTION_KEY!) ===
+      user.warga?.nik;
 
     const updatedUser = await prisma.user.update({
       where: {
@@ -198,6 +208,10 @@ export async function updateWarga(
           update: {
             ...validatedData.data,
             jenis_kelamin: validatedData.data.jenis_kelamin === "true",
+            nik: encryptData(
+              validatedData.data.nik,
+              process.env.ENCRYPTION_KEY!
+            ),
           },
         },
       },

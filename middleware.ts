@@ -21,11 +21,11 @@ export default withAuth(
 
     if (request.nextUrl.pathname.startsWith("/staff")) {
       if (request.nextauth.token?.role === "WARGA") {
-        return NextResponse.rewrite(new URL("/denied", request.url));
+        return NextResponse.redirect(new URL("/dashboard", request.url));
       }
       if (request.nextUrl.pathname.startsWith("/staff/warga")) {
         if (request.nextauth.token?.role === "PERBEKEL") {
-          return NextResponse.rewrite(new URL("/denied", request.url));
+          return NextResponse.redirect(new URL("/staff", request.url));
         }
       }
     }

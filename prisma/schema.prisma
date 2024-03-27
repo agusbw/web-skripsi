@@ -21,7 +21,7 @@ model User {
 
 model Warga {
   id              String      @id @default(uuid())
-  nik             String      @db.VarChar(16) @unique
+  nik             String      @db.VarChar(255) @unique
   no_kk           String      @db.VarChar(16)
   nama            String      @db.VarChar(75)
   alamat          String      @db.VarChar(120)
@@ -54,7 +54,7 @@ model Surat{
   keperluan   String      @db.VarChar(100)
   status      Status      @default(PENDING)
 
-  nik             String      @db.VarChar(16)
+  nik             String      @db.VarChar(255)
   no_kk           String      @db.VarChar(16)
   nama            String      @db.VarChar(75)
   alamat          String      @db.VarChar(120)

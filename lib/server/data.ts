@@ -4,6 +4,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getCurrentSession } from "./auth";
 import type { KodeSurat } from "@prisma/client";
 import { generateTotalFromSuratStatusGroup } from "../utils";
+import { decryptData } from "./utils";
 
 export async function fetchWargaList() {
   noStore();
@@ -32,6 +33,11 @@ export async function fetchWargaList() {
         },
       },
     });
+
+    data.map((warga) => {
+      warga.nik = decryptData(warga.nik, process.env.ENCRYPTION_KEY!);
+    });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -48,6 +54,10 @@ export async function fetchWargaByUserId(id: string) {
         id_user: id,
       },
     });
+
+    if (!data) throw new Error("Failed to fetch warga by user id.");
+
+    data.nik = decryptData(data.nik, process.env.ENCRYPTION_KEY!);
 
     return data;
   } catch (error) {
@@ -74,6 +84,7 @@ export async function fetchUserDisplayName() {
         },
       },
     });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -100,6 +111,11 @@ export async function fetchSuratByUserId(id: string) {
         kategori_surat: true,
       },
     });
+
+    data.map((surat) => {
+      surat.nik = decryptData(surat.nik, process.env.ENCRYPTION_KEY!);
+    });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -185,6 +201,11 @@ export async function fetchUserBiodata() {
         },
       },
     });
+
+    if (!data) throw new Error("Failed to fetch current biodata.");
+
+    data.nik = decryptData(data.nik, process.env.ENCRYPTION_KEY!);
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -206,6 +227,9 @@ export async function fetchUserUsername() {
         username: true,
       },
     });
+
+    if (!data) throw new Error("Failed to fetch user username.");
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -230,6 +254,11 @@ export async function fetchALlUserSurat() {
         kategori_surat: true,
       },
     });
+
+    data.map((surat) => {
+      surat.nik = decryptData(surat.nik, process.env.ENCRYPTION_KEY!);
+    });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -700,6 +729,15 @@ export async function fetchSuratDiambil() {
         },
       },
     });
+
+    data.map((surat) => {
+      surat.warga.nik = decryptData(
+        surat.warga.nik,
+        process.env.ENCRYPTION_KEY!
+      );
+      surat.nik = decryptData(surat.nik, process.env.ENCRYPTION_KEY!);
+    });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -734,6 +772,15 @@ export async function fetchAllSurat() {
         },
       },
     });
+
+    data.map((surat) => {
+      surat.warga.nik = decryptData(
+        surat.warga.nik,
+        process.env.ENCRYPTION_KEY!
+      );
+      surat.nik = decryptData(surat.nik, process.env.ENCRYPTION_KEY!);
+    });
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -764,6 +811,12 @@ export async function fetchSuratById(id: string) {
         },
       },
     });
+
+    if (!data) throw new Error("Failed to fetch surat by id.");
+
+    data.nik = decryptData(data.nik, process.env.ENCRYPTION_KEY!);
+    data.warga.nik = decryptData(data.warga.nik, process.env.ENCRYPTION_KEY!);
+
     return data;
   } catch (error) {
     console.error("Database Error:", error);
