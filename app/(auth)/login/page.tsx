@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AdminLoginForm from "@/app/(auth)/login/_components/admin-login-form";
-import PerbekelLoginForm from "./_components/perbekel-login-form";
-import WargaLoginForm from "@/app/(auth)/login/_components/warga-login-form";
+import LoginForm from "@/app/(auth)/login/_components/login-form";
 import { getCurrentSession } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
 
@@ -18,35 +15,11 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-      <Tabs
-        defaultValue="warga"
-        className="w-full"
-      >
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="warga">Warga</TabsTrigger>
-          <TabsTrigger value="admin">Admin</TabsTrigger>
-          <TabsTrigger value="perbekel">Perbekel</TabsTrigger>
-        </TabsList>
-        <TabsContent value="warga">
-          <h1 className="my-3 text-2xl font-semibold tracking-tight">
-            Masuk ke akun Warga
-          </h1>
-          <WargaLoginForm />
-        </TabsContent>
-        <TabsContent value="admin">
-          <h1 className="my-3 text-2xl font-semibold tracking-tight">
-            Masuk ke akun Admin
-          </h1>
-          <AdminLoginForm />
-        </TabsContent>
-        <TabsContent value="perbekel">
-          <h1 className="my-3 text-2xl font-semibold tracking-tight">
-            Masuk ke akun Perbekel
-          </h1>
-          <PerbekelLoginForm />
-        </TabsContent>
-      </Tabs>
+    <div className="mx-auto flex w-full flex-col justify-center sm:w-[350px]">
+      <h1 className="text-2xl font-semibold tracking-tight mb-3">
+        Masuk ke Akun Anda
+      </h1>
+      <LoginForm />
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function HeaderNavigationLinks() {
       </div>
       <Button
         className="rounded-full"
-        onClick={() => signIn()}
+        onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
       >
         <EnterIcon className={"mr-1"} /> | Masuk
       </Button>

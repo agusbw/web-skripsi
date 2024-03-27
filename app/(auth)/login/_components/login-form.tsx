@@ -39,7 +39,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useState } from "react";
 import Link from "next/link";
 import { ADMIN_WHATSAPP_NUMBER, WHATSAPP_TEXT } from "@/lib/constant";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function RenderPasswordInfoDrawerDialog() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -63,7 +63,7 @@ function RenderPasswordInfoDrawerDialog() {
           <DialogHeader>
             <DialogTitle>Informasi</DialogTitle>
             <DialogDescription>
-              Password bawaan adalah tanggal lahir anda dengan format
+              Password bawaan warga adalah tanggal lahir anda dengan format
               (ddmmyyyy). Contoh: 01111997 untuk tanggal lahir 1 November 1997.
               <span className="text-destructive mt-2 block">
                 Disarankan untuk mengganti password anda setelah login pertama
@@ -90,7 +90,7 @@ function RenderPasswordInfoDrawerDialog() {
           <DrawerHeader className="text-left">
             <DrawerTitle>Informasi</DrawerTitle>
             <DrawerDescription>
-              Password bawaan adalah tanggal lahir anda dengan format
+              Password bawaan warga adalah tanggal lahir anda dengan format
               (ddmmyyyy). Contoh: 01111997 untuk tanggal lahir 1 November 1997.
               <span className="text-destructive mt-2 block">
                 Disarankan untuk mengganti password anda setelah login pertama
@@ -109,21 +109,22 @@ function RenderPasswordInfoDrawerDialog() {
   );
 }
 
-export default function WargaLoginForm() {
+export default function LoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof wargaLoginSchema>>({
     resolver: zodResolver(wargaLoginSchema),
     defaultValues: {
-      nik: "",
+      username: "",
       password: "",
     },
   });
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof wargaLoginSchema>) {
-    const checkuser = await fetch(`/api/check-user/${values.nik}`);
+    const checkuser = await fetch(`/api/check-user/${values.username}`);
 
     if (!checkuser.ok) {
       setLoginError("Username tidak terdaftar.");
@@ -132,16 +133,20 @@ export default function WargaLoginForm() {
 
     try {
       const res = await signIn("credentials", {
-        username: values.nik,
+        username: values.username,
         password: values.password,
-        role: "WARGA",
         redirect: false,
       });
 
       if (res?.error) {
-        setLoginError("Password salah.");
+        setLoginError("Username atau password salah.");
       } else {
-        router.push("/warga");
+        const callbackUrl = searchParams.get("callbackUrl");
+        if (callbackUrl) {
+          router.push(callbackUrl);
+        } else {
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
       console.error(error);
@@ -164,7 +169,7 @@ export default function WargaLoginForm() {
       >
         <FormField
           control={form.control}
-          name="nik"
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
@@ -199,7 +204,7 @@ export default function WargaLoginForm() {
                 </div>
               </FormControl>
               <FormDescription className="text-xs">
-                Klik tanda [?] untuk informasi tentang password.
+                Klik tanda [?] untuk informasi mengenai password akun warga.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -218,8 +223,9 @@ export default function WargaLoginForm() {
           )}
         </Button>
         <p className="px-8 text-sm text-center text-muted-foreground">
-          Dengan klik &rdquo;Login&rdquo;, anda akan diarahkan ke halaman
-          Dashboard pengaduan.
+          Dengan klik <span className="font-semibold text-primary">Login</span>,
+          anda akan diarahkan ke halaman{" "}
+          <span className="italic text-primary">dashboard</span>.
         </p>
         <div className="flex flex-col">
           <Link

@@ -69,7 +69,7 @@ export const adminLoginSchema = z.object({
 });
 
 export const wargaLoginSchema = z.object({
-  nik: z
+  username: z
     .string({
       required_error: "Username tidak boleh kosong",
     })

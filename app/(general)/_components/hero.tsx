@@ -25,7 +25,11 @@ export default function Hero() {
           <div className="flex justify-center items-center gap-x-4 mt-6">
             <Button
               className="bg-gradient-to-br from-primary to-purple-400 text-white hover:text-white hover:from-primary hover:to-purple-600 rouned-lg"
-              onClick={() => signIn()}
+              onClick={() =>
+                signIn(undefined, {
+                  callbackUrl: "/warga/pengajuan",
+                })
+              }
             >
               Ajukan Surat
             </Button>

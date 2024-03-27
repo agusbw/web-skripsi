@@ -22,40 +22,18 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.username || !credentials.password) return null;
 
-        let user;
-        const includeStatement = {
-          warga: {
-            select: {
-              id: true,
+        const user = await prisma.user.findUnique({
+          where: {
+            username: credentials.username,
+          },
+          include: {
+            warga: {
+              select: {
+                id: true,
+              },
             },
           },
-        };
-
-        if (credentials.role === "PERBEKEL") {
-          user = await prisma.user.findUnique({
-            where: {
-              username: credentials.username,
-              role: "PERBEKEL",
-            },
-            include: includeStatement,
-          });
-        } else if (credentials.role === "ADMIN") {
-          user = await prisma.user.findUnique({
-            where: {
-              username: credentials.username,
-              role: "ADMIN",
-            },
-            include: includeStatement,
-          });
-        } else {
-          user = await prisma.user.findUnique({
-            where: {
-              username: credentials.username,
-              role: "WARGA",
-            },
-            include: includeStatement,
-          });
-        }
+        });
 
         if (!user || !(await compare(credentials.password, user.password)))
           return null;
