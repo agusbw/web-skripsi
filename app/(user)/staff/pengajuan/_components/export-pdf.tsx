@@ -20,7 +20,15 @@ type Props = {
   kategori_surat: KategoriSurat;
 } & Surat;
 
-export default function ExportPDF({ data }: { data: Props[] }) {
+export default function ExportPDF({
+  data,
+  startDate,
+  endDate,
+}: {
+  data: Props[];
+  startDate: Date | null;
+  endDate: Date | null;
+}) {
   function exportPDF() {
     const rows = data.map((data) => {
       const noSurat = data.no_surat ? data.no_surat : "-";
@@ -49,12 +57,67 @@ export default function ExportPDF({ data }: { data: Props[] }) {
           "Status",
         ],
       ],
+      startY: 40,
+      margin: { horizontal: 10, bottom: 30, top: 35 },
       body: rows,
       foot: [["Total", "", "", "", rows.length]],
       theme: "grid",
+      didDrawPage: function (data) {
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(
+          "Sistem Informasi Pengajuan Surat Keterangan Desa Pelapuan",
+          data.settings.margin.left,
+          22
+        );
+
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text("Laporan Data Pengajuan Surat", data.settings.margin.left, 28);
+
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        if (!startDate || !endDate) {
+          doc.text("Periode: Seluruh periode", data.settings.margin.left, 34);
+        } else {
+          doc.text(
+            `Periode: ${format(startDate, "dd MMMM yyyy", {
+              locale: id,
+            })} - ${format(endDate, "dd MMMM yyyy", {
+              locale: id,
+            })}`,
+            data.settings.margin.left,
+            34
+          );
+        }
+
+        const img = new Image();
+        img.src = "/logo-desa.png";
+        doc.addImage(img, "PNG", 180, 15, 15, 15);
+
+        doc.text(
+          "Dicetak Tanggal: " +
+            format(new Date(), "dd MMMM yyyy", { locale: id }),
+          data.settings.margin.left,
+          285
+        );
+      },
     });
 
-    doc.save("semua-data-pengajuan-surat.pdf");
+    const periodString =
+      startDate && endDate
+        ? `(${
+            format(startDate, "dd-MM-yyyy") +
+            " - " +
+            format(endDate, "dd-MM-yyyy")
+          })`
+        : null;
+
+    doc.save(
+      `Data Pengajuan Surat SIPSK Desa Pelapuan ${
+        periodString ? periodString : ""
+      }.pdf`
+    );
   }
 
   return (

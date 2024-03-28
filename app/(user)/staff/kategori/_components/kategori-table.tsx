@@ -39,7 +39,11 @@ export async function KategoriTable({
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <DateFilter />
-        <ExportPDF data={data} />
+        <ExportPDF
+          data={data}
+          startDate={startDate}
+          endDate={endDate}
+        />
       </div>
       <p className="my-2 text-sm">
         Menampilkan data:{" "}
@@ -49,7 +53,7 @@ export async function KategoriTable({
             })} -  ${format(endDate.setUTCHours(10, 0, 0, 0), "dd MMMM yyyy", {
               locale: id,
             })}`
-          : "semua"}
+          : "Semua periode"}
       </p>
       <Table className="border">
         <TableHeader>

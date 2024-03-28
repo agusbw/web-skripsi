@@ -64,7 +64,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex flex-col-reverse md:flex-row md:items-end py-4 gap-2">
+      <div className="flex flex-col-reverse md:flex-row md:items-end pb-4 gap-2">
         <div className="flex-1 flex flex-wrap gap-3">
           <Input
             placeholder="Cari berdasarkan NIK"

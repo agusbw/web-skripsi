@@ -23,7 +23,15 @@ type Props = {
   };
 } & Surat;
 
-export default function ExportPDF({ data }: { data: Props[] }) {
+export default function ExportPDF({
+  data,
+  startDate,
+  endDate,
+}: {
+  data: Props[];
+  startDate: Date | null;
+  endDate: Date | null;
+}) {
   function exportPDF() {
     const rows = data.map((data) => {
       const tanggalAmbil = data?.tanggal_pengambilan
@@ -54,12 +62,71 @@ export default function ExportPDF({ data }: { data: Props[] }) {
           "Tanggal Pengambilan",
         ],
       ],
+      startY: 40,
+      margin: { horizontal: 10, bottom: 30, top: 35 },
       body: rows,
       foot: [["Total", "", "", "", rows.length]],
       theme: "grid",
+      didDrawPage: function (data) {
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(
+          "Sistem Informasi Pengajuan Surat Keterangan Desa Pelapuan",
+          data.settings.margin.left,
+          22
+        );
+
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text(
+          "Laporan Data Pengambilan Surat",
+          data.settings.margin.left,
+          28
+        );
+
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        if (!startDate || !endDate) {
+          doc.text("Periode: Seluruh periode", data.settings.margin.left, 34);
+        } else {
+          doc.text(
+            `Periode: ${format(startDate, "dd MMMM yyyy", {
+              locale: id,
+            })} - ${format(endDate, "dd MMMM yyyy", {
+              locale: id,
+            })}`,
+            data.settings.margin.left,
+            34
+          );
+        }
+
+        const img = new Image();
+        img.src = "/logo-desa.png";
+        doc.addImage(img, "PNG", 180, 15, 15, 15);
+
+        doc.text(
+          "Dicetak Tanggal: " +
+            format(new Date(), "dd MMMM yyyy", { locale: id }),
+          data.settings.margin.left,
+          285
+        );
+      },
     });
 
-    doc.save("data-pengambilan-surat.pdf");
+    const periodString =
+      startDate && endDate
+        ? `(${
+            format(startDate, "dd-MM-yyyy") +
+            " - " +
+            format(endDate, "dd-MM-yyyy")
+          })`
+        : null;
+
+    doc.save(
+      `Data Pengambilan Surat SIPSK Desa Pelapuan ${
+        periodString ? periodString : ""
+      }.pdf`
+    );
   }
 
   return (

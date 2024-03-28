@@ -26,13 +26,43 @@ export default function ExportPDF({
 
     const doc = new jsPDF();
     autoTable(doc, {
+      startY: 35,
+      margin: { horizontal: 10, bottom: 30, top: 35 },
       head: [["NIK", "Nama", "Alamat", "Tanggal Lahir", "Total Pengajuan"]],
       body: rows,
       theme: "grid",
       foot: [["Total", "", "", "", rows.length]],
+      didDrawPage: function (data) {
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(
+          "Sistem Informasi Pengajuan Surat Keterangan Desa Pelapuan",
+          data.settings.margin.left,
+          22
+        );
+
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text("Laporan Data Warga", data.settings.margin.left, 28);
+
+        const img = new Image();
+        img.src = "/logo-desa.png";
+        doc.addImage(img, "PNG", 180, 15, 15, 15);
+
+        doc.text(
+          "Dicetak Tanggal: " +
+            format(new Date(), "dd MMMM yyyy", { locale: id }),
+          data.settings.margin.left,
+          285
+        );
+      },
     });
 
-    doc.save("data-warga.pdf");
+    doc.save(
+      `${format(new Date(), "dd-MM-yyyy", {
+        locale: id,
+      })} - Data Warga SIPSK Desa Pelapuan.pdf`
+    );
   }
 
   return (

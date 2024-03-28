@@ -1,7 +1,7 @@
 import DashboardContainer from "@/components/layouts/dashboard-container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchAllSurat } from "@/lib/server/data";
-import DataTableWrapper from "../_components/table-wrapper";
+import DateFilter from "../_components/date-filter";
 import { getCurrentSession } from "@/lib/server/auth";
 import {
   pendingColumns,
@@ -9,9 +9,9 @@ import {
   diprosesColumns,
   diterimaColumns,
 } from "../_components/columns";
-
 import { type Metadata } from "next";
 import ExportPDF from "../_components/export-pdf";
+import { DataTable } from "../_components/data-table";
 
 export const metadata: Metadata = {
   title: "Pengajuan",
@@ -21,9 +21,29 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function PengajuanPage() {
-  const surat = await fetchAllSurat();
+export default async function PengajuanPage({
+  searchParams,
+}: {
+  searchParams?: { startDate?: string; endDate?: string };
+}) {
+  let surat = await fetchAllSurat();
   const session = await getCurrentSession();
+
+  const startDate = searchParams?.startDate ?? null;
+  const endDate = searchParams?.endDate ?? null;
+
+  if (startDate && endDate) {
+    surat = surat.filter((d) => {
+      let date = new Date(d.createdAt);
+      const timezoneOffset = date.getTimezoneOffset() * 60000;
+      date = new Date(date.getTime() - timezoneOffset);
+
+      const start = new Date(startDate).setUTCHours(0, 0, 0, 0);
+      const end = new Date(endDate).setUTCHours(23, 59, 59, 999);
+
+      return date.getTime() >= start && date.getTime() <= end;
+    });
+  }
 
   const suratPending = surat.filter((item) => item.status === "PENDING");
   const suratDiproses = surat.filter((item) => item.status === "DIPROSES");
@@ -38,8 +58,13 @@ export default async function PengajuanPage() {
           : "Terima Pengajuan Surat"
       }
     >
-      <div className="flex justify-end mb-4">
-        <ExportPDF data={surat} />
+      <div className="flex flex-col lg:flex-row lg:justify-between mb-4 sm:mb-0">
+        <DateFilter />
+        <ExportPDF
+          data={surat}
+          startDate={startDate ? new Date(startDate) : null}
+          endDate={endDate ? new Date(endDate) : null}
+        />
       </div>
       <Tabs
         defaultValue={session?.user.role === "ADMIN" ? "pending" : "diproses"}
@@ -53,25 +78,25 @@ export default async function PengajuanPage() {
           <TabsTrigger value="ditolak">Ditolak</TabsTrigger>
         </TabsList>
         <TabsContent value="pending">
-          <DataTableWrapper
+          <DataTable
             data={suratPending}
             columns={pendingColumns}
           />
         </TabsContent>
         <TabsContent value="diproses">
-          <DataTableWrapper
+          <DataTable
             data={suratDiproses}
             columns={diprosesColumns}
           />
         </TabsContent>
         <TabsContent value="diterima">
-          <DataTableWrapper
+          <DataTable
             data={suratDiterima}
             columns={diterimaColumns}
           />
         </TabsContent>
         <TabsContent value="ditolak">
-          <DataTableWrapper
+          <DataTable
             data={suratDitolak}
             columns={ditolakColumns}
           />
