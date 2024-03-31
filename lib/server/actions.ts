@@ -19,7 +19,7 @@ import { getCurrentSession } from "./auth";
 import { type ActionsResponse } from "@/types/types";
 import { utcToZonedTime } from "date-fns-tz";
 import { utapi } from "./uploathing";
-import { encryptData } from "./utils";
+import { decryptData, encryptData } from "./utils";
 import type * as z from "zod";
 type CreateWarga = z.infer<typeof createWargaSchema>;
 type ChangePassword = z.infer<typeof changePasswordSchema>;
@@ -1062,7 +1062,7 @@ export async function resetUsernameWarga(user_id: string) {
         id: user.id,
       },
       data: {
-        username: user.warga.nik,
+        username: decryptData(user.warga.nik, process.env.ENCRYPTION_KEY!),
       },
     });
 
