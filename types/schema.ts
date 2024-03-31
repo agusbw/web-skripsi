@@ -27,21 +27,13 @@ export const createWargaSchema = z.object({
   agama: z.enum(AgamaValues, {
     required_error: "Agama tidak boleh kosong",
   }),
-  no_kk: z
-    .string()
-    .trim()
-    .min(16, "No KK minimal 16 karakter")
-    .max(255, "Nomor KK maksimal 255 karakter"),
+  no_kk: z.string().trim().length(16, "Nomor KK harus 16 karakter"),
   kewarganegaraan: z
     .string()
     .trim()
     .min(1, "Kewarganegaraan tidak boleh kosong")
     .max(30, "Kewarganegaraan maksimal 30 karakter"),
-  nik: z
-    .string()
-    .trim()
-    .min(16, "No KK minimal 16 karakter")
-    .max(255, "NIK maksimal 255 karakter"),
+  nik: z.string().trim().length(16, "NIK harus 16 karakter"),
   pekerjaan: z.string().trim().optional(),
   tanggal_lahir: z.coerce.date({
     errorMap: errorMap,
