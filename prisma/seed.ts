@@ -10,7 +10,14 @@ async function main() {
     !process.env.PERBEKEL_USERNAME
   ) {
     console.error(
-      "Please provide ADMIN_USERNAME, ADMIN_PASSWORD, PERBEKEL_USERNAME, PERBEKEL_PASSWORD in .env file"
+      "Tolong isi ADMIN_USERNAME, ADMIN_PASSWORD, PERBEKEL_USERNAME, PERBEKEL_PASSWORD di .env file"
+    );
+    process.exit(1);
+  }
+
+  if (process.env.ADMIN_USERNAME === process.env.PERBEKEL_USERNAME) {
+    console.error(
+      "ADMIN_USERNAME dan PERBEKEL_USERNAME di file .env harus berbeda"
     );
     process.exit(1);
   }
