@@ -10,7 +10,7 @@
     "postinstall": "prisma generate"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -91,6 +91,7 @@
     "prettier": "3.0.3",
     "prisma": "^5.3.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
     "typescript": "5.2.2"
   }
 }
